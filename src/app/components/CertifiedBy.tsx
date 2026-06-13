@@ -32,7 +32,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "International",
     description: "United Nations Educational, Scientific and Cultural Organization",
     logo: unescoLogo,
-    logoScale: "110%",
+    logoScale: "170%",
   },
   {
     eyebrow: "Egypt",
