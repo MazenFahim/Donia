@@ -26,7 +26,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "USA",
     description: "American Society for Instructional Technology",
     logo: asitLogo, 
-    mark: "asit",
+    logoScale: "130%",
   },
   {
     eyebrow: "International",
