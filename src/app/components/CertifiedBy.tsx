@@ -25,8 +25,8 @@ const CERTIFICATIONS: Certification[] = [
     title: "ASIT",
     country: "USA",
     description: "American Society for Instructional Technology",
-    logo: asitLogo, 
-    logoScale: "130%",
+    logo: asitLogo,
+    logoScale: "118%",
   },
   {
     eyebrow: "International",
@@ -34,7 +34,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "International",
     description: "United Nations Educational, Scientific and Cultural Organization",
     logo: unescoLogo,
-    logoScale: "170%",
+    logoScale: "145%",
   },
   {
     eyebrow: "Egypt",
@@ -42,7 +42,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Ain Shams University",
     logo: ainShamsLogo,
-    logoScale: "104%",
+    logoScale: "112%",
   },
   {
     eyebrow: "Egypt",
@@ -50,7 +50,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Helwan University",
     logo: helwanLogo,
-    logoScale: "106%",
+    logoScale: "115%",
   },
   {
     eyebrow: "Egypt",
@@ -58,7 +58,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Ministry of Youth & Sports",
     logo: mysLogo,
-    logoScale: "108%",
+    logoScale: "118%",
   },
 ];
 
@@ -220,14 +220,17 @@ export function CertifiedBy() {
                       width: 104,
                       height: 104,
                       borderRadius: "50%",
-                      background: "radial-gradient(circle at 34% 22%, #FFFFFF 0%, #F5EFE5 58%, #E5DAC9 100%)",
+                      overflow: "hidden",
+                      background:
+                        "radial-gradient(circle at 34% 22%, #FFFFFF 0%, #F5EFE5 58%, #E5DAC9 100%)",
                       border: "1px solid rgba(190,155,92,0.30)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: 8,
+                      padding: 0,
                       marginBottom: 24,
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.92), inset 0 -10px 22px rgba(107,143,113,0.055), 0 14px 28px rgba(28,28,28,0.08)",
+                      boxShadow:
+                        "inset 0 1px 0 rgba(255,255,255,0.92), inset 0 -10px 22px rgba(107,143,113,0.055), 0 14px 28px rgba(28,28,28,0.08)",
                     }}
                   >
                     {cert.mark === "asit" ? (
@@ -242,7 +245,13 @@ export function CertifiedBy() {
                       <ImageWithFallback
                         src={cert.logo}
                         alt={`${cert.title} logo`}
-                        style={{ width: cert.logoScale, height: cert.logoScale, objectFit: "contain", display: "block", mixBlendMode: "multiply" }}
+                        style={{
+                          width: cert.logoScale,
+                          height: cert.logoScale,
+                          objectFit: "contain",
+                          display: "block",
+                          borderRadius: "50%",
+                        }}
                       />
                     ) : Icon ? (
                       <Icon size={46} color={T.blue} strokeWidth={1.42} />
