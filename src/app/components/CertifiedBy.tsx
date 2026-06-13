@@ -4,6 +4,7 @@ import ainShamsLogo from "@/imports/ainshams.png";
 import helwanLogo from "@/imports/helwan.png";
 import mysLogo from "@/imports/MYS.png";
 import unescoLogo from "@/imports/UNSECO-1.png";
+import asitLogo from "@/imports/ASIT.png"
 import { T } from "./tokens";
 import { FadeUp } from "./FadeUp";
 
@@ -24,6 +25,7 @@ const CERTIFICATIONS: Certification[] = [
     title: "ASIT",
     country: "USA",
     description: "American Society for Instructional Technology",
+    logo: asitLogo, 
     mark: "asit",
   },
   {
