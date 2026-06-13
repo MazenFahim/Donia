@@ -26,7 +26,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "USA",
     description: "American Society for Instructional Technology",
     logo: asitLogo,
-    logoScale: "118%",
+    logoScale: "100%",
   },
   {
     eyebrow: "International",
@@ -34,7 +34,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "International",
     description: "United Nations Educational, Scientific and Cultural Organization",
     logo: unescoLogo,
-    logoScale: "145%",
+    logoScale: "160%",
   },
   {
     eyebrow: "Egypt",
