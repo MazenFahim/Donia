@@ -203,7 +203,8 @@ export function Hero() {
           </div>
 
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <button
+            <a
+              href="#programs"
               style={{
                 background: T.blue,
                 color: T.white,
@@ -218,8 +219,10 @@ export function Hero() {
                 borderRadius: 10,
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: 10,
                 transition: "background 0.15s, box-shadow 0.15s",
+                textDecoration: "none",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
@@ -234,10 +237,17 @@ export function Hero() {
             >
               View My Work
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M1 7h12M8 2l5 5-5 5" stroke="white" strokeWidth="1.8" strokeLinecap="square" />
+                <path
+                  d="M1 7h12M8 2l5 5-5 5"
+                  stroke="white"
+                  strokeWidth="1.8"
+                  strokeLinecap="square"
+                />
               </svg>
-            </button>
-            <button
+            </a>
+
+            <a
+              href="#contact"
               style={{
                 background: "transparent",
                 color: T.navy,
@@ -251,6 +261,10 @@ export function Hero() {
                 letterSpacing: "0.04em",
                 borderRadius: 10,
                 transition: "background 0.15s, border-color 0.15s",
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
@@ -264,7 +278,7 @@ export function Hero() {
               }}
             >
               Contact Me
-            </button>
+            </a>
           </div>
         </div>
 

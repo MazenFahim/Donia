@@ -70,7 +70,7 @@ export function Navbar() {
               {item}
             </a>
           ))}
-          <button
+          <a href="#contact"
             style={{
               background: T.blue,
               color: T.white,
@@ -84,6 +84,10 @@ export function Navbar() {
               letterSpacing: "0.04em",
               borderRadius: 10,
               transition: "background 0.15s, box-shadow 0.15s",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget as HTMLElement;
@@ -97,7 +101,7 @@ export function Navbar() {
             }}
           >
             Book Session
-          </button>
+          </a>
         </div>
       </nav>
     </div>
