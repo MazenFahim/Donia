@@ -15,7 +15,9 @@ type Certification = {
   description: string;
   icon?: LucideIcon;
   logo?: string;
-  logoScale?: string;
+  logoSize?: number;
+  logoNudgeX?: number;
+  logoNudgeY?: number;
   mark?: "asit";
 };
 
@@ -26,7 +28,8 @@ const CERTIFICATIONS: Certification[] = [
     country: "USA",
     description: "American Society for Instructional Technology",
     logo: asitLogo,
-    logoScale: "100%",
+    logoSize: 76,
+    logoNudgeY: -2,
   },
   {
     eyebrow: "International",
@@ -34,7 +37,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "International",
     description: "United Nations Educational, Scientific and Cultural Organization",
     logo: unescoLogo,
-    logoScale: "160%",
+    logoSize: 118,
   },
   {
     eyebrow: "Egypt",
@@ -42,7 +45,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Ain Shams University",
     logo: ainShamsLogo,
-    logoScale: "112%",
+    logoSize: 92,
   },
   {
     eyebrow: "Egypt",
@@ -50,7 +53,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Helwan University",
     logo: helwanLogo,
-    logoScale: "115%",
+    logoSize: 92,
   },
   {
     eyebrow: "Egypt",
@@ -58,7 +61,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Ministry of Youth & Sports",
     logo: mysLogo,
-    logoScale: "118%",
+    logoSize: 94,
   },
 ];
 
@@ -242,17 +245,28 @@ export function CertifiedBy() {
                         <span style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.22em", color: T.navy }}>USA</span>
                       </div>
                     ) : cert.logo ? (
-                      <ImageWithFallback
-                        src={cert.logo}
-                        alt={`${cert.title} logo`}
+                      <div
                         style={{
-                          width: cert.logoScale,
-                          height: cert.logoScale,
-                          objectFit: "contain",
-                          display: "block",
-                          borderRadius: "50%",
+                          width: cert.logoSize ?? 88,
+                          height: cert.logoSize ?? 88,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          transform: `translate(${cert.logoNudgeX ?? 0}px, ${cert.logoNudgeY ?? 0}px)`,
+                          flex: "0 0 auto",
                         }}
-                      />
+                      >
+                        <ImageWithFallback
+                          src={cert.logo}
+                          alt={`${cert.title} logo`}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "contain",
+                            display: "block",
+                          }}
+                        />
+                      </div>
                     ) : Icon ? (
                       <Icon size={46} color={T.blue} strokeWidth={1.42} />
                     ) : null}
