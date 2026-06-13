@@ -26,14 +26,15 @@ section {
     width: 100%;
 }
 
-.desktop-nav-links {
+/* Navbar */
+.nav-links {
     display: flex;
     align-items: center;
     gap: clamp(24px, 4vw, 56px);
 }
 
 @media (max-width: 767px) {
-    .desktop-nav-links {
+    .nav-links {
         display: none !important;
     }
 }
