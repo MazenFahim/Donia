@@ -33,7 +33,7 @@ export function Navbar() {
         style={{
           maxWidth: 1200,
           margin: "0 auto",
-          padding: "22px 48px",
+          padding: "16px 24px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -50,7 +50,7 @@ export function Navbar() {
         >
           Donia<span style={{ color: T.blue }}>.</span>
         </span>
-        <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
+        <div className="nav-links" style={{ display: "flex", gap: 32, alignItems: "center" }}>
           {["About", "Education", "Programs", "Contact"].map((item) => (
             <a
               key={item}

@@ -1,0 +1,13 @@
+@media (min-width: 768px) {
+    .hero-grid {
+        grid-template-columns: 1fr 480px !important;
+        gap: 80px !important;
+        padding: 80px 48px 100px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .nav-links {
+        display: none !important;
+    }
+}

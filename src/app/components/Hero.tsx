@@ -59,16 +59,19 @@ export function Hero() {
     return () => observer.disconnect();
   }, []);
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
     <>
       <section
+        className="hero-grid"
         style={{
           maxWidth: 1200,
           margin: "0 auto",
-          padding: "80px 48px 100px",
+          padding: isMobile ? "48px 20px 64px" : "80px 48px 100px",
           display: "grid",
-          gridTemplateColumns: "1fr 480px",
-          gap: 80,
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 480px",
+          gap: isMobile ? 48 : 80,
           alignItems: "center",
           minHeight: "calc(100vh - 91px)",
         }}
@@ -310,6 +313,7 @@ export function Hero() {
               zIndex: 1,
               width: "100%",
               aspectRatio: "3 / 4",
+              minHeight: 300,
               overflow: "hidden",
               background: T.bgCard,
               borderRadius: 12,
