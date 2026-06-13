@@ -11,11 +11,70 @@ const HERO_STATS = [
 const formatStatNumber = (value: number) => `${Math.round(value).toLocaleString("en-US")}+`;
 
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+const easeInOutCubic = (t: number) =>
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+const getScrollOffset = () => {
+  const navbar = document.querySelector("[data-site-navbar]") as HTMLElement | null;
+  return (navbar?.offsetHeight ?? 82) + 18;
+};
+
+const smoothScrollToSection = (id: string) => {
+  const section = document.getElementById(id);
+  if (!section) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const startY = window.scrollY;
+  const targetY = Math.max(
+    section.getBoundingClientRect().top + window.scrollY - getScrollOffset(),
+    0
+  );
+
+  // Keep the URL clean to avoid browser hash auto-jumps after React/layout updates.
+  window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+
+  if (prefersReducedMotion) {
+    window.scrollTo(0, targetY);
+    return;
+  }
+
+  const duration = 900;
+  const startTime = performance.now();
+
+  const animate = (currentTime: number) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easedProgress = easeInOutCubic(progress);
+
+    window.scrollTo(0, startY + (targetY - startY) * easedProgress);
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  };
+
+  requestAnimationFrame(animate);
+};
+
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateIsMobile = () => setIsMobile(window.innerWidth < 768);
+
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+    return () => window.removeEventListener("resize", updateIsMobile);
+  }, []);
+
+  return isMobile;
+};
 
 export function Hero() {
   const statsRef = useRef<HTMLDivElement | null>(null);
   const hasAnimatedStats = useRef(false);
   const [animatedStats, setAnimatedStats] = useState(HERO_STATS.map(() => 0));
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const statsElement = statsRef.current;
@@ -59,34 +118,34 @@ export function Hero() {
     return () => observer.disconnect();
   }, []);
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-
   return (
     <>
       <section
+        id="about"
         className="hero-grid"
         style={{
           maxWidth: 1200,
           margin: "0 auto",
-          padding: isMobile ? "48px 20px 64px" : "80px 48px 100px",
+          padding: isMobile ? "54px 22px 64px" : "80px 48px 100px",
           display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "1fr 480px",
-          gap: isMobile ? 48 : 80,
+          gridTemplateColumns: isMobile ? "1fr" : "minmax(0, 1fr) 480px",
+          gap: isMobile ? 44 : 80,
           alignItems: "center",
-          minHeight: "calc(100vh - 91px)",
+          minHeight: isMobile ? "auto" : "calc(100vh - 91px)",
         }}
       >
         {/* LEFT: Content */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 26 : 32 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 32, height: 1.5, background: T.blue }} />
+            <div style={{ width: 32, height: 1.5, background: T.blue, flexShrink: 0 }} />
             <span
               style={{
-                fontSize: 12,
+                fontSize: isMobile ? 11 : 12,
                 fontWeight: 500,
-                letterSpacing: "0.14em",
+                letterSpacing: isMobile ? "0.1em" : "0.14em",
                 textTransform: "uppercase",
                 color: T.blue,
+                lineHeight: 1.6,
               }}
             >
               Academic Trainer & Educator · Internationally Certified
@@ -96,12 +155,12 @@ export function Hero() {
           <div>
             <h1
               style={{
-                fontSize: "clamp(36px, 5vw, 56px)",
+                fontSize: isMobile ? "clamp(40px, 11vw, 54px)" : "clamp(44px, 5vw, 56px)",
                 fontWeight: 700,
                 color: T.navy,
                 margin: 0,
-                lineHeight: 1.1,
-                letterSpacing: "-0.03em",
+                lineHeight: 1.06,
+                letterSpacing: "-0.04em",
               }}
             >
               Donia Essam
@@ -112,13 +171,13 @@ export function Hero() {
 
           <p
             style={{
-              fontSize: 18,
+              fontSize: isMobile ? 17 : 18,
               fontWeight: 400,
               color: T.textSecondary,
               margin: 0,
-              lineHeight: 1.6,
+              lineHeight: 1.65,
               borderLeft: `3px solid ${T.border}`,
-              paddingLeft: 20,
+              paddingLeft: isMobile ? 16 : 20,
             }}
           >
             Internationally Certified Trainer
@@ -150,7 +209,7 @@ export function Hero() {
 
           <p
             style={{
-              fontSize: 16,
+              fontSize: isMobile ? 16 : 16,
               color: T.textSecondary,
               margin: 0,
               lineHeight: 1.8,
@@ -161,39 +220,49 @@ export function Hero() {
             universities, Donia bridges academic knowledge and real-world career readiness.
           </p>
 
-          <div ref={statsRef} style={{ display: "flex", gap: 0 }}>
+          <div
+            ref={statsRef}
+            style={{
+              display: "flex",
+              gap: 0,
+              width: "100%",
+              maxWidth: isMobile ? "100%" : 400,
+            }}
+          >
             {HERO_STATS.map((stat, i) => (
               <div
                 key={stat.label}
                 style={{
-                  padding: "20px 32px",
+                  padding: isMobile ? "18px 18px" : "20px 32px",
                   background: i === 0 ? T.navy : T.bgCard,
                   borderRight: i === 0 ? "none" : `1px solid ${T.border}`,
                   flex: 1,
-                  maxWidth: 200,
+                  minWidth: 0,
                   borderRadius: i === 0 ? "12px 0 0 12px" : "0 12px 12px 0",
                 }}
               >
                 <p
                   style={{
-                    fontSize: 32,
+                    fontSize: isMobile ? 30 : 32,
                     fontWeight: 800,
                     color: i === 0 ? T.gold : T.navy,
-                    margin: "0 0 4px",
+                    margin: "0 0 6px",
                     letterSpacing: "-0.02em",
                     lineHeight: 1,
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {formatStatNumber(animatedStats[i])}
                 </p>
                 <p
                   style={{
-                    fontSize: 12,
+                    fontSize: isMobile ? 10 : 12,
                     fontWeight: 500,
                     color: i === 0 ? "rgba(255,255,255,0.7)" : T.textSecondary,
                     margin: 0,
                     letterSpacing: "0.06em",
                     textTransform: "uppercase",
+                    lineHeight: 1.35,
                   }}
                 >
                   {stat.label}
@@ -202,15 +271,17 @@ export function Hero() {
             ))}
           </div>
 
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <a
-              href="#programs"
+          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+            <button
+              type="button"
+              onClick={() => smoothScrollToSection("programs")}
               style={{
                 background: T.blue,
                 color: T.white,
                 border: "none",
                 height: 48,
                 padding: "0 32px",
+                width: isMobile ? "100%" : "auto",
                 fontSize: 14,
                 fontWeight: 600,
                 fontFamily: "Poppins, sans-serif",
@@ -222,7 +293,6 @@ export function Hero() {
                 justifyContent: "center",
                 gap: 10,
                 transition: "background 0.15s, box-shadow 0.15s",
-                textDecoration: "none",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
@@ -244,16 +314,18 @@ export function Hero() {
                   strokeLinecap="square"
                 />
               </svg>
-            </a>
+            </button>
 
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={() => smoothScrollToSection("contact")}
               style={{
                 background: "transparent",
                 color: T.navy,
                 border: `1.5px solid ${T.navy}`,
                 height: 48,
                 padding: "0 32px",
+                width: isMobile ? "100%" : "auto",
                 fontSize: 14,
                 fontWeight: 600,
                 fontFamily: "Poppins, sans-serif",
@@ -261,10 +333,6 @@ export function Hero() {
                 letterSpacing: "0.04em",
                 borderRadius: 10,
                 transition: "background 0.15s, border-color 0.15s",
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
@@ -278,17 +346,25 @@ export function Hero() {
               }}
             >
               Contact Me
-            </a>
+            </button>
           </div>
         </div>
 
         {/* RIGHT: Photo column */}
-        <div style={{ position: "relative", alignSelf: "center" }}>
+        <div
+          style={{
+            position: "relative",
+            alignSelf: "center",
+            maxWidth: isMobile ? 420 : "none",
+            width: "100%",
+            margin: isMobile ? "0 auto" : 0,
+          }}
+        >
           <div
             style={{
               position: "absolute",
               top: -24,
-              right: -24,
+              right: isMobile ? -10 : -24,
               width: "85%",
               height: "92%",
               background: T.navy,
@@ -300,7 +376,7 @@ export function Hero() {
             style={{
               position: "absolute",
               top: 24,
-              left: -8,
+              left: isMobile ? -4 : -8,
               width: 4,
               height: "80%",
               background: T.blue,
@@ -312,7 +388,7 @@ export function Hero() {
             style={{
               position: "absolute",
               bottom: -32,
-              left: -32,
+              left: isMobile ? -10 : -32,
               width: 96,
               height: 96,
               backgroundImage: `radial-gradient(circle, ${T.blue}55 1.5px, transparent 1.5px)`,
@@ -327,7 +403,7 @@ export function Hero() {
               zIndex: 1,
               width: "100%",
               aspectRatio: "3 / 4",
-              minHeight: 300,
+              minHeight: isMobile ? 260 : 300,
               overflow: "hidden",
               background: T.bgCard,
               borderRadius: 12,
@@ -360,11 +436,11 @@ export function Hero() {
           <div
             style={{
               position: "absolute",
-              bottom: 48,
-              left: -28,
+              bottom: isMobile ? 28 : 48,
+              left: isMobile ? 12 : -28,
               zIndex: 3,
               background: T.gold,
-              padding: "12px 20px",
+              padding: isMobile ? "10px 14px" : "12px 20px",
               display: "flex",
               alignItems: "center",
               gap: 8,
@@ -376,7 +452,7 @@ export function Hero() {
             <div>
               <p
                 style={{
-                  fontSize: 12,
+                  fontSize: isMobile ? 11 : 12,
                   fontWeight: 700,
                   color: T.navy,
                   margin: 0,
@@ -407,7 +483,7 @@ export function Hero() {
       {/* Scroll indicator */}
       <div
         style={{
-          display: "flex",
+          display: isMobile ? "none" : "flex",
           justifyContent: "center",
           paddingBottom: 48,
           gap: 8,
