@@ -407,18 +407,6 @@ export function Hero() {
             background: `linear-gradient(to bottom, ${T.border}, transparent)`,
           }}
         />
-        <span
-          style={{
-            fontSize: 11,
-            fontWeight: 500,
-            color: T.textSecondary,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            writingMode: "vertical-rl",
-          }}
-        >
-          Scroll
-        </span>
       </div>
     </>
   );
