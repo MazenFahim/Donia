@@ -3,15 +3,12 @@ import { T } from "./tokens";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const navLinks = ["About", "Education", "Programs", "Contact"];
 
   return (
     <div
@@ -53,10 +50,8 @@ export function Navbar() {
         >
           Donia<span style={{ color: T.blue }}>.</span>
         </span>
-
-        {/* Desktop links */}
         <div className="nav-links" style={{ display: "flex", gap: 32, alignItems: "center" }}>
-          {navLinks.map((item) => (
+          {["About", "Education", "Programs", "Contact"].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -104,76 +99,7 @@ export function Navbar() {
             Book Session
           </button>
         </div>
-
-        {/* Hamburger button — mobile only */}
-        <button
-          className="nav-hamburger"
-          onClick={() => setMenuOpen(!menuOpen)}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: 4,
-            display: "flex",
-            flexDirection: "column",
-            gap: 5,
-          }}
-          aria-label="Toggle menu"
-        >
-          <span style={{ width: 22, height: 2, background: T.navy, display: "block", transition: "transform 0.2s", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
-          <span style={{ width: 22, height: 2, background: T.navy, display: "block", opacity: menuOpen ? 0 : 1, transition: "opacity 0.2s" }} />
-          <span style={{ width: 22, height: 2, background: T.navy, display: "block", transition: "transform 0.2s", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
-        </button>
       </nav>
-
-      {/* Mobile dropdown menu */}
-      {menuOpen && (
-        <div
-          className="nav-mobile-menu"
-          style={{
-            borderTop: `1px solid ${T.border}`,
-            padding: "16px 24px 24px",
-            display: "flex",
-            flexDirection: "column",
-            gap: 16,
-          }}
-        >
-          {navLinks.map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                fontSize: 15,
-                fontWeight: 500,
-                color: T.navy,
-                textDecoration: "none",
-                letterSpacing: "0.04em",
-              }}
-            >
-              {item}
-            </a>
-          ))}
-          <button
-            style={{
-              background: T.blue,
-              color: T.white,
-              border: "none",
-              height: 44,
-              padding: "0 22px",
-              fontSize: 14,
-              fontWeight: 600,
-              fontFamily: "Poppins, sans-serif",
-              cursor: "pointer",
-              letterSpacing: "0.04em",
-              borderRadius: 10,
-              marginTop: 4,
-            }}
-          >
-            Book Session
-          </button>
-        </div>
-      )}
     </div>
   );
 }
