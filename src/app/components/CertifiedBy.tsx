@@ -45,7 +45,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Ain Shams University",
     logo: ainShamsLogo,
-    logoSize: 100,
+    logoSize: 94,
   },
   {
     eyebrow: "Egypt",
