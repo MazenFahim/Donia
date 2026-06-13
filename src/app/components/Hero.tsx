@@ -59,23 +59,9 @@ export function Hero() {
     return () => observer.disconnect();
   }, []);
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-
   return (
     <>
-      <section
-        className="hero-grid"
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: isMobile ? "48px 20px 64px" : "80px 48px 100px",
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "1fr 480px",
-          gap: isMobile ? 48 : 80,
-          alignItems: "center",
-          minHeight: "calc(100vh - 91px)",
-        }}
-      >
+      <section className="hero-grid">
         {/* LEFT: Content */}
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -269,7 +255,7 @@ export function Hero() {
         </div>
 
         {/* RIGHT: Photo column */}
-        <div style={{ position: "relative", alignSelf: "center" }}>
+        <div className="hero-photo-col">
           <div
             style={{
               position: "absolute",
