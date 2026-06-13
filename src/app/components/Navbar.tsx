@@ -48,7 +48,7 @@ export function Navbar() {
             textTransform: "uppercase",
           }}
         >
-          Donia<span style={{ color: T.blue }}> Essam</span>
+          Donia Essam
         </span>
         <div className="nav-links" style={{ display: "flex", gap: 32, alignItems: "center" }}>
           {["About", "Education", "Programs", "Contact"].map((item) => (
