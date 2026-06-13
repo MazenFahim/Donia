@@ -45,7 +45,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Ain Shams University",
     logo: ainShamsLogo,
-    logoSize: 92,
+    logoSize: 100,
   },
   {
     eyebrow: "Egypt",
@@ -53,7 +53,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Helwan University",
     logo: helwanLogo,
-    logoSize: 92,
+    logoSize: 100,
   },
   {
     eyebrow: "Egypt",
@@ -61,7 +61,7 @@ const CERTIFICATIONS: Certification[] = [
     country: "Egypt",
     description: "Ministry of Youth & Sports",
     logo: mysLogo,
-    logoSize: 94,
+    logoSize: 100,
   },
 ];
 
