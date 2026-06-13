@@ -3,7 +3,7 @@ import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import ainShamsLogo from "@/imports/ainshams.png";
 import helwanLogo from "@/imports/helwan.png";
 import mysLogo from "@/imports/MYS.png";
-import unescoLogo from "@/imports/UNSECO-1.png";
+import unescoLogo from "@/imports/UNESCO.png";
 import asitLogo from "@/imports/ASIT.png"
 import { T } from "./tokens";
 import { FadeUp } from "./FadeUp";
