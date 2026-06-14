@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Award, BookMarked, GraduationCap, ScrollText } from "lucide-react";
+import { Award, BookMarked, ScrollText } from "lucide-react";
 import { FadeUp } from "./FadeUp";
 
 const ENTRIES = [
@@ -32,6 +32,68 @@ const ENTRIES = [
 const THESIS =
   "A Multi-Approach Training Program for Developing Teaching Performance and Attitude Toward the Teaching Profession for High School Philosophy Teachers";
 
+// Gold/shiny graduation cap icon with gradient + shine sweep
+function GoldGradCapIcon() {
+  return (
+    <div className="relative flex h-14 w-14 items-center justify-center">
+      <svg
+        viewBox="0 0 48 48"
+        className="h-8 w-8 drop-shadow-[0_2px_6px_rgba(212,175,55,0.5)]"
+        fill="none"
+      >
+        <defs>
+          <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FCE9B0" />
+            <stop offset="35%" stopColor="#E8C25E" />
+            <stop offset="65%" stopColor="#C8972F" />
+            <stop offset="100%" stopColor="#9C6F1E" />
+          </linearGradient>
+          <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+            <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* Cap top (diamond) */}
+        <path
+          d="M24 6 L44 16 L24 26 L4 16 Z"
+          fill="url(#goldGrad)"
+          stroke="#7A5613"
+          strokeWidth="0.6"
+          strokeLinejoin="round"
+        />
+        {/* Cap band/base */}
+        <path
+          d="M12 19.5 V30 C12 33 17 36 24 36 C31 36 36 33 36 30 V19.5 L24 25 Z"
+          fill="url(#goldGrad)"
+          stroke="#7A5613"
+          strokeWidth="0.6"
+          strokeLinejoin="round"
+        />
+        {/* Tassel string */}
+        <line x1="44" y1="16" x2="44" y2="29" stroke="#9C6F1E" strokeWidth="1.4" strokeLinecap="round" />
+        {/* Tassel bead */}
+        <circle cx="44" cy="31.5" r="2.4" fill="url(#goldGrad)" stroke="#7A5613" strokeWidth="0.6" />
+
+        {/* Shine sweep overlay across the cap top */}
+        <motion.path
+          d="M24 6 L44 16 L24 26 L4 16 Z"
+          fill="url(#goldShine)"
+          initial={{ x: -30, opacity: 0 }}
+          animate={{ x: [-(-30), 30], opacity: [0, 0.9, 0] }}
+          transition={{
+            duration: 2.2,
+            repeat: Infinity,
+            repeatDelay: 2.5,
+            ease: "easeInOut",
+          }}
+        />
+      </svg>
+    </div>
+  );
+}
+
 export function Education() {
   return (
     <section id="education" className="relative overflow-hidden bg-[#EEE9DF] py-24 text-[#1C1C1C] md:py-28">
@@ -62,12 +124,26 @@ export function Education() {
         <FadeUp delay={0.06}>
           <div className="rounded-[36px] border border-[#D8D1C4] bg-[#F8F5EF] p-5 shadow-[0_24px_70px_rgba(28,28,28,0.07)] md:p-7">
             <div className="grid gap-5 lg:grid-cols-[300px_minmax(0,1fr)]">
-              <div className="relative overflow-hidden rounded-[28px] bg-[#1C1C1C] p-7 text-[#F8F5EF]">
-                <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#6B8F71]/25 blur-2xl" />
+              <motion.div
+                initial={{ opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -4 }}
+                className="relative overflow-hidden rounded-[28px] bg-[#1C1C1C] p-7 text-[#F8F5EF] transition-shadow duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
+              >
+                <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#6B8F71]/25 blur-2xl transition-opacity duration-500 group-hover:opacity-70" />
                 <div className="relative">
-                  <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-full border border-[#F8F5EF]/15 bg-[#F8F5EF]/8 text-[#D6E5D8]">
-                    <GraduationCap size={26} strokeWidth={1.7} />
-                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.6, rotate: -15 }}
+                    whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, ease: [0.34, 1.56, 0.64, 1], delay: 0.15 }}
+                    whileHover={{ scale: 1.1, rotate: -6 }}
+                    className="mb-8 flex h-14 w-14 items-center justify-center rounded-full border border-[#F8F5EF]/15 bg-gradient-to-br from-[#F8F5EF]/10 to-[#F8F5EF]/5"
+                  >
+                    <GoldGradCapIcon />
+                  </motion.div>
                   <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#D6E5D8]">
                     Academic Profile
                   </p>
@@ -79,49 +155,61 @@ export function Education() {
                   </p>
 
                   <div className="mt-9 grid grid-cols-3 gap-3 border-t border-[#F8F5EF]/12 pt-6">
-                    <div>
-                      <p className="font-['Playfair_Display'] text-3xl font-semibold text-[#D6E5D8]">4</p>
-                      <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#F8F5EF]/48">Credentials</p>
-                    </div>
-                    <div>
-                      <p className="font-['Playfair_Display'] text-3xl font-semibold text-[#D6E5D8]">1st</p>
-                      <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#F8F5EF]/48">Ranking</p>
-                    </div>
-                    <div>
-                      <p className="font-['Playfair_Display'] text-3xl font-semibold text-[#D6E5D8]">4</p>
-                      <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#F8F5EF]/48">Years</p>
-                    </div>
+                    {[
+                      { value: "4", label: "Credentials" },
+                      { value: "1st", label: "Ranking" },
+                      { value: "4", label: "Years" },
+                    ].map((stat, i) => (
+                      <motion.div
+                        key={stat.label}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.25 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                      >
+                        <p className="font-['Playfair_Display'] text-3xl font-semibold text-[#D6E5D8]">{stat.value}</p>
+                        <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#F8F5EF]/48">{stat.label}</p>
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 {ENTRIES.map((entry, index) => (
                   <motion.article
                     key={entry.year}
-                    initial={{ opacity: 0, y: 14 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: index * 0.05 }}
-                    className="group rounded-[26px] border border-[#E1DACD] bg-[#FBF8F1] p-5 transition hover:-translate-y-1 hover:border-[#6B8F71]/50 hover:bg-[#FFFDF8]"
+                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: index * 0.08 }}
+                    whileHover={{ y: -6, scale: 1.015 }}
+                    className="group relative overflow-hidden rounded-[26px] border border-[#E1DACD] bg-[#FBF8F1] p-5 transition-all duration-300 hover:border-[#6B8F71]/50 hover:bg-[#FFFDF8] hover:shadow-[0_18px_40px_rgba(107,143,113,0.18)]"
                   >
-                    <div className="mb-5 flex items-start justify-between gap-4">
+                    {/* subtle hover glow */}
+                    <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#6B8F71]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#6B8F71]/12" />
+
+                    <div className="relative mb-5 flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D6E5D8]/70 text-[#48664E]">
+                        <motion.span
+                          whileHover={{ scale: 1.12, rotate: 8 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                          className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D6E5D8]/70 text-[#48664E] transition-colors duration-300 group-hover:bg-[#D6E5D8]"
+                        >
                           {index === 3 ? <BookMarked size={17} strokeWidth={1.8} /> : <Award size={17} strokeWidth={1.8} />}
-                        </span>
+                        </motion.span>
                         <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6B8F71]">
                           {entry.badge}
                         </span>
                       </div>
-                      <span className="font-['Playfair_Display'] text-2xl italic leading-none text-[#A09689] group-hover:text-[#6B8F71]">
+                      <span className="font-['Playfair_Display'] text-2xl italic leading-none text-[#A09689] transition-colors duration-300 group-hover:text-[#6B8F71]">
                         {entry.year}
                       </span>
                     </div>
-                    <h3 className="font-['Playfair_Display'] text-[26px] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1C1C1C]">
+                    <h3 className="relative font-['Playfair_Display'] text-[26px] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1C1C1C]">
                       {entry.degree}
                     </h3>
-                    <p className="mt-3 text-sm leading-6 text-[#5B554C]">
+                    <p className="relative mt-3 text-sm leading-6 text-[#5B554C]">
                       {entry.detail}
                     </p>
                   </motion.article>
@@ -129,10 +217,21 @@ export function Education() {
               </div>
             </div>
 
-            <div className="mt-5 rounded-[28px] border border-[#D8D1C4] bg-[#EEE9DF]/70 p-6 md:flex md:items-start md:gap-6">
-              <div className="mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F8F5EF] text-[#6B8F71] md:mb-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+              whileHover={{ y: -3 }}
+              className="mt-5 rounded-[28px] border border-[#D8D1C4] bg-[#EEE9DF]/70 p-6 transition-shadow duration-300 hover:shadow-[0_14px_36px_rgba(28,28,28,0.06)] md:flex md:items-start md:gap-6"
+            >
+              <motion.div
+                whileHover={{ rotate: -8, scale: 1.08 }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                className="mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F8F5EF] text-[#6B8F71] md:mb-0"
+              >
                 <ScrollText size={22} strokeWidth={1.7} />
-              </div>
+              </motion.div>
               <div>
                 <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#6B8F71]">
                   Master's Thesis
@@ -141,7 +240,7 @@ export function Education() {
                   “{THESIS}”
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </FadeUp>
       </div>
