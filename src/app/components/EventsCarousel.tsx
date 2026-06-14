@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
-import { motion, useMotionValue, useScroll, useTransform, useSpring } from "motion/react";
-import { ArrowUpRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValue, useScroll, useTransform, useSpring } from "motion/react";
+import { ArrowUpRight, ArrowLeft, ArrowRight, X } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import evtSlide1 from "@/imports/5791871838450290276.jpg";
 import evtSlide2 from "@/imports/5791871838450290275-1.jpg";
@@ -68,12 +68,14 @@ function EventCard({
   total,
   trackProgress,
   onFocus,
+  onOpen,
 }: {
   event: (typeof EVENTS)[number];
   index: number;
   total: number;
   trackProgress: ReturnType<typeof useMotionValue<number>>;
   onFocus: (index: number) => void;
+  onOpen: (index: number) => void;
 }) {
   // Each card's "center position" along the track, as a fraction 0..1
   const centerFraction = (index + 0.5) / total;
@@ -137,12 +139,21 @@ function EventCard({
           onFocus(index);
         }}
         onPointerLeave={handlePointerLeave}
+        onClick={() => onOpen(index)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onOpen(index);
+          }
+        }}
         style={{
           rotateX: springRotateX,
           rotateY: springRotateY,
           transformPerspective: 1000,
         }}
-        className="group relative overflow-hidden rounded-[30px] bg-[#DCD6CB] shadow-[0_20px_60px_rgba(28,28,28,0.10)] ring-1 ring-[#DDD8CE] transition-shadow duration-500 hover:shadow-[0_30px_80px_rgba(28,28,28,0.20)]"
+        className="group relative cursor-pointer overflow-hidden rounded-[30px] bg-[#DCD6CB] shadow-[0_20px_60px_rgba(28,28,28,0.10)] ring-1 ring-[#DDD8CE] transition-shadow duration-500 hover:shadow-[0_30px_80px_rgba(28,28,28,0.20)]"
       >
         <div className="aspect-[3.5/4.3]">
           <motion.div style={{ y: smoothImageY }} className="h-full w-full">
@@ -234,9 +245,140 @@ function EventCard({
   );
 }
 
+function EventModal({
+  event,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  event: (typeof EVENTS)[number];
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  // lock body scroll while open
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, []);
+
+  // keyboard navigation
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose, onPrev, onNext]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C1C1C]/70 p-4 backdrop-blur-sm md:p-8"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 28, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 18, scale: 0.97 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative grid max-h-[88vh] w-full max-w-[1040px] overflow-hidden rounded-[28px] bg-[#F8F5EF] shadow-[0_40px_100px_rgba(0,0,0,0.35)] md:grid-cols-[1.1fr_1fr]"
+      >
+        {/* close button */}
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#1C1C1C]/40 text-[#F8F5EF] backdrop-blur-sm transition-all duration-300 hover:bg-[#1C1C1C]/70 hover:rotate-90"
+        >
+          <X size={18} strokeWidth={1.8} />
+        </button>
+
+        {/* image side */}
+        <div className="relative h-[280px] md:h-auto">
+          <ImageWithFallback
+            src={event.photo}
+            alt={event.alt}
+            className="h-full w-full object-cover grayscale-[14%] saturate-[.86]"
+            style={{ objectPosition: event.crop }}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[#6B8F71]/12 mix-blend-multiply" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#171717]/60 via-transparent to-transparent md:bg-gradient-to-r" />
+          <span className="absolute left-6 top-6 font-['Playfair_Display'] text-5xl italic leading-none text-[#F8F5EF] drop-shadow-md">
+            {event.num}
+          </span>
+        </div>
+
+        {/* content side */}
+        <div className="flex max-h-[88vh] flex-col overflow-y-auto p-7 md:p-10">
+          <div className="mb-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6B8F71]">
+            <span className="h-px w-8 bg-[#6B8F71]" />
+            <span>{event.type}</span>
+          </div>
+          <h3 className="font-['Playfair_Display'] text-[clamp(30px,4vw,44px)] font-semibold leading-[1.02] tracking-[-0.045em] text-[#1C1C1C]">
+            {event.name}
+          </h3>
+          <p className="mt-5 text-[16px] leading-8 text-[#3F3B35]">
+            {event.description}
+          </p>
+
+          <div className="mt-7 grid gap-5 border-t border-[#DDD8CE] pt-6 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#847B6E]">
+                Impact focus
+              </p>
+              <p className="text-sm font-semibold leading-6 text-[#1C1C1C]">
+                {event.impact}
+              </p>
+            </div>
+            <div>
+              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#847B6E]">
+                Recognition
+              </p>
+              <p className="text-sm font-semibold leading-6 text-[#1C1C1C]">
+                {event.meta}
+              </p>
+            </div>
+          </div>
+
+          {/* prev / next */}
+          <div className="mt-auto flex items-center justify-between gap-4 border-t border-[#DDD8CE] pt-6 mt-8">
+            <button
+              type="button"
+              onClick={onPrev}
+              className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#7A7267] transition-colors duration-300 hover:text-[#6B8F71]"
+            >
+              <ArrowLeft size={15} strokeWidth={1.8} />
+              Previous
+            </button>
+            <button
+              type="button"
+              onClick={onNext}
+              className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#7A7267] transition-colors duration-300 hover:text-[#6B8F71]"
+            >
+              Next
+              <ArrowRight size={15} strokeWidth={1.8} />
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function EventsCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   // Track horizontal scroll progress of the filmstrip itself
   const { scrollXProgress } = useScroll({ container: trackRef });
@@ -318,6 +460,7 @@ export function EventsCarousel() {
                   total={EVENTS.length}
                   trackProgress={scrollXProgress}
                   onFocus={setActiveIndex}
+                  onOpen={setOpenIndex}
                 />
               </div>
             ))}
@@ -355,6 +498,17 @@ export function EventsCarousel() {
         </FadeUp>
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[#DDD8CE]" />
+
+      <AnimatePresence>
+        {openIndex !== null && (
+          <EventModal
+            event={EVENTS[openIndex]}
+            onClose={() => setOpenIndex(null)}
+            onPrev={() => setOpenIndex((prev) => (prev === null ? 0 : (prev - 1 + EVENTS.length) % EVENTS.length))}
+            onNext={() => setOpenIndex((prev) => (prev === null ? 0 : (prev + 1) % EVENTS.length))}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
