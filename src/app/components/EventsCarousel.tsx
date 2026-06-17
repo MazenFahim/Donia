@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useScroll, useTransform, useSpring } from "motion/react";
+import { AnimatePresence, motion, useMotionValue, useScroll, useTransform, useSpring, useInView } from "motion/react";
 import { ArrowUpRight, ArrowLeft, ArrowRight, X } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import evtSlide1 from "@/imports/5791871838450290276.jpg";
@@ -103,6 +103,32 @@ function EventCard({
 
   const [hovered, setHovered] = useState(false);
 
+  // ── Mobile auto-cycle ───────────────────────────────────────────────────────
+  // On touch devices (no hover), when the card scrolls into view the panel
+  // briefly reveals itself, then collapses so users know it's there.
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: false, margin: "0px -15% 0px -15%" });
+  const [mobilePeek, setMobilePeek] = useState(false);
+  const isTouchDevice = typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+
+  useEffect(() => {
+    if (!isTouchDevice) return;
+    if (!isInView) return;
+
+    // Small delay so the card finishes its scroll-snap before peeking
+    const openTimer = setTimeout(() => setMobilePeek(true), 420);
+    // Hold for 2s then collapse
+    const closeTimer = setTimeout(() => setMobilePeek(false), 420 + 2000);
+    return () => {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+    };
+  }, [isInView, isTouchDevice]);
+
+  // Panel is open when hovered (desktop) OR peeking (mobile)
+  const panelOpen = hovered || mobilePeek;
+  // ───────────────────────────────────────────────────────────────────────────
+
   // subtle tilt following pointer
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -124,6 +150,7 @@ function EventCard({
 
   return (
     <motion.div
+      ref={cardRef}
       style={{
         scale: smoothScale,
         opacity: smoothOpacity,
@@ -172,7 +199,7 @@ function EventCard({
         {/* number watermark */}
         <motion.span
           initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: hovered ? 0.16 : 0.08, y: 0 }}
+          animate={{ opacity: panelOpen ? 0.16 : 0.08, y: 0 }}
           transition={{ duration: 0.5 }}
           className="pointer-events-none absolute right-5 top-5 font-['Playfair_Display'] text-[120px] italic leading-none text-[#F8F5EF]"
         >
@@ -196,9 +223,9 @@ function EventCard({
           <motion.div
             initial={false}
             animate={{
-              height: hovered ? "auto" : 0,
-              opacity: hovered ? 1 : 0,
-              marginTop: hovered ? 14 : 0,
+              height: panelOpen ? "auto" : 0,
+              opacity: panelOpen ? 1 : 0,
+              marginTop: panelOpen ? 14 : 0,
             }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
@@ -231,9 +258,9 @@ function EventCard({
         <motion.span
           initial={{ scale: 0.9, opacity: 0.7 }}
           animate={{
-            scale: hovered ? 1.1 : 0.9,
+            scale: panelOpen ? 1.1 : 0.9,
             opacity: 1,
-            rotate: hovered ? 45 : 0,
+            rotate: panelOpen ? 45 : 0,
           }}
           transition={{ type: "spring", stiffness: 260, damping: 18 }}
           className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full border border-[#F8F5EF]/30 bg-[#1C1C1C]/30 text-[#F8F5EF] backdrop-blur-sm"
