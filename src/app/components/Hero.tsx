@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
-import heroPhoto from "@/imports/5791871838450290263.jpg";
+import heroPhoto from "@/imports/hero_photo.jpg";
 import { T } from "./tokens";
 
 const HERO_STATS = [
