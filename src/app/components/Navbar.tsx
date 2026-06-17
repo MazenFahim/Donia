@@ -1,292 +1,199 @@
 import { useEffect, useState } from "react";
-import { T } from "./tokens";
+import { motion, AnimatePresence } from "motion/react";
+import { Menu, X } from "lucide-react";
 
-const NAV_ITEMS = ["About", "Education", "Programs", "Contact"];
+const NAV_ITEMS = [
+  { label: "About",      id: "about" },
+  { label: "Education",  id: "education" },
+  { label: "Programs",   id: "programs" },
+  { label: "Contact",    id: "contact" },
+];
 
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-const getScrollOffset = () => {
-  const navbar = document.querySelector("[data-site-navbar]") as HTMLElement | null;
-  return (navbar?.offsetHeight ?? 82) + 18;
-};
-
-const smoothScrollToSection = (id: string) => {
+function smoothScroll(id: string) {
   const section = document.getElementById(id);
   if (!section) return;
 
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const startY = window.scrollY;
-  const targetY = Math.max(
-    section.getBoundingClientRect().top + window.scrollY - getScrollOffset(),
-    0
-  );
-
-  // Remove the hash from the URL. This stops the browser from auto-jumping again
-  // when images/components re-render after the manual scroll finishes.
-  window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
-
-  if (prefersReducedMotion) {
-    window.scrollTo(0, targetY);
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    section.scrollIntoView();
     return;
   }
 
-  const duration = 900;
+  const navbar = document.querySelector("[data-site-navbar]") as HTMLElement | null;
+  const offset = (navbar?.offsetHeight ?? 72) + 16;
+  const startY = window.scrollY;
+  const targetY = Math.max(section.getBoundingClientRect().top + window.scrollY - offset, 0);
   const startTime = performance.now();
+  const duration = 880;
 
-  const animate = (currentTime: number) => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const easedProgress = easeInOutCubic(progress);
+  window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
 
-    window.scrollTo(0, startY + (targetY - startY) * easedProgress);
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    }
+  const tick = (now: number) => {
+    const progress = Math.min((now - startTime) / duration, 1);
+    window.scrollTo(0, startY + (targetY - startY) * easeInOutCubic(progress));
+    if (progress < 1) requestAnimationFrame(tick);
   };
-
-  requestAnimationFrame(animate);
-};
-
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const updateIsMobile = () => setIsMobile(window.innerWidth < 768);
-
-    updateIsMobile();
-    window.addEventListener("resize", updateIsMobile);
-    return () => window.removeEventListener("resize", updateIsMobile);
-  }, []);
-
-  return isMobile;
-};
+  requestAnimationFrame(tick);
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // close mobile menu on resize to desktop
   useEffect(() => {
-    const closeMenuOnResize = () => {
-      if (window.innerWidth >= 768) setMenuOpen(false);
-    };
-
-    window.addEventListener("resize", closeMenuOnResize);
-    return () => window.removeEventListener("resize", closeMenuOnResize);
+    const onResize = () => { if (window.innerWidth >= 768) setOpen(false); };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // clear stale hash on mount
   useEffect(() => {
-    // If the page was left at /#contact or /#programs, clear the hash once.
-    // This prevents repeated browser hash-jumps while the page layout is changing.
     if (window.location.hash) {
       window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
     }
   }, []);
 
-  const handleNavClick = (id: string) => {
-    setMenuOpen(false);
-    smoothScrollToSection(id);
+  const handleClick = (id: string) => {
+    setOpen(false);
+    smoothScroll(id);
   };
-
-  const renderNavLink = (item: string) => {
-    const id = item.toLowerCase();
-
-    return (
-      <button
-        key={item}
-        type="button"
-        onClick={() => handleNavClick(id)}
-        style={{
-          background: "transparent",
-          border: "none",
-          padding: 0,
-          fontSize: 13,
-          fontWeight: 500,
-          color: T.textSecondary,
-          fontFamily: "Poppins, sans-serif",
-          textDecoration: "none",
-          letterSpacing: "0.04em",
-          transition: "color 0.15s",
-          cursor: "pointer",
-        }}
-        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = T.navy)}
-        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = T.textSecondary)}
-      >
-        {item}
-      </button>
-    );
-  };
-
-  const bookButtonStyles = {
-    background: T.blue,
-    color: T.white,
-    border: "none",
-    height: 40,
-    padding: "0 22px",
-    fontSize: 13,
-    fontWeight: 600,
-    fontFamily: "Poppins, sans-serif",
-    cursor: "pointer",
-    letterSpacing: "0.04em",
-    borderRadius: 10,
-    transition: "background 0.15s, box-shadow 0.15s",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  } as const;
 
   return (
-    <div
+    <motion.div
       data-site-navbar
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        background: scrolled ? "rgba(247,248,252,0.92)" : T.bgPage,
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? `1px solid ${T.border}` : "1px solid transparent",
-        transition: "background 0.3s ease, border-color 0.3s ease",
-      }}
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-[#F8F5EF]/92 backdrop-blur-md border-b border-[#DDD8CE] shadow-[0_2px_20px_rgba(28,28,28,0.06)]"
+          : "bg-[#F8F5EF] border-b border-transparent"
+      }`}
     >
-      <div
-        style={{
-          height: 3,
-          background: `linear-gradient(90deg, ${T.navy} 0%, ${T.blue} 60%, ${T.gold} 100%)`,
-        }}
-      />
+      {/* top accent bar */}
+      <div className="h-[3px] bg-gradient-to-r from-[#1C1C1C] via-[#6B8F71] to-[#D6E5D8]" />
 
-      <nav
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "16px 24px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 20,
-        }}
-      >
-        <button
+      <nav className="mx-auto flex max-w-[1220px] items-center justify-between gap-6 px-6 py-4 md:px-12">
+        {/* Logo */}
+        <motion.button
           type="button"
-          onClick={() => smoothScrollToSection("about")}
-          style={{
-            background: "transparent",
-            border: "none",
-            padding: 0,
-            fontSize: 14,
-            fontWeight: 700,
-            color: T.navy,
-            fontFamily: "Poppins, sans-serif",
-            letterSpacing: "0.06em",
-            textTransform: "uppercase",
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-          }}
+          onClick={() => handleClick("about")}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="font-['Playfair_Display'] text-[15px] font-semibold tracking-[-0.02em] text-[#1C1C1C]"
         >
           Donia Essam
-        </button>
+        </motion.button>
 
-        {/* Desktop navigation */}
-        <div
-          className="desktop-nav-links"
-          style={{
-            display: isMobile ? "none" : "flex",
-            gap: 32,
-            alignItems: "center",
-          }}
-        >
-          {NAV_ITEMS.map(renderNavLink)}
-
-          <button
-            type="button"
-            onClick={() => handleNavClick("contact")}
-            style={bookButtonStyles}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.background = "#2a45e8";
-              el.style.boxShadow = "0 4px 16px rgba(61,90,254,0.35)";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.background = T.blue;
-              el.style.boxShadow = "none";
-            }}
-          >
-            Book Session
-          </button>
+        {/* Desktop nav */}
+        <div className="hidden items-center gap-8 md:flex">
+          {NAV_ITEMS.map((item) => (
+            <NavLink key={item.id} label={item.label} onClick={() => handleClick(item.id)} />
+          ))}
+          <BookButton onClick={() => handleClick("contact")} />
         </div>
 
-        {/* Mobile menu button */}
-        <button
+        {/* Mobile toggle */}
+        <motion.button
           type="button"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          className="mobile-menu-button"
-          onClick={() => setMenuOpen((current) => !current)}
-          style={{
-            display: isMobile ? "flex" : "none",
-            width: 42,
-            height: 42,
-            alignItems: "center",
-            justifyContent: "center",
-            background: T.bgCard,
-            border: `1px solid ${T.border}`,
-            borderRadius: 10,
-            color: T.navy,
-            fontSize: 22,
-            lineHeight: 1,
-            cursor: "pointer",
-          }}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          whileTap={{ scale: 0.9 }}
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#DDD8CE] bg-[#F8F5EF] text-[#1C1C1C] transition-colors hover:border-[#6B8F71] hover:text-[#6B8F71] md:hidden"
         >
-          {menuOpen ? "×" : "☰"}
-        </button>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={open ? "x" : "menu"}
+              initial={{ opacity: 0, rotate: -45, scale: 0.7 }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
+              exit={{ opacity: 0, rotate: 45, scale: 0.7 }}
+              transition={{ duration: 0.18 }}
+            >
+              {open ? <X size={18} strokeWidth={1.8} /> : <Menu size={18} strokeWidth={1.8} />}
+            </motion.span>
+          </AnimatePresence>
+        </motion.button>
       </nav>
 
-      {menuOpen && (
-        <div
-          className="mobile-nav-panel"
-          style={{
-            display: isMobile ? "block" : "none",
-            padding: "4px 24px 22px",
-            borderTop: `1px solid ${T.border}`,
-            background: scrolled ? "rgba(247,248,252,0.98)" : T.bgPage,
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 1200,
-              margin: "0 auto",
-              display: "flex",
-              flexDirection: "column",
-              gap: 18,
-            }}
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden border-t border-[#DDD8CE] bg-[#F8F5EF] md:hidden"
           >
-            {NAV_ITEMS.map(renderNavLink)}
-            <button
-              type="button"
-              onClick={() => handleNavClick("contact")}
-              style={{
-                ...bookButtonStyles,
-                width: "100%",
-                height: 44,
-              }}
-            >
-              Book Session
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+            <div className="flex flex-col gap-1 px-6 py-4">
+              {NAV_ITEMS.map((item, i) => (
+                <motion.button
+                  key={item.id}
+                  type="button"
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05, duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                  onClick={() => handleClick(item.id)}
+                  className="rounded-xl px-4 py-3 text-left text-[14px] font-medium text-[#3F3B35] transition-colors hover:bg-[#EEE9DF] hover:text-[#6B8F71]"
+                >
+                  {item.label}
+                </motion.button>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: NAV_ITEMS.length * 0.05, duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                className="pt-2"
+              >
+                <BookButton onClick={() => handleClick("contact")} fullWidth />
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+// ── Sub-components ────────────────────────────────────────────────────────────
+
+function NavLink({ label, onClick }: { label: string; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group relative text-[13px] font-medium tracking-[0.03em] text-[#4A4A4A] transition-colors duration-200 hover:text-[#1C1C1C]"
+    >
+      {label}
+      {/* underline slide-in */}
+      <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 rounded-full bg-[#6B8F71] transition-all duration-300 group-hover:w-full" />
+    </button>
+  );
+}
+
+function BookButton({ onClick, fullWidth }: { onClick: () => void; fullWidth?: boolean }) {
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.96 }}
+      className={`rounded-xl bg-[#1C1C1C] px-5 py-2.5 text-[13px] font-semibold tracking-[0.04em] text-[#F8F5EF] transition-all duration-300 hover:bg-[#6B8F71] hover:shadow-[0_4px_18px_rgba(107,143,113,0.35)] ${
+        fullWidth ? "w-full text-center" : ""
+      }`}
+    >
+      Book Session
+    </motion.button>
   );
 }
