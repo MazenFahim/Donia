@@ -93,3 +93,8 @@ section {
         padding-inline: 24px !important;
     }
 }
+
+section {
+    position: relative;
+    z-index: 0;
+}

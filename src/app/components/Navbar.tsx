@@ -74,7 +74,7 @@ export function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-[100] transition-all duration-300 ${
         scrolled
           ? "bg-[#F8F5EF]/92 backdrop-blur-md border-b border-[#DDD8CE] shadow-[0_2px_20px_rgba(28,28,28,0.06)]"
           : "bg-[#F8F5EF] border-b border-transparent"
