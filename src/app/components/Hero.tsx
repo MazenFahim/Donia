@@ -23,37 +23,12 @@ const smoothScrollToSection = (id: string) => {
   const section = document.getElementById(id);
   if (!section) return;
 
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const startY = window.scrollY;
-  const targetY = Math.max(
-    section.getBoundingClientRect().top + window.scrollY - getScrollOffset(),
-    0
-  );
-
-  // Keep the URL clean to avoid browser hash auto-jumps after React/layout updates.
   window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
 
-  if (prefersReducedMotion) {
-    window.scrollTo(0, targetY);
-    return;
-  }
-
-  const duration = 900;
-  const startTime = performance.now();
-
-  const animate = (currentTime: number) => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const easedProgress = easeInOutCubic(progress);
-
-    window.scrollTo(0, startY + (targetY - startY) * easedProgress);
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    }
-  };
-
-  requestAnimationFrame(animate);
+  section.scrollIntoView({
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    block: "start",
+  });
 };
 
 const useIsMobile = () => {
@@ -274,7 +249,7 @@ export function Hero() {
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
             <button
               type="button"
-              onClick={() => smoothScrollToSection("programs")}
+              onClick={() => smoothScrollToSection("training-videos")}
               style={{
                 background: T.blue,
                 color: T.white,
