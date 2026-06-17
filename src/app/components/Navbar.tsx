@@ -9,34 +9,18 @@ const NAV_ITEMS = [
   { label: "Contact",    id: "contact" },
 ];
 
-const easeInOutCubic = (t: number) =>
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
 function smoothScroll(id: string) {
   const section = document.getElementById(id);
   if (!section) return;
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    section.scrollIntoView();
-    return;
-  }
-
-  const navbar = document.querySelector("[data-site-navbar]") as HTMLElement | null;
-  const offset = (navbar?.offsetHeight ?? 72) + 16;
-  const startY = window.scrollY;
-  const targetY = Math.max(section.getBoundingClientRect().top + window.scrollY - offset, 0);
-  const startTime = performance.now();
-  const duration = 880;
-
   window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
 
-  const tick = (now: number) => {
-    const progress = Math.min((now - startTime) / duration, 1);
-    window.scrollTo(0, startY + (targetY - startY) * easeInOutCubic(progress));
-    if (progress < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
+  section.scrollIntoView({
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    block: "start",
+  });
 }
+
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -74,7 +58,8 @@ export function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-      className={`sticky top-0 z-[100] transition-all duration-300 ${
+      style={{ zIndex: 9999, pointerEvents: "auto", isolation: "isolate" }}
+      className={`sticky top-0 z-[9999] transition-all duration-300 ${
         scrolled
           ? "bg-[#F8F5EF]/92 backdrop-blur-md border-b border-[#DDD8CE] shadow-[0_2px_20px_rgba(28,28,28,0.06)]"
           : "bg-[#F8F5EF] border-b border-transparent"

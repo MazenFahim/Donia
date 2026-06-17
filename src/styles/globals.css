@@ -93,3 +93,26 @@ section {
         padding-inline: 24px !important;
     }
 }
+
+/* Smooth section navigation + navbar layering safety */
+html {
+    scroll-behavior: smooth;
+}
+
+[data-site-navbar] {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    isolation: isolate;
+    pointer-events: auto;
+}
+
+[data-site-navbar] * {
+    pointer-events: auto;
+}
+
+section[id] {
+    position: relative;
+    z-index: 0;
+    scroll-margin-top: 5px;
+}
