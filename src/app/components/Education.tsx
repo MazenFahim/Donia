@@ -1,288 +1,250 @@
-import {
-  BadgeCheck,
-  BookOpen,
-  GraduationCap,
-  Landmark,
-  Layers,
-  PenLine,
-  Sparkles,
-  UserCheck,
-} from "lucide-react";
+import { motion } from "motion/react";
+import { Award, BookMarked, ScrollText } from "lucide-react";
 import { FadeUp } from "./FadeUp";
-import { T } from "./tokens";
 
-const EDUCATION_ITEMS = [
+const ENTRIES = [
   {
-    icon: GraduationCap,
-    badge: "Academic Degree",
-    title: "M.Sc. in Education",
-    institution: "Helwan University",
-    description:
-      "A strong academic foundation in education, teaching methods, curriculum development, and learner-centered training.",
-    meta: [
-      { icon: Landmark, label: "University", value: "Helwan University" },
-      { icon: BookOpen, label: "Field", value: "Education" },
-    ],
-    chips: ["Teaching Methods", "Curriculum Development", "Learner-Centered Education"],
+    year: "2019",
+    degree: "Bachelor's Degree in Education",
+    detail: "Philosophy & Sociology Department",
+    badge: "Ranked 1st · Distinction",
   },
   {
-    icon: Sparkles,
-    badge: "Academic Focus",
-    title: "Education-Led Training Approach",
-    institution: "From academic knowledge to real-world learning impact",
-    description:
-      "Her educational background supports the way she designs practical sessions, builds clear learning journeys, and helps students develop confidence for the job market.",
-    meta: [
-      { icon: Layers, label: "Approach", value: "Structured Learning" },
-      { icon: UserCheck, label: "Impact", value: "Student Development" },
-    ],
-    chips: ["Clear Delivery", "Learning Design", "Career Readiness"],
+    year: "2020",
+    degree: "Professional Diploma in Education",
+    detail: "Curricula, Philosophy & Sociology Teaching Methods",
+    badge: "Distinction",
+  },
+  {
+    year: "2021",
+    degree: "Special Diploma in Education",
+    detail: "Philosophy Teaching Methods",
+    badge: "Distinction",
+  },
+  {
+    year: "2023",
+    degree: "Master's Degree in Education",
+    detail: "Curricula & Philosophy Teaching Methods",
+    badge: "Distinction",
   },
 ];
 
-const FOCUS_ITEMS = [
-  {
-    icon: BookOpen,
-    title: "Teaching Methods",
-    text: "Clear and engaging ways to deliver knowledge.",
-  },
-  {
-    icon: Layers,
-    title: "Curriculum Design",
-    text: "Structured learning journeys with purpose.",
-  },
-  {
-    icon: UserCheck,
-    title: "Learner Development",
-    text: "Helping learners build confidence and readiness.",
-  },
-];
+const THESIS =
+  "A Multi-Approach Training Program for Developing Teaching Performance and Attitude Toward the Teaching Profession for High School Philosophy Teachers";
+
+// Gold/shiny graduation cap icon with gradient + shine sweep
+function GoldGradCapIcon() {
+  return (
+    <div className="relative flex h-14 w-14 items-center justify-center">
+      <svg
+        viewBox="0 0 48 48"
+        className="h-8 w-8 drop-shadow-[0_2px_6px_rgba(212,175,55,0.5)]"
+        fill="none"
+      >
+        <defs>
+          <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FCE9B0" />
+            <stop offset="35%" stopColor="#E8C25E" />
+            <stop offset="65%" stopColor="#C8972F" />
+            <stop offset="100%" stopColor="#9C6F1E" />
+          </linearGradient>
+          <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+            <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* Cap top (diamond) */}
+        <path
+          d="M24 6 L44 16 L24 26 L4 16 Z"
+          fill="url(#goldGrad)"
+          stroke="#7A5613"
+          strokeWidth="0.6"
+          strokeLinejoin="round"
+        />
+        {/* Cap band/base */}
+        <path
+          d="M12 19.5 V30 C12 33 17 36 24 36 C31 36 36 33 36 30 V19.5 L24 25 Z"
+          fill="url(#goldGrad)"
+          stroke="#7A5613"
+          strokeWidth="0.6"
+          strokeLinejoin="round"
+        />
+        {/* Tassel string */}
+        <line x1="44" y1="16" x2="44" y2="29" stroke="#9C6F1E" strokeWidth="1.4" strokeLinecap="round" />
+        {/* Tassel bead */}
+        <circle cx="44" cy="31.5" r="2.4" fill="url(#goldGrad)" stroke="#7A5613" strokeWidth="0.6" />
+
+        {/* Shine sweep overlay across the cap top */}
+        <motion.path
+          d="M24 6 L44 16 L24 26 L4 16 Z"
+          fill="url(#goldShine)"
+          initial={{ x: -30, opacity: 0 }}
+          animate={{ x: [-(-30), 30], opacity: [0, 0.9, 0] }}
+          transition={{
+            duration: 2.2,
+            repeat: Infinity,
+            repeatDelay: 2.5,
+            ease: "easeInOut",
+          }}
+        />
+      </svg>
+    </div>
+  );
+}
 
 export function Education() {
   return (
-    <section
-      id="education"
-      className="relative overflow-hidden py-24 text-[#1C1C1C] md:py-28"
-      style={{ background: T.bgPage }}
-    >
-      <div className="absolute inset-x-0 top-0 h-px" style={{ background: T.border }} />
+    <section id="education" className="relative overflow-hidden bg-[#EEE9DF] py-24 text-[#1C1C1C] md:py-28">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#DDD8CE]" />
+      <div className="pointer-events-none absolute -right-28 top-24 h-80 w-80 rounded-full bg-[#6B8F71]/10 blur-3xl" />
 
-      <div
-        className="pointer-events-none absolute -right-20 top-16 h-72 w-72 rounded-full blur-3xl"
-        style={{ background: "rgba(107,143,113,0.11)" }}
-      />
-      <div
-        className="pointer-events-none absolute -left-24 bottom-10 h-64 w-64 rounded-full blur-3xl"
-        style={{ background: "rgba(214,229,216,0.38)" }}
-      />
-
-      <div className="relative mx-auto max-w-[1120px] px-6 md:px-12">
+      <div className="relative mx-auto max-w-[1220px] px-6 md:px-12">
         <FadeUp>
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl">
-              <div className="mb-5 flex items-center gap-3">
-                <span className="h-px w-9" style={{ background: T.blue }} />
-                <span
-                  className="text-[11px] font-semibold uppercase tracking-[0.22em]"
-                  style={{ color: T.blue }}
-                >
-                  Education
+          <div className="mb-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+            <div>
+              <div className="mb-6 flex items-center gap-3">
+                <span className="h-px w-10 bg-[#6B8F71]" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6B8F71]">
+                  Academic Background
                 </span>
               </div>
-
-              <h2 className="font-['Playfair_Display'] text-[clamp(38px,5vw,62px)] font-semibold leading-[1.02] tracking-[-0.05em]">
-                Academic Background
+              <h2 className="font-['Playfair_Display'] text-[clamp(40px,5.5vw,72px)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#1C1C1C]">
+                Education built
+                <br />on distinction
               </h2>
-
-              <p className="mt-6 max-w-2xl text-[16px] leading-8" style={{ color: T.textSecondary }}>
-                Donia’s academic background in education supports her practical training approach,
-                helping her design learning experiences that are structured, clear, and connected
-                to real-world development.
-              </p>
             </div>
-
-            <div
-              className="w-full rounded-[24px] border p-5 shadow-[0_16px_45px_rgba(28,28,28,0.05)] lg:max-w-[330px]"
-              style={{ background: "rgba(255,255,255,0.45)", borderColor: T.border }}
-            >
-              <div className="flex items-start gap-4">
-                <div
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl"
-                  style={{ background: T.gold, color: T.blue }}
-                >
-                  <BadgeCheck size={23} strokeWidth={1.8} />
-                </div>
-                <div>
-                  <p className="text-[12px] font-bold uppercase tracking-[0.16em]" style={{ color: T.blue }}>
-                    Academic Base
-                  </p>
-                  <p className="mt-2 text-sm leading-6" style={{ color: T.textSecondary }}>
-                    Built on education, applied through training, mentoring, and learner development.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <p className="max-w-2xl text-[16px] leading-8 text-[#4A4A4A] lg:ml-auto">
+              Donia’s academic path combines education, philosophy, sociology, curricula, and teaching methods — a scholarly foundation behind her training and youth development work.
+            </p>
           </div>
         </FadeUp>
 
-        <div className="relative mt-14">
-          <div
-            className="absolute left-[25px] top-8 hidden h-[calc(100%-64px)] w-px sm:block"
-            style={{ background: "linear-gradient(to bottom, rgba(107,143,113,0.18), rgba(107,143,113,0.62), rgba(107,143,113,0.18))" }}
-          />
-
-          <div className="space-y-6">
-            {EDUCATION_ITEMS.map((item, index) => {
-              const Icon = item.icon;
-
-              return (
-                <FadeUp key={item.title} delay={index * 0.06}>
-                  <div className="relative sm:pl-[78px]">
-                    <div
-                      className="absolute left-0 top-8 hidden h-[52px] w-[52px] items-center justify-center rounded-full border sm:flex"
-                      style={{
-                        background: index === 0 ? T.gold : "rgba(255,255,255,0.58)",
-                        borderColor: "rgba(107,143,113,0.28)",
-                        color: T.blue,
-                        boxShadow: "0 12px 26px rgba(107,143,113,0.14)",
-                      }}
-                    >
-                      <Icon size={22} strokeWidth={1.8} />
-                    </div>
-
-                    <article
-                      className="relative overflow-hidden rounded-[28px] border p-6 shadow-[0_18px_55px_rgba(28,28,28,0.06)] md:p-7"
-                      style={{ background: "rgba(255,255,255,0.56)", borderColor: T.border }}
-                    >
-                      <div
-                        className="absolute inset-x-0 top-0 h-[4px]"
-                        style={{ background: index === 0 ? T.blue : "rgba(107,143,113,0.28)" }}
-                      />
-
-                      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                        <div className="flex gap-4">
-                          <div
-                            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl sm:hidden"
-                            style={{ background: T.gold, color: T.blue }}
-                          >
-                            <Icon size={25} strokeWidth={1.8} />
-                          </div>
-
-                          <div>
-                            <span
-                              className="inline-flex rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em]"
-                              style={{ background: "rgba(107,143,113,0.11)", color: T.blue }}
-                            >
-                              {item.badge}
-                            </span>
-
-                            <h3 className="mt-4 text-[24px] font-extrabold leading-tight tracking-[-0.03em] md:text-[30px]">
-                              {item.title}
-                            </h3>
-
-                            <p className="mt-2 text-[15px] font-semibold" style={{ color: T.blue }}>
-                              {item.institution}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div
-                          className="flex w-fit items-center gap-2 rounded-full px-4 py-2 text-[12px] font-bold uppercase tracking-[0.14em]"
-                          style={{ background: T.bgCard, color: T.navy }}
-                        >
-                          <PenLine size={14} strokeWidth={1.9} />
-                          {index === 0 ? "Master’s Degree" : "Applied Learning"}
-                        </div>
-                      </div>
-
-                      <p className="mt-5 max-w-3xl text-[15.5px] leading-8" style={{ color: T.textSecondary }}>
-                        {item.description}
-                      </p>
-
-                      <div className="mt-6 grid gap-3 md:grid-cols-2">
-                        {item.meta.map((metaItem) => {
-                          const MetaIcon = metaItem.icon;
-                          return (
-                            <div
-                              key={metaItem.label}
-                              className="flex items-center gap-3 rounded-[18px] border p-4"
-                              style={{ background: T.bgPage, borderColor: T.border }}
-                            >
-                              <span
-                                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-                                style={{ background: T.gold, color: T.blue }}
-                              >
-                                <MetaIcon size={18} strokeWidth={1.8} />
-                              </span>
-                              <div>
-                                <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: "#8A8174" }}>
-                                  {metaItem.label}
-                                </p>
-                                <p className="mt-1 text-sm font-semibold" style={{ color: T.navy }}>
-                                  {metaItem.value}
-                                </p>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {item.chips.map((chip) => (
-                          <span
-                            key={chip}
-                            className="rounded-full border px-4 py-2 text-[12px] font-semibold"
-                            style={{ background: "rgba(238,233,223,0.62)", borderColor: T.border, color: T.navy }}
-                          >
-                            {chip}
-                          </span>
-                        ))}
-                      </div>
-                    </article>
-                  </div>
-                </FadeUp>
-              );
-            })}
-          </div>
-        </div>
-
-        <FadeUp delay={0.16}>
-          <div className="mt-7 grid gap-3 md:grid-cols-3">
-            {FOCUS_ITEMS.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.title}
-                  className="rounded-[22px] border p-5 shadow-[0_14px_38px_rgba(28,28,28,0.04)]"
-                  style={{ background: "rgba(255,255,255,0.48)", borderColor: T.border }}
-                >
-                  <div className="flex items-center gap-4">
-                    <span
-                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl"
-                      style={{ background: T.gold, color: T.blue }}
-                    >
-                      <Icon size={20} strokeWidth={1.8} />
-                    </span>
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "#8A8174" }}>
-                        0{index + 1}
-                      </p>
-                      <h4 className="mt-1 text-[15px] font-bold" style={{ color: T.navy }}>
-                        {item.title}
-                      </h4>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-sm leading-6" style={{ color: T.textSecondary }}>
-                    {item.text}
+        <FadeUp delay={0.06}>
+          <div className="rounded-[36px] border border-[#D8D1C4] bg-[#F8F5EF] p-5 shadow-[0_24px_70px_rgba(28,28,28,0.07)] md:p-7">
+            <div className="grid gap-5 lg:grid-cols-[300px_minmax(0,1fr)]">
+              <motion.div
+                initial={{ opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -4 }}
+                className="relative overflow-hidden rounded-[28px] bg-[#1C1C1C] p-7 text-[#F8F5EF] transition-shadow duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
+              >
+                <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#6B8F71]/25 blur-2xl transition-opacity duration-500 group-hover:opacity-70" />
+                <div className="relative">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.6, rotate: -15 }}
+                    whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, ease: [0.34, 1.56, 0.64, 1], delay: 0.15 }}
+                    whileHover={{ scale: 1.1, rotate: -6 }}
+                    className="mb-8 flex h-14 w-14 items-center justify-center rounded-full border border-[#F8F5EF]/15 bg-gradient-to-br from-[#F8F5EF]/10 to-[#F8F5EF]/5"
+                  >
+                    <GoldGradCapIcon />
+                  </motion.div>
+                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#D6E5D8]">
+                    Academic Profile
                   </p>
+                  <h3 className="font-['Playfair_Display'] text-4xl font-semibold leading-[0.98] tracking-[-0.05em]">
+                    Helwan University
+                  </h3>
+                  <p className="mt-5 text-sm leading-7 text-[#F8F5EF]/68">
+                    A consistent record of distinction across undergraduate, diploma, and master’s-level education.
+                  </p>
+
+                  <div className="mt-9 grid grid-cols-3 gap-3 border-t border-[#F8F5EF]/12 pt-6">
+                    {[
+                      { value: "4", label: "Credentials" },
+                      { value: "1st", label: "Ranking" },
+                      { value: "4", label: "Years" },
+                    ].map((stat, i) => (
+                      <motion.div
+                        key={stat.label}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.25 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                      >
+                        <p className="font-['Playfair_Display'] text-3xl font-semibold text-[#D6E5D8]">{stat.value}</p>
+                        <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#F8F5EF]/48">{stat.label}</p>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
-              );
-            })}
+              </motion.div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                {ENTRIES.map((entry, index) => (
+                  <motion.article
+                    key={entry.year}
+                    initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: index * 0.08 }}
+                    whileHover={{ y: -6, scale: 1.015 }}
+                    className="group relative overflow-hidden rounded-[26px] border border-[#E1DACD] bg-[#FBF8F1] p-5 transition-all duration-300 hover:border-[#6B8F71]/50 hover:bg-[#FFFDF8] hover:shadow-[0_18px_40px_rgba(107,143,113,0.18)]"
+                  >
+                    {/* subtle hover glow */}
+                    <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#6B8F71]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#6B8F71]/12" />
+
+                    <div className="relative mb-5 flex items-start justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <motion.span
+                          whileHover={{ scale: 1.12, rotate: 8 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                          className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D6E5D8]/70 text-[#48664E] transition-colors duration-300 group-hover:bg-[#D6E5D8]"
+                        >
+                          {index === 3 ? <BookMarked size={17} strokeWidth={1.8} /> : <Award size={17} strokeWidth={1.8} />}
+                        </motion.span>
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6B8F71]">
+                          {entry.badge}
+                        </span>
+                      </div>
+                      <span className="font-['Playfair_Display'] text-2xl italic leading-none text-[#A09689] transition-colors duration-300 group-hover:text-[#6B8F71]">
+                        {entry.year}
+                      </span>
+                    </div>
+                    <h3 className="relative font-['Playfair_Display'] text-[26px] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1C1C1C]">
+                      {entry.degree}
+                    </h3>
+                    <p className="relative mt-3 text-sm leading-6 text-[#5B554C]">
+                      {entry.detail}
+                    </p>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+              whileHover={{ y: -3 }}
+              className="mt-5 rounded-[28px] border border-[#D8D1C4] bg-[#EEE9DF]/70 p-6 transition-shadow duration-300 hover:shadow-[0_14px_36px_rgba(28,28,28,0.06)] md:flex md:items-start md:gap-6"
+            >
+              <motion.div
+                whileHover={{ rotate: -8, scale: 1.08 }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                className="mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F8F5EF] text-[#6B8F71] md:mb-0"
+              >
+                <ScrollText size={22} strokeWidth={1.7} />
+              </motion.div>
+              <div>
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#6B8F71]">
+                  Master's Thesis
+                </p>
+                <p className="font-['Playfair_Display'] text-[20px] italic leading-8 text-[#3F3B35] md:text-[22px]">
+                  “{THESIS}”
+                </p>
+              </div>
+            </motion.div>
           </div>
         </FadeUp>
       </div>
-
-      <div className="absolute inset-x-0 bottom-0 h-px" style={{ background: T.border }} />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[#DDD8CE]" />
     </section>
   );
 }
