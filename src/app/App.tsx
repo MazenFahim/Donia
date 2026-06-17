@@ -17,7 +17,6 @@ export default function App() {
         background: "#F8F5EF",
         minHeight: "100vh",
         color: "#1C1C1C",
-        overflowX: "hidden",
       }}
     >
       <Navbar />
