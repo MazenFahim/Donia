@@ -75,7 +75,7 @@ export function Navbar() {
           onClick={() => handleClick("about")}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className="font-['Playfair_Display'] text-[15px] font-semibold tracking-[-0.02em] text-[#1C1C1C]"
+          className="font-['Playfair_Display'] text-[20px] font-semibold tracking-[-0.02em] text-[#1C1C1C]"
         >
           Donia Essam
         </motion.button>
