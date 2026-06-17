@@ -121,7 +121,7 @@ export function Hero() {
   return (
     <>
       <section
-        id="about"
+        id="hero"
         className="hero-grid"
         style={{
           maxWidth: 1200,
