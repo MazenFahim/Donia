@@ -302,29 +302,115 @@ export function CertifiedBy() {
               position: "relative",
               margin: "64px auto 0",
               maxWidth: 980,
-              border: "1px solid rgba(190,155,92,0.28)",
-              background: "linear-gradient(180deg, rgba(255,255,255,0.62), rgba(248,245,239,0.78))",
               borderRadius: 28,
-              padding: "22px 34px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 18,
-              boxShadow: "0 20px 46px rgba(28,28,28,0.075), inset 0 1px 0 rgba(255,255,255,0.8)",
-              textAlign: "center",
               overflow: "hidden",
+              display: "flex",
+              alignItems: "stretch",
+              minHeight: 80,
+              border: "1px solid rgba(190,155,92,0.38)",
+              boxShadow: "0 20px 46px rgba(28,28,28,0.075), inset 0 1px 0 rgba(255,255,255,0.8)",
             }}
           >
-            <div aria-hidden="true" style={{ position: "absolute", left: 26, top: 0, bottom: 0, width: 1, background: "linear-gradient(180deg, transparent, rgba(190,155,92,0.44), transparent)" }} />
-            <div aria-hidden="true" style={{ position: "absolute", right: 26, top: 0, bottom: 0, width: 1, background: "linear-gradient(180deg, transparent, rgba(190,155,92,0.44), transparent)" }} />
-            <div style={{ width: 38, height: 38, borderRadius: "50%", border: "1px solid rgba(190,155,92,0.34)", background: "rgba(107,143,113,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flex: "0 0 auto" }}>
-              <Award size={17} color={T.blue} strokeWidth={1.7} />
+            {/* ── Left green panel ── */}
+            <div
+              style={{
+                background: "linear-gradient(135deg, #2B4A30 0%, #355D3B 60%, #3F6B46 100%)",
+                padding: "0 28px",
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+                flexShrink: 0,
+                position: "relative",
+              }}
+            >
+              {/* seam divider */}
+              <div aria-hidden="true" style={{ position: "absolute", right: 0, top: "14%", height: "72%", width: 1, background: "linear-gradient(180deg, transparent, rgba(190,155,92,0.6), transparent)" }} />
+
+              <div
+                style={{
+                  width: 46,
+                  height: 46,
+                  borderRadius: "50%",
+                  border: "1.5px solid rgba(190,155,92,0.7)",
+                  background: "rgba(255,255,255,0.08)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <Award size={19} color="rgba(190,155,92,0.92)" strokeWidth={1.6} />
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(190,155,92,0.82)", lineHeight: 1 }}>
+                  Globally
+                </span>
+                <span style={{ fontFamily: "Playfair Display, serif", fontSize: 17, fontWeight: 800, color: "#fff", lineHeight: 1.1, whiteSpace: "nowrap", letterSpacing: "-0.01em" }}>
+                  Certified
+                </span>
+              </div>
             </div>
-            <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: T.navy, lineHeight: 1.65, letterSpacing: "0.005em" }}>
-              Certified and recognized across international, academic, and governmental training institutions.
-            </p>
-            <div style={{ width: 38, height: 38, borderRadius: "50%", border: "1px solid rgba(190,155,92,0.34)", background: "rgba(107,143,113,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flex: "0 0 auto" }}>
-              <ShieldCheck size={17} color={T.blue} strokeWidth={1.7} />
+
+            {/* ── Center cream panel ── */}
+            <div
+              style={{
+                flex: 1,
+                background: "linear-gradient(90deg, rgba(248,245,237,0.97), rgba(255,255,255,0.99))",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "20px 36px",
+                gap: 8,
+              }}
+            >
+              {/* ✦ divider */}
+              <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ display: "block", width: 38, height: 1, background: "linear-gradient(90deg, transparent, rgba(190,155,92,0.55))" }} />
+                <Sparkles size={11} color="#B99A5F" strokeWidth={1.8} />
+                <span style={{ display: "block", width: 38, height: 1, background: "linear-gradient(270deg, transparent, rgba(190,155,92,0.55))" }} />
+              </div>
+              <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: T.navy, lineHeight: 1.6, letterSpacing: "0.005em", textAlign: "center" }}>
+                Certified and recognized across international, academic, and governmental training institutions.
+              </p>
+            </div>
+
+            {/* ── Right green panel ── */}
+            <div
+              style={{
+                background: "linear-gradient(135deg, #3F6B46 0%, #355D3B 40%, #2B4A30 100%)",
+                padding: "0 28px",
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+                flexShrink: 0,
+                position: "relative",
+              }}
+            >
+              {/* seam divider */}
+              <div aria-hidden="true" style={{ position: "absolute", left: 0, top: "14%", height: "72%", width: 1, background: "linear-gradient(180deg, transparent, rgba(190,155,92,0.6), transparent)" }} />
+
+              {/* count */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
+                <span style={{ fontFamily: "Playfair Display, serif", fontSize: 34, fontWeight: 800, color: "rgba(190,155,92,0.95)", lineHeight: 1, transform: "translateY(-4px)" }}>5</span>
+                <span style={{ fontSize: 8.5, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap" }}>Institutions</span>
+              </div>
+
+              {/* thin vertical sep */}
+              <div aria-hidden="true" style={{ width: 1, height: 32, background: "rgba(255,255,255,0.12)" }} />
+
+              {/* category flags */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {["International", "Academic", "Governmental"].map((label) => (
+                  <div key={label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(190,155,92,0.65)", flexShrink: 0, display: "block" }} />
+                    <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.62)", whiteSpace: "nowrap" }}>
+                      {label}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </FadeUp>
