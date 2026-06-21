@@ -6,7 +6,6 @@ import { Education } from "./components/Education";
 import { Universities } from "./components/Universities";
 import { TrainingVideos } from "./components/TrainingVideos";
 import { EventsCarousel } from "./components/EventsCarousel";
-import { Programs } from "./components/Programs";
 import { Contact } from "./components/Contact";
 
 export default function App() {
@@ -28,7 +27,6 @@ export default function App() {
       <Universities />
       <TrainingVideos />
       <EventsCarousel />
-      <Programs />
       <Contact />
     </div>
   );

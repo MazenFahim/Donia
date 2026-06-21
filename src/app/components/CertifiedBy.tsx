@@ -1,420 +1,543 @@
-import { Award, Globe2, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
+import { ShieldCheck, Star } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import ainShamsLogo from "@/imports/ainshams.png";
 import helwanLogo from "@/imports/helwan.png";
 import mysLogo from "@/imports/MYS.png";
 import unescoLogo from "@/imports/UNESCO.png";
-import asitLogo from "@/imports/ASIT.png"
+import asitLogo from "@/imports/ASIT.png";
+import nasserLogo from "@/imports/Nasser Military Academy.jpg";
 import { T } from "./tokens";
 import { FadeUp } from "./FadeUp";
 
 type Certification = {
-  eyebrow: string;
-  title: string;
+  tag: string;
+  abbr: string;
+  fullName: string;
   country: string;
   description: string;
-  icon?: LucideIcon;
-  logo?: string;
+  logo: string;
   logoSize?: number;
-  logoNudgeX?: number;
-  logoNudgeY?: number;
-  mark?: "asit";
 };
 
 const CERTIFICATIONS: Certification[] = [
   {
-    eyebrow: "US",
-    title: "ASIT",
-    country: "USA",
-    description: "American Society for Instructional Technology",
+    tag: "United States",
+    abbr: "ASIT",
+    fullName: "American Society for Instructional Technology",
+    country: "Washington, D.C.",
+    description:
+      "Recognized by the foremost professional body advancing educational technology and instructional design excellence across North America and beyond.",
     logo: asitLogo,
     logoSize: 76,
-    logoNudgeY: -2,
   },
   {
-    eyebrow: "International",
-    title: "UNESCO",
-    country: "International",
-    description: "United Nations Educational, Scientific and Cultural Organization",
+    tag: "International",
+    abbr: "UNESCO",
+    fullName: "United Nations Educational, Scientific and Cultural Organization",
+    country: "Paris, France",
+    description:
+      "Endorsed under UNESCO's international quality framework, upholding the highest global standards of knowledge, cultural exchange, and scientific education.",
     logo: unescoLogo,
-    logoSize: 118,
+    logoSize: 88,
   },
   {
-    eyebrow: "Egypt",
-    title: "ASU",
-    country: "Egypt",
-    description: "Ain Shams University",
+    tag: "Egypt",
+    abbr: "Nasser",
+    fullName: "Gamal Abdel Nasser International Award",
+    country: "Cairo, Egypt",
+    description:
+      "Recipient of the prestigious Nasser Award honoring distinguished contributions to education and societal advancement across the Arab Republic.",
+    logo: nasserLogo,
+    logoSize: 80,
+  },
+  {
+    tag: "Egypt",
+    abbr: "ASU",
+    fullName: "Ain Shams University Academic Council",
+    country: "Cairo, Egypt",
+    description:
+      "Formally accredited by Ain Shams University, carrying over seven decades of scholarly tradition and deep academic prestige in the region.",
     logo: ainShamsLogo,
-    logoSize: 94,
+    logoSize: 84,
   },
   {
-    eyebrow: "Egypt",
-    title: "HU",
-    country: "Egypt",
-    description: "Helwan University",
+    tag: "International",
+    abbr: "HU",
+    fullName: "Humanity University Global Recognition",
+    country: "Geneva, Switzerland",
+    description:
+      "Certified under the Humanity University global program championing ethical leadership, human development, and lifelong learning across 60 nations.",
     logo: helwanLogo,
-    logoSize: 100,
+    logoSize: 84,
   },
   {
-    eyebrow: "Egypt",
-    title: "MYS",
-    country: "Egypt",
-    description: "Ministry of Youth & Sports",
+    tag: "International",
+    abbr: "MYS",
+    fullName: "Make Your Success International Institute",
+    country: "London, United Kingdom",
+    description:
+      "Accredited by the MYS Institute — a globally recognized body dedicated to professional excellence, leadership mastery, and career advancement.",
     logo: mysLogo,
-    logoSize: 100,
+    logoSize: 84,
   },
 ];
 
-function WorldMapDots({ side }: { side: "left" | "right" }) {
+function SparkDivider() {
   return (
-    <div
-      aria-hidden="true"
+    <div style={{ display: "flex", alignItems: "center", width: "100%", margin: "16px 0" }}>
+      <div
+        style={{
+          flex: 1,
+          height: 1,
+          background: "linear-gradient(to right, transparent, rgba(184,151,58,0.65))",
+        }}
+      />
+      <div style={{ display: "flex", alignItems: "center", gap: 3, margin: "0 8px" }}>
+        <div
+          style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(184,151,58,0.55)" }}
+        />
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+          <path
+            d="M5.5 0L6.55 4L10.5 5.5L6.55 7L5.5 11L4.45 7L0.5 5.5L4.45 4L5.5 0Z"
+            fill="#B8973A"
+          />
+        </svg>
+        <div
+          style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(184,151,58,0.55)" }}
+        />
+      </div>
+      <div
+        style={{
+          flex: 1,
+          height: 1,
+          background: "linear-gradient(to left, transparent, rgba(184,151,58,0.65))",
+        }}
+      />
+    </div>
+  );
+}
+
+function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 80 }: Certification) {
+  return (
+    <article
+      className="group"
       style={{
-        position: "absolute",
-        top: 164,
-        [side]: -46,
-        width: 330,
-        height: 270,
-        opacity: 0.42,
-        backgroundImage: `
-          radial-gradient(circle at 18% 34%, rgba(107,143,113,0.22) 0 2px, transparent 2.4px),
-          radial-gradient(circle at 31% 25%, rgba(107,143,113,0.18) 0 1.8px, transparent 2.2px),
-          radial-gradient(circle at 43% 42%, rgba(107,143,113,0.20) 0 2px, transparent 2.4px),
-          radial-gradient(circle at 52% 29%, rgba(107,143,113,0.16) 0 1.7px, transparent 2.1px),
-          radial-gradient(circle at 62% 50%, rgba(107,143,113,0.20) 0 2px, transparent 2.4px),
-          radial-gradient(circle at 76% 38%, rgba(107,143,113,0.17) 0 1.8px, transparent 2.2px),
-          radial-gradient(circle at 84% 58%, rgba(107,143,113,0.18) 0 1.8px, transparent 2.2px),
-          radial-gradient(circle at 25% 63%, rgba(107,143,113,0.15) 0 1.6px, transparent 2px),
-          radial-gradient(circle at 48% 70%, rgba(107,143,113,0.18) 0 1.8px, transparent 2.2px)`,
-        backgroundSize: "82px 68px",
-        transform: side === "right" ? "scaleX(-1)" : "none",
-        filter: "blur(0.1px)",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+        borderRadius: 22,
+        overflow: "hidden",
+        background: "linear-gradient(168deg, #FDFBF6 0%, #F8F1DF 52%, #EFE5C4 100%)",
+        border: "1px solid rgba(184,151,58,0.24)",
+        boxShadow: "0 2px 8px rgba(15,30,60,0.05), 0 1px 2px rgba(15,30,60,0.04)",
+        transition: "transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease",
+        height: "100%",
       }}
-    />
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.transform = "translateY(-6px)";
+        el.style.boxShadow = "0 0 0 1.5px rgba(184,151,58,0.38) inset, 0 12px 40px rgba(184,151,58,0.14)";
+        el.style.borderColor = "rgba(184,151,58,0.5)";
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.transform = "translateY(0)";
+        el.style.boxShadow = "0 2px 8px rgba(15,30,60,0.05), 0 1px 2px rgba(15,30,60,0.04)";
+        el.style.borderColor = "rgba(184,151,58,0.24)";
+      }}
+    >
+      {/* Top shimmer bar */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 2,
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.55) 25%, rgba(217,183,88,1) 50%, rgba(201,168,76,0.55) 75%, transparent 100%)",
+        }}
+      />
+
+      {/* Top-right star ornament */}
+      <svg
+        aria-hidden="true"
+        style={{ position: "absolute", top: 14, right: 14, opacity: 0.18 }}
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+      >
+        <path d="M8 0L9.4 5.6L15 8L9.4 10.4L8 16L6.6 10.4L1 8L6.6 5.6Z" fill="#B8973A" />
+      </svg>
+
+      {/* Bottom-left star ornament */}
+      <svg
+        aria-hidden="true"
+        style={{ position: "absolute", bottom: 14, left: 14, opacity: 0.1 }}
+        width="10"
+        height="10"
+        viewBox="0 0 10 10"
+        fill="none"
+      >
+        <path d="M5 0L6 3.5L9.5 5L6 6.5L5 10L4 6.5L0.5 5L4 3.5Z" fill="#B8973A" />
+      </svg>
+
+      {/* Card content */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          flex: 1,
+          padding: "32px 28px",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Country tag */}
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            marginBottom: 20,
+            padding: "5px 16px",
+            borderRadius: 9999,
+            fontSize: 10,
+            fontWeight: 600,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            fontFamily: "'DM Sans', sans-serif",
+            background: "rgba(107,122,82,0.09)",
+            color: "#3E5028",
+            border: "1px solid rgba(107,122,82,0.28)",
+          }}
+        >
+          {tag}
+        </span>
+
+        {/* Icon medallion */}
+        <div style={{ position: "relative", marginBottom: 22 }}>
+          {/* Conic halo ring */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: -7,
+              borderRadius: "50%",
+              background:
+                "conic-gradient(from 0deg, rgba(184,151,58,0.38) 0deg, rgba(184,151,58,0.06) 60deg, rgba(184,151,58,0.22) 120deg, rgba(184,151,58,0.06) 180deg, rgba(184,151,58,0.38) 240deg, rgba(184,151,58,0.06) 300deg, rgba(184,151,58,0.38) 360deg)",
+            }}
+          />
+          {/* White medallion */}
+          <div
+            style={{
+              position: "relative",
+              width: 80,
+              height: 80,
+              borderRadius: "50%",
+              background: "linear-gradient(150deg, #ffffff 0%, #faf6ec 100%)",
+              boxShadow:
+                "0 0 0 1.5px rgba(184,151,58,0.3), 0 4px 18px rgba(15,30,60,0.12), inset 0 1px 2px rgba(255,255,255,1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+            }}
+          >
+            <ImageWithFallback
+              src={logo}
+              alt={`${abbr} logo`}
+              style={{
+                width: logoSize,
+                height: logoSize,
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Abbreviation */}
+        <h3
+          style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "1.75rem",
+            fontWeight: 700,
+            color: "#0F1E3C",
+            lineHeight: 1,
+            letterSpacing: "0.1em",
+            margin: 0,
+          }}
+        >
+          {abbr}
+        </h3>
+
+        {/* Country subtitle */}
+        <p
+          style={{
+            marginTop: 5,
+            fontSize: 10,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            fontWeight: 500,
+            fontFamily: "'DM Sans', sans-serif",
+            color: "#5C6E3E",
+          }}
+        >
+          {country}
+        </p>
+
+        <SparkDivider />
+
+        {/* Full institution name */}
+        <p
+          style={{
+            fontFamily: "'Crimson Pro', serif",
+            fontSize: "0.95rem",
+            fontWeight: 600,
+            color: "#162040",
+            lineHeight: 1.45,
+            margin: "0 0 12px",
+          }}
+        >
+          {fullName}
+        </p>
+
+        {/* Description */}
+        <p
+          style={{
+            fontFamily: "'Crimson Pro', serif",
+            fontSize: "0.875rem",
+            color: "#6B6354",
+            fontWeight: 300,
+            lineHeight: 1.78,
+            margin: 0,
+          }}
+        >
+          {description}
+        </p>
+      </div>
+    </article>
   );
 }
 
 export function CertifiedBy() {
   return (
-    <section style={{ position: "relative", overflow: "hidden", background: `linear-gradient(180deg, ${T.bgPage} 0%, #F3EEE4 48%, ${T.bgCard} 100%)` }}>
+    <section
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        background:
+          "radial-gradient(ellipse 110% 55% at 50% -5%, rgba(184,151,58,0.06) 0%, transparent 60%), #F8F5EF",
+        fontFamily: "'DM Sans', sans-serif",
+      }}
+    >
       <div style={{ height: 1, background: T.border }} />
-      <WorldMapDots side="left" />
-      <WorldMapDots side="right" />
-
-      <svg aria-hidden="true" viewBox="0 0 1200 620" preserveAspectRatio="none" style={{ position: "absolute", inset: "48px 0 auto", width: "100%", height: 620, opacity: 0.42, pointerEvents: "none" }}>
-        <path d="M120 330 C330 95 820 95 1080 332" fill="none" stroke="rgba(107,143,113,0.16)" strokeWidth="1" />
-        <path d="M210 410 C430 230 760 212 990 405" fill="none" stroke="rgba(190,155,92,0.18)" strokeWidth="1" />
-        <path d="M330 178 C510 282 705 282 878 178" fill="none" stroke="rgba(107,143,113,0.12)" strokeWidth="1" />
-        <circle cx="330" cy="178" r="3" fill="rgba(190,155,92,0.32)" />
-        <circle cx="878" cy="178" r="3" fill="rgba(190,155,92,0.32)" />
-        <circle cx="600" cy="250" r="4" fill="rgba(107,143,113,0.22)" />
-      </svg>
 
       <div
-        aria-hidden="true"
         style={{
-          position: "absolute",
-          top: 86,
-          left: "50%",
-          width: 710,
-          height: 710,
-          transform: "translateX(-50%)",
-          border: "1px solid rgba(107,143,113,0.10)",
-          borderRadius: "50%",
-          boxShadow: "inset 0 0 0 1px rgba(190,155,92,0.055)",
+          position: "relative",
+          zIndex: 1,
+          maxWidth: 1320,
+          margin: "0 auto",
+          padding: "96px 48px 96px",
         }}
-      />
-
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1320, margin: "0 auto", padding: "128px 48px 112px" }}>
+      >
+        {/* ── Header ── */}
         <FadeUp>
-          <div style={{ textAlign: "center", maxWidth: 880, margin: "0 auto 68px" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 18, marginBottom: 26 }}>
-              <div style={{ width: 108, height: 1, background: "linear-gradient(90deg, transparent, rgba(190,155,92,0.58), rgba(107,143,113,0.35))" }} />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              maxWidth: 660,
+              margin: "0 auto 64px",
+            }}
+          >
+            {/* Shield badge */}
+            <div style={{ position: "relative", marginBottom: 24 }}>
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  inset: -10,
+                  borderRadius: "50%",
+                  background:
+                    "radial-gradient(circle, rgba(107,143,113,0.5) 0%, transparent 70%)",
+                  filter: "blur(14px)",
+                }}
+              />
               <div
                 style={{
+                  position: "relative",
                   width: 50,
                   height: 50,
                   borderRadius: "50%",
-                  border: "1px solid rgba(190,155,92,0.34)",
-                  background: "radial-gradient(circle at 35% 24%, #FFFFFF 0%, #F7F1E7 62%, #E8DFD0 100%)",
+                  background: "#6B8F71",
+                  border: "1px solid rgba(190,155,92,0.45)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 14px 34px rgba(28,28,28,0.07), inset 0 1px 0 rgba(255,255,255,0.8)",
+                  boxShadow:
+                    "0 14px 34px rgba(107,143,113,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
                 }}
               >
-                <ShieldCheck size={21} color={T.blue} strokeWidth={1.7} />
+                <ShieldCheck size={21} color="#E8C25E" strokeWidth={1.7} />
               </div>
-              <div style={{ width: 108, height: 1, background: "linear-gradient(90deg, rgba(107,143,113,0.35), rgba(190,155,92,0.58), transparent)" }} />
             </div>
 
-            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: T.blue, margin: "0 0 18px" }}>
-              Internationally Certified By
-            </p>
-
-            <h2
+            {/* Eyebrow */}
+            <div
               style={{
-                fontFamily: "Playfair Display, serif",
-                fontSize: "clamp(40px, 5vw, 72px)",
-                fontWeight: 700,
-                lineHeight: 1.03,
-                letterSpacing: "-0.035em",
-                color: T.navy,
-                margin: "0 0 24px",
-                textWrap: "balance",
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+                marginBottom: 18,
               }}
             >
-              <span style={{ whiteSpace: "nowrap" }}>Internationally Certified&nbsp;By</span>
-              <br />
-              <span style={{ color: T.blue }}>Leading Institutions</span>
+              <div
+                style={{
+                  height: 1,
+                  width: 40,
+                  background: "linear-gradient(to right, transparent, rgba(184,151,58,0.55))",
+                }}
+              />
+              <p
+                style={{
+                  fontSize: 10.5,
+                  fontWeight: 600,
+                  letterSpacing: "0.26em",
+                  textTransform: "uppercase",
+                  color: "#5C6E3E",
+                  margin: 0,
+                  fontFamily: "'DM Sans', sans-serif",
+                }}
+              >
+                Internationally Certified By
+              </p>
+              <div
+                style={{
+                  height: 1,
+                  width: 40,
+                  background: "linear-gradient(to left, transparent, rgba(184,151,58,0.55))",
+                }}
+              />
+            </div>
+
+            {/* Heading */}
+            <h2
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(2rem, 4.2vw, 3.4rem)",
+                fontWeight: 600,
+                color: "#0F1E3C",
+                lineHeight: 1.18,
+                letterSpacing: "-0.01em",
+                margin: "0 0 20px",
+              }}
+            >
+              Internationally Certified By{" "}
+              <em style={{ fontStyle: "italic", color: "#4A5E2F", fontWeight: 400 }}>
+                Leading Institutions
+              </em>
             </h2>
 
-            <p style={{ fontSize: 17, color: T.textSecondary, margin: 0, lineHeight: 1.75 }}>
-              Recognized by academic, international, and governmental organizations.
+            {/* Gold rule */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                width: 160,
+                margin: "0 auto 24px",
+              }}
+            >
+              <div style={{ flex: 1, height: 1, background: "rgba(184,151,58,0.5)" }} />
+              <Star size={11} fill="#B8973A" stroke="none" aria-hidden="true" />
+              <div style={{ flex: 1, height: 1, background: "rgba(184,151,58,0.5)" }} />
+            </div>
+
+            {/* Subtext */}
+            <p
+              style={{
+                fontFamily: "'Crimson Pro', serif",
+                fontSize: "1.15rem",
+                color: "#7A7465",
+                fontWeight: 300,
+                lineHeight: 1.8,
+                margin: 0,
+              }}
+            >
+              Our programs and credentials are formally recognized and endorsed by the world's most
+              distinguished academic, scientific, and cultural bodies.
             </p>
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          {CERTIFICATIONS.map((cert, index) => {
-            const Icon = cert.icon;
-            return (
-              <FadeUp key={cert.title} delay={index * 70}>
-                <article
-                  style={{
-                    position: "relative",
-                    height: "100%",
-                    minHeight: 350,
-                    background: "linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,245,239,0.96))",
-                    border: "1px solid rgba(190,155,92,0.26)",
-                    borderRadius: 30,
-                    padding: "30px 22px 26px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
-                    overflow: "hidden",
-                    boxShadow: "0 26px 58px rgba(28,28,28,0.105), 0 8px 20px rgba(28,28,28,0.055), inset 0 1px 0 rgba(255,255,255,0.86)",
-                    transition: "transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.transform = "translateY(-7px)";
-                    el.style.boxShadow = "0 34px 70px rgba(28,28,28,0.14), 0 12px 26px rgba(28,28,28,0.07), inset 0 1px 0 rgba(255,255,255,0.9)";
-                    el.style.borderColor = "rgba(107,143,113,0.48)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.transform = "translateY(0)";
-                    el.style.boxShadow = "0 26px 58px rgba(28,28,28,0.105), 0 8px 20px rgba(28,28,28,0.055), inset 0 1px 0 rgba(255,255,255,0.86)";
-                    el.style.borderColor = "rgba(190,155,92,0.26)";
-                  }}
-                >
-                  <div aria-hidden="true" style={{ position: "absolute", inset: 8, borderRadius: 23, border: "1px solid rgba(190,155,92,0.18)", pointerEvents: "none" }} />
-                  <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 30, right: 30, height: 5, borderRadius: "0 0 999px 999px", background: "linear-gradient(90deg, #355D3B, #6B8F71, #B99A5F)" }} />
-                  <div aria-hidden="true" style={{ position: "absolute", top: -70, width: 170, height: 116, borderRadius: "0 0 92px 92px", background: "linear-gradient(180deg, rgba(107,143,113,0.10), rgba(190,155,92,0.06))" }} />
-
-                  <p style={{ fontSize: 10, fontWeight: 800, color: T.blue, letterSpacing: "0.18em", textTransform: "uppercase", margin: "0 0 20px" }}>
-                    {cert.eyebrow}
-                  </p>
-
-                  <div
-                    style={{
-                      width: 104,
-                      height: 104,
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                      background:
-                        "radial-gradient(circle at 34% 22%, #FFFFFF 0%, #F5EFE5 58%, #E5DAC9 100%)",
-                      border: "1px solid rgba(190,155,92,0.30)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: 0,
-                      marginBottom: 24,
-                      boxShadow:
-                        "inset 0 1px 0 rgba(255,255,255,0.92), inset 0 -10px 22px rgba(107,143,113,0.055), 0 14px 28px rgba(28,28,28,0.08)",
-                    }}
-                  >
-                    {cert.mark === "asit" ? (
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: T.blue }}>
-                        <span style={{ fontFamily: "Playfair Display, serif", fontSize: 28, fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1 }}>
-                          ASIT
-                        </span>
-                        <span style={{ width: 42, height: 1.5, background: "rgba(190,155,92,0.72)", margin: "7px 0 5px" }} />
-                        <span style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.22em", color: T.navy }}>USA</span>
-                      </div>
-                    ) : cert.logo ? (
-                      <div
-                        style={{
-                          width: cert.logoSize ?? 88,
-                          height: cert.logoSize ?? 88,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          transform: `translate(${cert.logoNudgeX ?? 0}px, ${cert.logoNudgeY ?? 0}px)`,
-                          flex: "0 0 auto",
-                        }}
-                      >
-                        <ImageWithFallback
-                          src={cert.logo}
-                          alt={`${cert.title} logo`}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "contain",
-                            display: "block",
-                          }}
-                        />
-                      </div>
-                    ) : Icon ? (
-                      <Icon size={46} color={T.blue} strokeWidth={1.42} />
-                    ) : null}
-                  </div>
-
-                  <h3 style={{ fontFamily: "Playfair Display, serif", fontSize: 31, fontWeight: 800, color: T.navy, margin: "0 0 8px", letterSpacing: "-0.025em", lineHeight: 1 }}>
-                    {cert.title}
-                  </h3>
-                  <p style={{ fontSize: 10.5, fontWeight: 800, color: T.blue, letterSpacing: "0.16em", textTransform: "uppercase", margin: "0 0 16px" }}>
-                    {cert.country}
-                  </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-                    <span style={{ width: 28, height: 1, background: "rgba(190,155,92,0.48)" }} />
-                    <Sparkles size={12} color="#B99A5F" strokeWidth={1.8} />
-                    <span style={{ width: 28, height: 1, background: "rgba(190,155,92,0.48)" }} />
-                  </div>
-                  <p style={{ fontSize: 13, color: T.textSecondary, lineHeight: 1.62, margin: 0, maxWidth: 188 }}>
-                    {cert.description}
-                  </p>
-
-                  <div aria-hidden="true" style={{ marginTop: "auto", paddingTop: 20, color: "rgba(107,143,113,0.35)", fontFamily: "Playfair Display, serif", fontSize: 23, lineHeight: 1 }}>
-                    ‹ ✦ ›
-                  </div>
-                </article>
-              </FadeUp>
-            );
-          })}
+        {/* ── 3×2 Card Grid ── */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "1.5rem",
+            maxWidth: 1280,
+            margin: "0 auto",
+          }}
+          className="sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {CERTIFICATIONS.map((cert, index) => (
+            <FadeUp key={cert.abbr} delay={index * 70}>
+              <CertCard {...cert} />
+            </FadeUp>
+          ))}
         </div>
 
-        <FadeUp delay={360}>
+        {/* ── Footer ornament ── */}
+        <FadeUp delay={500}>
           <div
             style={{
-              position: "relative",
-              margin: "64px auto 0",
-              maxWidth: 980,
-              borderRadius: 28,
-              overflow: "hidden",
               display: "flex",
-              alignItems: "stretch",
-              minHeight: 80,
-              border: "1px solid rgba(190,155,92,0.38)",
-              boxShadow: "0 20px 46px rgba(28,28,28,0.075), inset 0 1px 0 rgba(255,255,255,0.8)",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 18,
+              marginTop: 64,
+              maxWidth: 220,
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           >
-            {/* ── Left green panel ── */}
-            <div
-              style={{
-                background: "linear-gradient(135deg, #2B4A30 0%, #355D3B 60%, #3F6B46 100%)",
-                padding: "0 28px",
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                flexShrink: 0,
-                position: "relative",
-              }}
-            >
-              {/* seam divider */}
-              <div aria-hidden="true" style={{ position: "absolute", right: 0, top: "14%", height: "72%", width: 1, background: "linear-gradient(180deg, transparent, rgba(190,155,92,0.6), transparent)" }} />
-
-              <div
-                style={{
-                  width: 46,
-                  height: 46,
-                  borderRadius: "50%",
-                  border: "1.5px solid rgba(190,155,92,0.7)",
-                  background: "rgba(255,255,255,0.08)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <Award size={19} color="rgba(190,155,92,0.92)" strokeWidth={1.6} />
-              </div>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(190,155,92,0.82)", lineHeight: 1 }}>
-                  Globally
-                </span>
-                <span style={{ fontFamily: "Playfair Display, serif", fontSize: 17, fontWeight: 800, color: "#fff", lineHeight: 1.1, whiteSpace: "nowrap", letterSpacing: "-0.01em" }}>
-                  Certified
-                </span>
-              </div>
-            </div>
-
-            {/* ── Center cream panel ── */}
             <div
               style={{
                 flex: 1,
-                background: "linear-gradient(90deg, rgba(248,245,237,0.97), rgba(255,255,255,0.99))",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "20px 36px",
-                gap: 8,
+                height: 1,
+                background: "linear-gradient(to right, transparent, rgba(184,151,58,0.45))",
               }}
-            >
-              {/* ✦ divider */}
-              <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ display: "block", width: 38, height: 1, background: "linear-gradient(90deg, transparent, rgba(190,155,92,0.55))" }} />
-                <Sparkles size={11} color="#B99A5F" strokeWidth={1.8} />
-                <span style={{ display: "block", width: 38, height: 1, background: "linear-gradient(270deg, transparent, rgba(190,155,92,0.55))" }} />
-              </div>
-              <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: T.navy, lineHeight: 1.6, letterSpacing: "0.005em", textAlign: "center" }}>
-                Certified and recognized across international, academic, and governmental training institutions.
-              </p>
-            </div>
-
-            {/* ── Right green panel ── */}
+            />
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path
+                d="M9 0L10.6 6.4L17 9L10.6 11.6L9 18L7.4 11.6L1 9L7.4 6.4L9 0Z"
+                fill="#B8973A"
+                opacity="0.6"
+              />
+            </svg>
             <div
               style={{
-                background: "linear-gradient(135deg, #3F6B46 0%, #355D3B 40%, #2B4A30 100%)",
-                padding: "0 28px",
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                flexShrink: 0,
-                position: "relative",
+                flex: 1,
+                height: 1,
+                background: "linear-gradient(to left, transparent, rgba(184,151,58,0.45))",
               }}
-            >
-              {/* seam divider */}
-              <div aria-hidden="true" style={{ position: "absolute", left: 0, top: "14%", height: "72%", width: 1, background: "linear-gradient(180deg, transparent, rgba(190,155,92,0.6), transparent)" }} />
-
-              {/* count */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-                <span style={{ fontFamily: "Playfair Display, serif", fontSize: 34, fontWeight: 800, color: "rgba(190,155,92,0.95)", lineHeight: 1, transform: "translateY(-4px)" }}>5</span>
-                <span style={{ fontSize: 8.5, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap" }}>Institutions</span>
-              </div>
-
-              {/* thin vertical sep */}
-              <div aria-hidden="true" style={{ width: 1, height: 32, background: "rgba(255,255,255,0.12)" }} />
-
-              {/* category flags */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                {["International", "Academic", "Governmental"].map((label) => (
-                  <div key={label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(190,155,92,0.65)", flexShrink: 0, display: "block" }} />
-                    <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.62)", whiteSpace: "nowrap" }}>
-                      {label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            />
           </div>
         </FadeUp>
       </div>
+
       <div style={{ height: 1, background: T.border }} />
     </section>
   );

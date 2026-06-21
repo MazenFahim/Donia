@@ -151,7 +151,6 @@ export function Universities() {
     setActivePhotoIndex(0);
   }, []);
 
-  // Inner rotation timer (3 seconds)
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => {
@@ -160,7 +159,6 @@ export function Universities() {
     return () => clearInterval(id);
   }, [paused, activeUniIndex, activePhotoIndex]);
 
-  // Outer rotation timer (8 seconds)
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => {
@@ -169,7 +167,6 @@ export function Universities() {
     return () => clearInterval(id);
   }, [paused, activeUniIndex, paginate]);
 
-  // Swipe & Trackpad handlers
   const [touchStart, setTouchStart] = useState<{ x: number, y: number } | null>(null);
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
@@ -199,7 +196,7 @@ export function Universities() {
   };
 
   return (
-    <section style={{ background: T.white, overflow: "hidden" }}>
+    <section style={{ background: "#F8F5EF", overflow: "hidden" }}>
       <div style={{ height: 1, background: T.border }} />
 
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "120px 48px 0" }}>
@@ -250,7 +247,7 @@ export function Universities() {
                 {/* Left Column: Stacked Photo Deck */}
                 <div style={{ width: "100%", maxWidth: 380, margin: "0 auto", position: "relative" }}>
                   <div style={{ paddingBottom: "125%" }} />
-                  
+
                   {UNIVERSITIES[activeUniIndex].photos.map((photo, idx) => {
                     let position = "hidden";
                     if (idx === activePhotoIndex) position = "front";
@@ -278,8 +275,8 @@ export function Universities() {
                           overflow: "hidden",
                           border: `1px solid ${T.border}`,
                           background: T.bgCard,
-                          boxShadow: isFront 
-                            ? "0 24px 48px -12px rgba(28,28,28,0.25)" 
+                          boxShadow: isFront
+                            ? "0 24px 48px -12px rgba(28,28,28,0.25)"
                             : "0 8px 24px rgba(28,28,28,0.08)",
                           transformOrigin: "center center"
                         }}
@@ -299,7 +296,6 @@ export function Universities() {
                     );
                   })}
 
-                  {/* Static overlay on top of the front photo */}
                   <div
                     style={{
                       position: "absolute",
@@ -326,23 +322,22 @@ export function Universities() {
                       </span>
                     </div>
 
-                    <InnerNavButton 
-                      direction="left" 
+                    <InnerNavButton
+                      direction="left"
                       onClick={(e) => {
                         e.stopPropagation();
                         setActivePhotoIndex((prev) => (prev - 1 + 3) % 3);
-                      }} 
+                      }}
                     />
-                    <InnerNavButton 
-                      direction="right" 
+                    <InnerNavButton
+                      direction="right"
                       onClick={(e) => {
                         e.stopPropagation();
                         setActivePhotoIndex((prev) => (prev + 1) % 3);
-                      }} 
+                      }}
                     />
                   </div>
 
-                  {/* 3 inner dots for the active university's photos */}
                   <div style={{ display: "flex", justifyContent: "center", gap: 8, position: "absolute", bottom: -32, left: 0, right: 0 }}>
                     {[0, 1, 2].map((i) => (
                       <button
@@ -389,7 +384,7 @@ export function Universities() {
 
               </motion.div>
             </AnimatePresence>
-            
+
           </div>
         </FadeUp>
       </div>

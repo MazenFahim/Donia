@@ -35,7 +35,7 @@ const TRAINING_VIDEOS = [
 
 export function TrainingVideos() {
   return (
-    <section id="training-videos" style={{ background: T.white, borderTop: `1px solid ${T.border}` }}>
+    <section id="training-videos" style={{ background: "#F8F5EF", borderTop: `1px solid ${T.border}` }}>
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "112px 48px 120px" }}>
         <FadeUp>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
