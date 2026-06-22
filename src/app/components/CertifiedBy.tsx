@@ -442,7 +442,7 @@ export function CertifiedBy() {
                 letterSpacing: "-0.01em",
                 margin: "0 0 20px",
               }}
-            >
+            > 
               Internationally Certified By{" "}
               <em style={{ fontStyle: "italic", color: "#4A5E2F", fontWeight: 400 }}>
                 Leading Institutions
