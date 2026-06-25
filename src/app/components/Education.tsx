@@ -32,7 +32,6 @@ const ENTRIES = [
 const THESIS =
   "A Multi-Approach Training Program for Developing Teaching Performance and Attitude Toward the Teaching Profession for High School Philosophy Teachers";
 
-// Gold/shiny graduation cap icon with gradient + shine sweep
 function GoldGradCapIcon() {
   return (
     <div className="relative flex h-14 w-14 items-center justify-center">
@@ -55,7 +54,6 @@ function GoldGradCapIcon() {
           </linearGradient>
         </defs>
 
-        {/* Cap top (diamond) */}
         <path
           d="M24 6 L44 16 L24 26 L4 16 Z"
           fill="url(#goldGrad)"
@@ -63,7 +61,6 @@ function GoldGradCapIcon() {
           strokeWidth="0.6"
           strokeLinejoin="round"
         />
-        {/* Cap band/base */}
         <path
           d="M12 19.5 V30 C12 33 17 36 24 36 C31 36 36 33 36 30 V19.5 L24 25 Z"
           fill="url(#goldGrad)"
@@ -71,12 +68,9 @@ function GoldGradCapIcon() {
           strokeWidth="0.6"
           strokeLinejoin="round"
         />
-        {/* Tassel string */}
         <line x1="44" y1="16" x2="44" y2="29" stroke="#9C6F1E" strokeWidth="1.4" strokeLinecap="round" />
-        {/* Tassel bead */}
         <circle cx="44" cy="31.5" r="2.4" fill="url(#goldGrad)" stroke="#7A5613" strokeWidth="0.6" />
 
-        {/* Shine sweep overlay across the cap top */}
         <motion.path
           d="M24 6 L44 16 L24 26 L4 16 Z"
           fill="url(#goldShine)"
@@ -96,17 +90,17 @@ function GoldGradCapIcon() {
 
 export function Education() {
   return (
-    <section id="education" className="relative overflow-hidden bg-[#EEE9DF] py-24 text-[#1C1C1C] md:py-28">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#DDD8CE]" />
-      <div className="pointer-events-none absolute -right-28 top-24 h-80 w-80 rounded-full bg-[#6B8F71]/10 blur-3xl" />
+    <section id="education" className="relative overflow-hidden bg-[#EFECE6] py-24 text-[#1C1C1C] md:py-28">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#DCD8D0]" />
+      <div className="pointer-events-none absolute -right-28 top-24 h-80 w-80 rounded-full bg-[#7D9A84]/8 blur-3xl" />
 
       <div className="relative mx-auto max-w-[1220px] px-6 md:px-12">
         <FadeUp>
           <div className="mb-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div>
               <div className="mb-6 flex items-center gap-3">
-                <span className="h-px w-10 bg-[#6B8F71]" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6B8F71]">
+                <span className="h-px w-10 bg-[#7D9A84]" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7D9A84]">
                   Academic Background
                 </span>
               </div>
@@ -122,17 +116,18 @@ export function Education() {
         </FadeUp>
 
         <FadeUp delay={0.06}>
-          <div className="rounded-[36px] border border-[#D8D1C4] bg-[#F8F5EF] p-5 shadow-[0_24px_70px_rgba(28,28,28,0.07)] md:p-7">
+          <div className="rounded-[36px] border border-[#DCD8D0] bg-[#F4F1EA] p-5 shadow-[0_24px_70px_rgba(28,28,28,0.05)] md:p-7">
             <div className="grid gap-5 lg:grid-cols-[300px_minmax(0,1fr)]">
+              
               <motion.div
                 initial={{ opacity: 0, x: -16 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -4 }}
-                className="relative overflow-hidden rounded-[28px] bg-[#1C1C1C] p-7 text-[#F8F5EF] transition-shadow duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
+                className="relative overflow-hidden rounded-[28px] bg-[#111111] p-7 text-[#FBF9F6] transition-shadow duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
               >
-                <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#6B8F71]/25 blur-2xl transition-opacity duration-500 group-hover:opacity-70" />
+                <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#7D9A84]/25 blur-2xl transition-opacity duration-500 group-hover:opacity-70" />
                 <div className="relative">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.6, rotate: -15 }}
@@ -144,13 +139,15 @@ export function Education() {
                   >
                     <GoldGradCapIcon />
                   </motion.div>
-                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#D6E5D8]">
+                  
+                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#E8C25E]">
                     Academic Profile
                   </p>
-                  <h3 className="font-['Playfair_Display'] text-4xl font-semibold leading-[0.98] tracking-[-0.05em]">
+                  
+                  <h3 className="font-['Playfair_Display'] text-4xl font-semibold leading-[0.98] tracking-[-0.05em] text-[#FBF9F6]">
                     Helwan University
                   </h3>
-                  <p className="mt-5 text-sm leading-7 text-[#F8F5EF]/68">
+                  <p className="mt-5 text-sm leading-7 text-[#D5D1C9]">
                     A consistent record of distinction across undergraduate, diploma, and master’s-level education.
                   </p>
 
@@ -167,8 +164,8 @@ export function Education() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.25 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                       >
-                        <p className="font-['Playfair_Display'] text-3xl font-semibold text-[#D6E5D8]">{stat.value}</p>
-                        <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#F8F5EF]/48">{stat.label}</p>
+                        <p className="font-['Playfair_Display'] text-3xl font-semibold text-[#E8C25E]">{stat.value}</p>
+                        <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#D5D1C9]/60">{stat.label}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -184,29 +181,31 @@ export function Education() {
                     viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: index * 0.08 }}
                     whileHover={{ y: -6, scale: 1.015 }}
-                    className="group relative overflow-hidden rounded-[26px] border border-[#E1DACD] bg-[#FBF8F1] p-5 transition-all duration-300 hover:border-[#6B8F71]/50 hover:bg-[#FFFDF8] hover:shadow-[0_18px_40px_rgba(107,143,113,0.18)]"
+                    className="group relative overflow-hidden rounded-[26px] border border-[#DCD2C1] bg-[#E9E0D1] p-5 transition-all duration-300 hover:border-[#7D9A84]/50 hover:bg-[#EEE5D6] hover:shadow-[0_18px_40px_rgba(125,154,132,0.12)]"
                   >
-                    {/* subtle hover glow */}
-                    <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#6B8F71]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#6B8F71]/12" />
+                    <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#7D9A84]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#7D9A84]/8" />
 
-                    <div className="relative mb-5 flex items-start justify-between gap-4">
-                      <div className="flex items-center gap-3">
+                    <div className="relative mb-5 flex items-center justify-between gap-4">
+                      
+                      <div className="flex items-center gap-1.5 rounded-full border border-[#7D9A84]/30 bg-[#7D9A84]/12 p-0.5 pr-2.5">
                         <motion.span
                           whileHover={{ scale: 1.12, rotate: 8 }}
                           transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                          className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D6E5D8]/70 text-[#48664E] transition-colors duration-300 group-hover:bg-[#D6E5D8]"
+                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#7D9A84] text-[#FBF8F1] shadow-sm"
                         >
-                          {index === 3 ? <BookMarked size={17} strokeWidth={1.8} /> : <Award size={17} strokeWidth={1.8} />}
+                          {index === 3 ? <BookMarked size={12} strokeWidth={2} /> : <Award size={12} strokeWidth={2} />}
                         </motion.span>
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6B8F71]">
+                        <span className="text-[9.5px] font-bold uppercase tracking-[0.12em] text-[#4E6353]">
                           {entry.badge}
                         </span>
                       </div>
-                      <span className="font-['Playfair_Display'] text-2xl italic leading-none text-[#A09689] transition-colors duration-300 group-hover:text-[#6B8F71]">
+
+                      <span className="font-['Playfair_Display'] text-2xl italic leading-none text-[#938A7E] transition-colors duration-300 group-hover:text-[#7D9A84]">
                         {entry.year}
                       </span>
                     </div>
-                    <h3 className="relative font-['Playfair_Display'] text-[26px] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1C1C1C]">
+                    
+                    <h3 className="relative font-['Playfair_Display'] text-[26px] font-semibold leading-[1.05] tracking-[-0.04em] text-[#2C2925]">
                       {entry.degree}
                     </h3>
                     <p className="relative mt-3 text-sm leading-6 text-[#5B554C]">
@@ -223,20 +222,20 @@ export function Education() {
               viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
               whileHover={{ y: -3 }}
-              className="mt-5 rounded-[28px] border border-[#D8D1C4] bg-[#EEE9DF]/70 p-6 transition-shadow duration-300 hover:shadow-[0_14px_36px_rgba(28,28,28,0.06)] md:flex md:items-start md:gap-6"
+              className="mt-5 rounded-[28px] border border-[#D8D1C4] bg-[#FFFFFF] p-6 shadow-[0_14px_36px_rgba(28,28,28,0.02)] md:flex md:items-start md:gap-6"
             >
               <motion.div
                 whileHover={{ rotate: -8, scale: 1.08 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                className="mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F8F5EF] text-[#6B8F71] md:mb-0"
+                className="mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F4F1EA] text-[#7D9A84] md:mb-0"
               >
                 <ScrollText size={22} strokeWidth={1.7} />
               </motion.div>
               <div>
-                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#6B8F71]">
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7D9A84]">
                   Master's Thesis
                 </p>
-                <p className="font-['Playfair_Display'] text-[20px] italic leading-8 text-[#3F3B35] md:text-[22px]">
+                <p className="font-['Playfair_Display'] text-[20px] italic leading-8 text-[#2C2925] md:text-[22px]">
                   “{THESIS}”
                 </p>
               </div>
@@ -244,7 +243,7 @@ export function Education() {
           </div>
         </FadeUp>
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[#DDD8CE]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[#DCD8D0]" />
     </section>
   );
 }
