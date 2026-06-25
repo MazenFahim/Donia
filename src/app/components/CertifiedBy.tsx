@@ -61,22 +61,22 @@ const CERTIFICATIONS: Certification[] = [
     logoSize: 84,
   },
   {
-    tag: "International",
+    tag: "EGYPT",
     abbr: "HU",
-    fullName: "Humanity University Global Recognition",
-    country: "Geneva, Switzerland",
+    fullName: "Helwan University Academic Council",
+    country: "Helwan, Egypt",
     description:
-      "Certified under the Humanity University global program championing ethical leadership, human development, and lifelong learning across 60 nations.",
+      "Endorsed by Helwan University — a leading Egyptian institution renowned for its rigorous academic standards and commitment to excellence in higher education.",
     logo: helwanLogo,
     logoSize: 84,
   },
   {
-    tag: "International",
+    tag: "EGYPT",
     abbr: "MYS",
-    fullName: "Make Your Success International Institute",
-    country: "London, United Kingdom",
+    fullName: "MYS Institute for Leadership and Excellence",
+    country: "Cairo, Egypt",
     description:
-      "Accredited by the MYS Institute — a globally recognized body dedicated to professional excellence, leadership mastery, and career advancement.",
+      "Accredited by the MYS Institute — a leading Egyptian center for leadership development, professional excellence, and transformative education across the MENA region.",
     logo: mysLogo,
     logoSize: 84,
   },
@@ -442,7 +442,7 @@ export function CertifiedBy() {
                 letterSpacing: "-0.01em",
                 margin: "0 0 20px",
               }}
-            >
+            > 
               Internationally Certified By{" "}
               <em style={{ fontStyle: "italic", color: "#4A5E2F", fontWeight: 400 }}>
                 Leading Institutions

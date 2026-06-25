@@ -14,9 +14,9 @@ interface ContactCard {
 const CONTACT_CARDS: ContactCard[] = [
   { Icon: MessageCircle, label: "WhatsApp", value: "01155501538", href: "https://wa.me/201155501538" },
   { Icon: Mail, label: "Email", value: "doniaessam2000200@gmail.com", href: "mailto:doniaessam2000200@gmail.com" },
-  { Icon: Linkedin, label: "LinkedIn", value: "donia-essam-38302b241", href: "https://linkedin.com/in/donia-essam-38302b241" },
-  { Icon: Facebook, label: "Facebook", value: "Donia Essam", href: "#" },
-  { Icon: Instagram, label: "Instagram", value: "Donia Essam", href: "#" },
+  { Icon: Linkedin, label: "LinkedIn", value: "", href: "https://linkedin.com/in/donia-essam-38302b241" },
+  { Icon: Facebook, label: "Facebook", value: "", href: "https://www.facebook.com/dody.essam.79" },
+  { Icon: Instagram, label: "Instagram", value: "", href: "https://www.instagram.com/donia_essam_98" },
 ];
 
 export function Contact() {
