@@ -5,7 +5,7 @@ import uniOctober from "@/imports/5791871838450290267.jpg";
 import uniAinShams from "@/imports/5791871838450290269.jpg";
 import uniCairo from "@/imports/5791871838450290285.jpg";
 import uniNct from "@/imports/5791871838450290278.jpg";
-import uniMisr from "@/imports/5791871838450290273.jpg";
+import uniMust from "@/imports/must uni.jpeg"; 
 import { T } from "./tokens";
 import { FadeUp } from "./FadeUp";
 
@@ -51,14 +51,15 @@ const UNIVERSITIES = [
     description: "Spearheaded technical communication modules tailored for engineering and technology students, bridging the gap between applied sciences and effective workplace collaboration.",
   },
   {
-    name: "Misr University",
-    city: "Cairo",
+    // 2. Updated Misr University Section:
+    name: "Misr University for Science and Technology (MUST)",
+    city: "Giza",
     photos: [
-      { src: uniMisr, alt: "Group of students holding certificates at a Misr University training session", crop: "center 20%" },
-      { src: uniMisr, alt: "Group of students holding certificates at a Misr University training session", crop: "center 20%" },
-      { src: uniMisr, alt: "Group of students holding certificates at a Misr University training session", crop: "center 20%" },
+      { src: uniMust, alt: "Career Readiness Training at Misr University for Science and Technology", crop: "center 20%" },
+      { src: uniMust, alt: "Career Readiness Training at Misr University for Science and Technology", crop: "center 20%" },
+      { src: uniMust, alt: "Career Readiness Training at Misr University for Science and Technology", crop: "center 20%" },
     ],
-    description: "Facilitated career readiness programs and interactive mentoring sessions. Consistently achieved high student satisfaction rates for translating complex theories into practical skills.",
+    description: "Career Readiness Trainer | Designed and facilitated training workshops tailored for 3rd and 4th-year students to prepare them for the modern job market. Cultivated core soft skills among students, focusing on impactful communication, leadership, and team management while guiding them in creating strategic, action-oriented career roadmaps with measurable goals.",
   },
 ];
 
