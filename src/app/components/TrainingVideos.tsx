@@ -3,8 +3,8 @@ import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { FadeUp } from "./FadeUp";
 import { T } from "./tokens";
 import reelThumbOne from "@/imports/5791871838450290271.jpg";
-import reelThumbTwo from "@/imports/5791871838450290275.jpg";
-import reelThumbThree from "@/imports/5791871838450290275-1.jpg";
+import reelThumbTwo from "@/imports/ain shams.jpg";
+import reelThumbThree from "@/imports/New Cairo4.jpeg";
 
 const TRAINING_VIDEOS = [
   {

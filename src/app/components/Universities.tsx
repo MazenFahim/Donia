@@ -2,65 +2,100 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import uniOctober from "@/imports/5791871838450290267.jpg";
-import uniAinShams from "@/imports/5791871838450290269.jpg";
-import uniCairo from "@/imports/5791871838450290285.jpg";
-import uniNct from "@/imports/5791871838450290278.jpg";
-import uniMust from "@/imports/must uni.jpeg"; 
+import AinShams from "@/imports/ain shams.jpg";
+import CIC1 from "@/imports/CIC1.jpeg";
+import CIC2 from "@/imports/CIC2.jpeg";
+import CIC3 from "@/imports/CIC3.jpeg";
+import CIC4 from "@/imports/CIC4.jpeg";
+import cairo1 from "@/imports/Cairo1.jpeg";
+import cairo2 from "@/imports/Cairo2.jpeg";
+import cairo3 from "@/imports/Cairo3.jpeg";
+import cairo4 from "@/imports/Cairo4.jpeg";
+import cairo5 from "@/imports/Cairo5.jpeg";
+import cairo6 from "@/imports/Cairo6.jpeg";
+import cairo7 from "@/imports/Cairo7.jpeg";
+import NewCairo1 from "@/imports/New Cairo1.jpeg";
+import NewCairo2 from "@/imports/New Cairo2.jpeg";
+import NewCairo3 from "@/imports/New Cairo3.jpeg";
+import NewCairo4 from "@/imports/New Cairo4.jpeg";
+import NewCairo5 from "@/imports/New Cairo5.jpeg";
+import NewCairo6 from "@/imports/New Cairo6.jpeg";
+import Must1 from "@/imports/Must1.jpeg";
+import Must2 from "@/imports/Must2.jpeg";
+import Must4 from "@/imports/Must4.jpeg";
+import Must5 from "@/imports/Must5.jpeg";
 import { T } from "./tokens";
 import { FadeUp } from "./FadeUp";
 
 const UNIVERSITIES = [
-  {
-    name: "6th of October University",
+   {
+    name: "Cairo University",
     city: "Giza",
     photos: [
-      { src: uniOctober, alt: "Students holding certificates at 6th of October University training event", crop: "center 20%" },
-      { src: uniOctober, alt: "Students holding certificates at 6th of October University training event", crop: "center 20%" },
-      { src: uniOctober, alt: "Students holding certificates at 6th of October University training event", crop: "center 20%" },
+      { src: cairo4, alt: "Group of students in front of Cairo University", crop: "center 25%" },
+      { src: cairo6, alt: "Cairo University training session", crop: "center 25%" },
+      { src: cairo3, alt: "Cairo University training session", crop: "center 25%" },
+      { src: cairo2, alt: "Cairo University training session", crop: "center 25%" },
+      { src: cairo5, alt: "Cairo University training session", crop: "center 25%" },
+      { src: cairo1, alt: "Cairo University training session", crop: "center 25%" },
+      { src: cairo7, alt: "Cairo University training session", crop: "center 25%" },
     ],
-    description: "Delivered comprehensive soft skills and job market preparation training to over 500 graduating seniors, focusing on interview techniques and professional communication.",
+    description: "Led large-scale seminar series for multiple faculties, equipping thousands of students with the necessary philosophical frameworks to excel in professional environments.",
+  
+  },
+ {
+    name: "New Cairo Technological University",
+    city: "Cairo",
+    photos: [
+      { src: NewCairo3, alt: "New Cairo Technological University Initiative sponsor banner", crop: "center" },
+      { src: NewCairo1, alt: "Donia Essam speaking at New Cairo Technological University", crop: "center" },
+      { src: NewCairo2, alt: "Group photo at New Cairo Technological University", crop: "center" },
+      { src: NewCairo6, alt: "Donia Essam in front of New Cairo Technological University signage", crop: "center" },
+      { src: NewCairo5, alt: "Exterior view of New Cairo Technological University", crop: "center" },
+      { src: NewCairo4, alt: "Training session at New Cairo Technological University auditorium", crop: "center" },
+    ],
+    description: "Successfully trained 400+ students in core labor market skills, enhancing their employability and preparing them for seamless entry into the modern workforce.",
+  },
+  {
+    name: "Misr University for Science and Technology (MUST)",
+    city: "Giza",
+    photos: [
+      { src: Must5, alt: "Group photo at MUST", crop: "center" },
+      { src: Must2, alt: "Donia Essam speaking about communication at MUST", crop: "center" },
+      { src: Must4, alt: "Donia Essam at the Innovation & Entrepreneurship event at MUST", crop: "center" },
+      { src: Must1, alt: "Exterior campus view of MUST", crop: "center" },
+    ],
+    description: "Career Readiness Trainer | Designed and facilitated training workshops tailored for 3rd and 4th-year students to prepare them for the modern job market. Cultivated core soft skills among students, focusing on impactful communication, leadership, and team management while guiding them in creating strategic, action-oriented career roadmaps with measurable goals.",
   },
   {
     name: "Ain Shams University",
     city: "Cairo",
     photos: [
-      { src: uniAinShams, alt: "Donia Essam in front of Canadian International College building in Cairo", crop: "center 15%" },
-      { src: uniAinShams, alt: "Donia Essam in front of Canadian International College building in Cairo", crop: "center 15%" },
-      { src: uniAinShams, alt: "Donia Essam in front of Canadian International College building in Cairo", crop: "center 15%" },
+      { src: AinShams, alt: "Donia Essam at Ain Shams University", crop: "center" },
     ],
     description: "Conducted intensive workshops on leadership and strategic thinking. Partnered with career services to align academic outcomes with modern industry requirements.",
   },
   {
-    name: "Cairo University",
-    city: "Giza",
+    name: "Canadian International College (CIC)",
+    city: "New Cairo",
     photos: [
-      { src: uniCairo, alt: "Group of students in front of Cairo University's iconic domed main building", crop: "center 25%" },
-      { src: uniCairo, alt: "Group of students in front of Cairo University's iconic domed main building", crop: "center 25%" },
-      { src: uniCairo, alt: "Group of students in front of Cairo University's iconic domed main building", crop: "center 25%" },
+      { src: CIC1, alt: "Donia Essam at the entrance of CIC", crop: "center" },
+      { src: CIC2, alt: "Donia Essam at CIC branding wall", crop: "center" },
+      { src: CIC3, alt: "Donia Essam speaking on panel at CIC", crop: "center" },
+      { src: CIC4, alt: "Donia Essam presenting at CIC event", crop: "center" },
     ],
-    description: "Led large-scale seminar series for multiple faculties, equipping thousands of students with the necessary philosophical frameworks to excel in professional environments.",
+    description: "Contributed as a Guest Trainer at the Canadian International College (CIC), delivering comprehensive training sessions for the School of Business Administration. By designing interactive and practical learning experiences, I empowered undergraduate students with vital professional development and market-ready skills, fostering their academic growth and preparing them to excel in today's competitive corporate landscape.",
   },
   {
-    name: "New Cairo Technological University",
-    city: "Cairo",
-    photos: [
-      { src: uniNct, alt: "Group photo inside New Cairo Technological University lobby", crop: "center 20%" },
-      { src: uniNct, alt: "Group photo inside New Cairo Technological University lobby", crop: "center 20%" },
-      { src: uniNct, alt: "Group photo inside New Cairo Technological University lobby", crop: "center 20%" },
-    ],
-    description: "Spearheaded technical communication modules tailored for engineering and technology students, bridging the gap between applied sciences and effective workplace collaboration.",
-  },
-  {
-    // 2. Updated Misr University Section:
-    name: "Misr University for Science and Technology (MUST)",
+  
+    name: "6th of October University",
     city: "Giza",
     photos: [
-      { src: uniMust, alt: "Career Readiness Training at Misr University for Science and Technology", crop: "center 20%" },
-      { src: uniMust, alt: "Career Readiness Training at Misr University for Science and Technology", crop: "center 20%" },
-      { src: uniMust, alt: "Career Readiness Training at Misr University for Science and Technology", crop: "center 20%" },
+      { src: uniOctober, alt: "Students holding certificates at 6th of October University training event", crop: "center" },
     ],
-    description: "Career Readiness Trainer | Designed and facilitated training workshops tailored for 3rd and 4th-year students to prepare them for the modern job market. Cultivated core soft skills among students, focusing on impactful communication, leadership, and team management while guiding them in creating strategic, action-oriented career roadmaps with measurable goals.",
+    description: "Delivered comprehensive soft skills and job market preparation training to over 500 graduating seniors, focusing on interview techniques and professional communication.",
   },
+ 
 ];
 
 const ArrowButton = ({ direction, onClick }: { direction: "left" | "right", onClick: () => void }) => {
@@ -155,10 +190,11 @@ export function Universities() {
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => {
-      setActivePhotoIndex((prev) => (prev + 1) % 3);
-    }, 3000);
-    return () => clearInterval(id);
-  }, [paused, activeUniIndex, activePhotoIndex]);
+      const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
+    setActivePhotoIndex((prev) => (prev + 1) % photoCount);
+        }, 3000);
+        return () => clearInterval(id);
+      }, [paused, activeUniIndex, activePhotoIndex]);
 
   useEffect(() => {
     if (paused) return;
@@ -250,11 +286,16 @@ export function Universities() {
                   <div style={{ paddingBottom: "125%" }} />
 
                   {UNIVERSITIES[activeUniIndex].photos.map((photo, idx) => {
-                    let position = "hidden";
-                    if (idx === activePhotoIndex) position = "front";
-                    else if (idx === (activePhotoIndex + 1) % 3) position = "backRight";
-                    else if (idx === (activePhotoIndex + 2) % 3) position = "backLeft";
+                   const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
+                   let position = "hidden";
 
+                    if (idx === activePhotoIndex) {
+                      position = "front";
+                    } else if (idx === (activePhotoIndex + 1) % photoCount) {
+                      position = "backRight";
+                    } else if (idx === (activePhotoIndex + 2) % photoCount) {
+                      position = "backLeft";
+                    } 
                     const isFront = position === "front";
 
                     return (
@@ -327,20 +368,26 @@ export function Universities() {
                       direction="left"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setActivePhotoIndex((prev) => (prev - 1 + 3) % 3);
+                        setActivePhotoIndex((prev) => {
+                        const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
+                        return (prev - 1 + photoCount) % photoCount;
+                      });
                       }}
                     />
                     <InnerNavButton
                       direction="right"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setActivePhotoIndex((prev) => (prev + 1) % 3);
+                        setActivePhotoIndex((prev) => {
+                          const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
+                          return (prev + 1) % photoCount;
+                        });
                       }}
                     />
                   </div>
 
                   <div style={{ display: "flex", justifyContent: "center", gap: 8, position: "absolute", bottom: -32, left: 0, right: 0 }}>
-                    {[0, 1, 2].map((i) => (
+                    {UNIVERSITIES[activeUniIndex].photos.map((_, i) => (
                       <button
                         key={i}
                         onClick={(e) => {
@@ -371,7 +418,7 @@ export function Universities() {
                       University Lecturer
                     </span>
                     <span style={{ marginLeft: "auto", fontSize: 13, fontWeight: 600, color: T.textSecondary, fontFamily: "Poppins, sans-serif" }}>
-                      {String(activeUniIndex + 1).padStart(2, "0")} / 05
+                      {String(activeUniIndex + 1).padStart(2, "0")} / {String(UNIVERSITIES.length).padStart(2, "0")}
                     </span>
                   </div>
 
