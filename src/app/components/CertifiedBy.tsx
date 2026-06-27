@@ -89,28 +89,28 @@ function SparkDivider() {
         style={{
           flex: 1,
           height: 1,
-          background: "linear-gradient(to right, transparent, rgba(184,151,58,0.65))",
+          background: "linear-gradient(to right, transparent, rgba(46,139,122,0.5))",
         }}
       />
       <div style={{ display: "flex", alignItems: "center", gap: 3, margin: "0 8px" }}>
         <div
-          style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(184,151,58,0.55)" }}
+          style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(46,139,122,0.45)" }}
         />
         <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
           <path
             d="M5.5 0L6.55 4L10.5 5.5L6.55 7L5.5 11L4.45 7L0.5 5.5L4.45 4L5.5 0Z"
-            fill="#B8973A"
+            fill="#2E8B7A"
           />
         </svg>
         <div
-          style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(184,151,58,0.55)" }}
+          style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(46,139,122,0.45)" }}
         />
       </div>
       <div
         style={{
           flex: 1,
           height: 1,
-          background: "linear-gradient(to left, transparent, rgba(184,151,58,0.65))",
+          background: "linear-gradient(to left, transparent, rgba(46,139,122,0.5))",
         }}
       />
     </div>
@@ -129,23 +129,23 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
         textAlign: "center",
         borderRadius: 22,
         overflow: "hidden",
-        background: "linear-gradient(168deg, #FDFBF6 0%, #F8F1DF 52%, #EFE5C4 100%)",
-        border: "1px solid rgba(184,151,58,0.24)",
-        boxShadow: "0 2px 8px rgba(15,30,60,0.05), 0 1px 2px rgba(15,30,60,0.04)",
+        background: "linear-gradient(168deg, #F4F6F7 0%, #E8ECEE 52%, #D5DCDF 100%)",
+        border: "1px solid rgba(46,139,122,0.18)",
+        boxShadow: "0 2px 8px rgba(26,42,56,0.05), 0 1px 2px rgba(26,42,56,0.04)",
         transition: "transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease",
         height: "100%",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement;
         el.style.transform = "translateY(-6px)";
-        el.style.boxShadow = "0 0 0 1.5px rgba(184,151,58,0.38) inset, 0 12px 40px rgba(184,151,58,0.14)";
-        el.style.borderColor = "rgba(184,151,58,0.5)";
+        el.style.boxShadow = "0 0 0 1.5px rgba(46,139,122,0.3) inset, 0 12px 40px rgba(46,139,122,0.12)";
+        el.style.borderColor = "rgba(46,139,122,0.4)";
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement;
         el.style.transform = "translateY(0)";
-        el.style.boxShadow = "0 2px 8px rgba(15,30,60,0.05), 0 1px 2px rgba(15,30,60,0.04)";
-        el.style.borderColor = "rgba(184,151,58,0.24)";
+        el.style.boxShadow = "0 2px 8px rgba(26,42,56,0.05), 0 1px 2px rgba(26,42,56,0.04)";
+        el.style.borderColor = "rgba(46,139,122,0.18)";
       }}
     >
       {/* Top shimmer bar */}
@@ -158,32 +158,32 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
           right: 0,
           height: 2,
           background:
-            "linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.55) 25%, rgba(217,183,88,1) 50%, rgba(201,168,76,0.55) 75%, transparent 100%)",
+            "linear-gradient(90deg, transparent 0%, rgba(46,139,122,0.4) 25%, rgba(46,139,122,0.9) 50%, rgba(46,139,122,0.4) 75%, transparent 100%)",
         }}
       />
 
       {/* Top-right star ornament */}
       <svg
         aria-hidden="true"
-        style={{ position: "absolute", top: 14, right: 14, opacity: 0.18 }}
+        style={{ position: "absolute", top: 14, right: 14, opacity: 0.15 }}
         width="16"
         height="16"
         viewBox="0 0 16 16"
         fill="none"
       >
-        <path d="M8 0L9.4 5.6L15 8L9.4 10.4L8 16L6.6 10.4L1 8L6.6 5.6Z" fill="#B8973A" />
+        <path d="M8 0L9.4 5.6L15 8L9.4 10.4L8 16L6.6 10.4L1 8L6.6 5.6Z" fill="#2E8B7A" />
       </svg>
 
       {/* Bottom-left star ornament */}
       <svg
         aria-hidden="true"
-        style={{ position: "absolute", bottom: 14, left: 14, opacity: 0.1 }}
+        style={{ position: "absolute", bottom: 14, left: 14, opacity: 0.08 }}
         width="10"
         height="10"
         viewBox="0 0 10 10"
         fill="none"
       >
-        <path d="M5 0L6 3.5L9.5 5L6 6.5L5 10L4 6.5L0.5 5L4 3.5Z" fill="#B8973A" />
+        <path d="M5 0L6 3.5L9.5 5L6 6.5L5 10L4 6.5L0.5 5L4 3.5Z" fill="#5B7FA6" />
       </svg>
 
       {/* Card content */}
@@ -212,10 +212,10 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
             fontWeight: 600,
             letterSpacing: "0.22em",
             textTransform: "uppercase",
-            fontFamily: "'DM Sans', sans-serif",
-            background: "rgba(107,122,82,0.09)",
-            color: "#3E5028",
-            border: "1px solid rgba(107,122,82,0.28)",
+            fontFamily: "'Poppins', sans-serif",
+            background: "rgba(46,139,122,0.08)",
+            color: "#1A6B5E",
+            border: "1px solid rgba(46,139,122,0.22)",
           }}
         >
           {tag}
@@ -223,7 +223,7 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
 
         {/* Icon medallion */}
         <div style={{ position: "relative", marginBottom: 22 }}>
-          {/* Conic halo ring */}
+          {/* Halo ring */}
           <div
             aria-hidden="true"
             style={{
@@ -231,19 +231,19 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
               inset: -7,
               borderRadius: "50%",
               background:
-                "conic-gradient(from 0deg, rgba(184,151,58,0.38) 0deg, rgba(184,151,58,0.06) 60deg, rgba(184,151,58,0.22) 120deg, rgba(184,151,58,0.06) 180deg, rgba(184,151,58,0.38) 240deg, rgba(184,151,58,0.06) 300deg, rgba(184,151,58,0.38) 360deg)",
+                "conic-gradient(from 0deg, rgba(46,139,122,0.3) 0deg, rgba(46,139,122,0.05) 60deg, rgba(91,127,166,0.2) 120deg, rgba(46,139,122,0.05) 180deg, rgba(46,139,122,0.3) 240deg, rgba(46,139,122,0.05) 300deg, rgba(46,139,122,0.3) 360deg)",
             }}
           />
-          {/* White medallion */}
+          {/* Medallion */}
           <div
             style={{
               position: "relative",
               width: 80,
               height: 80,
               borderRadius: "50%",
-              background: "linear-gradient(150deg, #ffffff 0%, #faf6ec 100%)",
+              background: "linear-gradient(150deg, #ffffff 0%, #f0f4f5 100%)",
               boxShadow:
-                "0 0 0 1.5px rgba(184,151,58,0.3), 0 4px 18px rgba(15,30,60,0.12), inset 0 1px 2px rgba(255,255,255,1)",
+                "0 0 0 1.5px rgba(46,139,122,0.25), 0 4px 18px rgba(26,42,56,0.1), inset 0 1px 2px rgba(255,255,255,1)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -269,7 +269,7 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
             fontFamily: "'Playfair Display', serif",
             fontSize: "1.75rem",
             fontWeight: 700,
-            color: "#0F1E3C",
+            color: "#1A2A38",
             lineHeight: 1,
             letterSpacing: "0.1em",
             margin: 0,
@@ -286,8 +286,8 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
             letterSpacing: "0.16em",
             textTransform: "uppercase",
             fontWeight: 500,
-            fontFamily: "'DM Sans', sans-serif",
-            color: "#5C6E3E",
+            fontFamily: "'Poppins', sans-serif",
+            color: "#2E8B7A",
           }}
         >
           {country}
@@ -298,10 +298,10 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
         {/* Full institution name */}
         <p
           style={{
-            fontFamily: "'Crimson Pro', serif",
+            fontFamily: "'Playfair Display', serif",
             fontSize: "0.95rem",
             fontWeight: 600,
-            color: "#162040",
+            color: "#1A2A38",
             lineHeight: 1.45,
             margin: "0 0 12px",
           }}
@@ -312,9 +312,9 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
         {/* Description */}
         <p
           style={{
-            fontFamily: "'Crimson Pro', serif",
-            fontSize: "0.875rem",
-            color: "#6B6354",
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: "0.8rem",
+            color: "#4A5E6A",
             fontWeight: 300,
             lineHeight: 1.78,
             margin: 0,
@@ -334,8 +334,8 @@ export function CertifiedBy() {
         position: "relative",
         overflow: "hidden",
         background:
-          "radial-gradient(ellipse 110% 55% at 50% -5%, rgba(184,151,58,0.06) 0%, transparent 60%), #F8F5EF",
-        fontFamily: "'DM Sans', sans-serif",
+          "radial-gradient(ellipse 110% 55% at 50% -5%, rgba(46,139,122,0.05) 0%, transparent 60%), #F4F6F7",
+        fontFamily: "'Poppins', sans-serif",
       }}
     >
       <div style={{ height: 1, background: T.border }} />
@@ -370,7 +370,7 @@ export function CertifiedBy() {
                   inset: -10,
                   borderRadius: "50%",
                   background:
-                    "radial-gradient(circle, rgba(107,143,113,0.5) 0%, transparent 70%)",
+                    "radial-gradient(circle, rgba(46,139,122,0.45) 0%, transparent 70%)",
                   filter: "blur(14px)",
                 }}
               />
@@ -380,16 +380,16 @@ export function CertifiedBy() {
                   width: 50,
                   height: 50,
                   borderRadius: "50%",
-                  background: "#6B8F71",
-                  border: "1px solid rgba(190,155,92,0.45)",
+                  background: "#2E8B7A",
+                  border: "1px solid rgba(91,127,166,0.4)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   boxShadow:
-                    "0 14px 34px rgba(107,143,113,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
+                    "0 14px 34px rgba(46,139,122,0.22), inset 0 1px 0 rgba(255,255,255,0.2)",
                 }}
               >
-                <ShieldCheck size={21} color="#E8C25E" strokeWidth={1.7} />
+                <ShieldCheck size={21} color="#ffffff" strokeWidth={1.7} />
               </div>
             </div>
 
@@ -406,7 +406,7 @@ export function CertifiedBy() {
                 style={{
                   height: 1,
                   width: 40,
-                  background: "linear-gradient(to right, transparent, rgba(184,151,58,0.55))",
+                  background: "linear-gradient(to right, transparent, rgba(46,139,122,0.5))",
                 }}
               />
               <p
@@ -415,9 +415,9 @@ export function CertifiedBy() {
                   fontWeight: 600,
                   letterSpacing: "0.26em",
                   textTransform: "uppercase",
-                  color: "#5C6E3E",
+                  color: "#2E8B7A",
                   margin: 0,
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                 }}
               >
                 Internationally Certified By
@@ -426,7 +426,7 @@ export function CertifiedBy() {
                 style={{
                   height: 1,
                   width: 40,
-                  background: "linear-gradient(to left, transparent, rgba(184,151,58,0.55))",
+                  background: "linear-gradient(to left, transparent, rgba(46,139,122,0.5))",
                 }}
               />
             </div>
@@ -437,19 +437,19 @@ export function CertifiedBy() {
                 fontFamily: "'Playfair Display', serif",
                 fontSize: "clamp(2rem, 4.2vw, 3.4rem)",
                 fontWeight: 600,
-                color: "#0F1E3C",
+                color: "#1A2A38",
                 lineHeight: 1.18,
                 letterSpacing: "-0.01em",
                 margin: "0 0 20px",
               }}
-            > 
+            >
               Internationally Certified By{" "}
-              <em style={{ fontStyle: "italic", color: "#4A5E2F", fontWeight: 400 }}>
+              <em style={{ fontStyle: "italic", color: "#2E8B7A", fontWeight: 400 }}>
                 Leading Institutions
               </em>
             </h2>
 
-            {/* Gold rule */}
+            {/* Teal rule */}
             <div
               style={{
                 display: "flex",
@@ -459,17 +459,17 @@ export function CertifiedBy() {
                 margin: "0 auto 24px",
               }}
             >
-              <div style={{ flex: 1, height: 1, background: "rgba(184,151,58,0.5)" }} />
-              <Star size={11} fill="#B8973A" stroke="none" aria-hidden="true" />
-              <div style={{ flex: 1, height: 1, background: "rgba(184,151,58,0.5)" }} />
+              <div style={{ flex: 1, height: 1, background: "rgba(46,139,122,0.45)" }} />
+              <Star size={11} fill="#2E8B7A" stroke="none" aria-hidden="true" />
+              <div style={{ flex: 1, height: 1, background: "rgba(46,139,122,0.45)" }} />
             </div>
 
             {/* Subtext */}
             <p
               style={{
-                fontFamily: "'Crimson Pro', serif",
-                fontSize: "1.15rem",
-                color: "#7A7465",
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: "1rem",
+                color: "#4A5E6A",
                 fontWeight: 300,
                 lineHeight: 1.8,
                 margin: 0,
@@ -517,13 +517,13 @@ export function CertifiedBy() {
               style={{
                 flex: 1,
                 height: 1,
-                background: "linear-gradient(to right, transparent, rgba(184,151,58,0.45))",
+                background: "linear-gradient(to right, transparent, rgba(46,139,122,0.4))",
               }}
             />
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
               <path
                 d="M9 0L10.6 6.4L17 9L10.6 11.6L9 18L7.4 11.6L1 9L7.4 6.4L9 0Z"
-                fill="#B8973A"
+                fill="#2E8B7A"
                 opacity="0.6"
               />
             </svg>
@@ -531,7 +531,7 @@ export function CertifiedBy() {
               style={{
                 flex: 1,
                 height: 1,
-                background: "linear-gradient(to left, transparent, rgba(184,151,58,0.45))",
+                background: "linear-gradient(to left, transparent, rgba(46,139,122,0.4))",
               }}
             />
           </div>
