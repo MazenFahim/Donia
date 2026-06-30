@@ -22,7 +22,7 @@ const CONTACT_CARDS: ContactCard[] = [
 export function Contact() {
   return (
     <section id="contact" style={{ background: T.navy }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "120px 48px 0" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }} className="px-6 md:px-12 pt-16 md:pt-[120px]">
 
         {/* Section label */}
         <FadeUp>
@@ -43,7 +43,7 @@ export function Contact() {
         </FadeUp>
 
         {/* Two columns */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "start" }}>
+        <div style={{ alignItems: "start" }} className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-[64px]">
 
           {/* Left: Quote + Photo */}
           <FadeUp delay={100}>
@@ -77,10 +77,9 @@ export function Contact() {
 
           {/* Right: Contact cards 2x3 grid */}
           <FadeUp delay={180}>
-            <div
+            <div className="grid grid-cols-2"
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
                 gap: 16,
               }}
             >
@@ -154,7 +153,7 @@ export function Contact() {
       </div>
 
       {/* Footer */}
-      <div style={{ marginTop: 80, padding: "32px 48px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+      <div style={{ marginTop: 80, borderTop: "1px solid rgba(255,255,255,0.08)" }} className="px-6 md:px-12 py-8">
         <p
           style={{
             fontSize: 12,

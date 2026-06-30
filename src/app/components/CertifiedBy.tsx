@@ -485,12 +485,11 @@ export function CertifiedBy() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
             gap: "1.5rem",
             maxWidth: 1280,
             margin: "0 auto",
           }}
-          className="sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         >
           {CERTIFICATIONS.map((cert, index) => (
             <FadeUp key={cert.abbr} delay={index * 70}>
