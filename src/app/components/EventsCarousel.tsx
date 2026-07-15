@@ -220,44 +220,8 @@ function EventCard({
   const smoothOpacity = useSpring(opacity, { stiffness: 120, damping: 20 });
   const smoothImageY = useSpring(imageY, { stiffness: 120, damping: 20 });
 
-  const [hovered, setHovered] = useState(false);
-
   const cardRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(cardRef, { once: false, margin: "0px -15% 0px -15%" });
-  const [mobilePeek, setMobilePeek] = useState(false);
-  const isTouchDevice = typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
-
-  useEffect(() => {
-    if (!isTouchDevice) return;
-    if (!isInView) return;
-
-    const openTimer = setTimeout(() => setMobilePeek(true), 420);
-    const closeTimer = setTimeout(() => setMobilePeek(false), 420 + 2000);
-    return () => {
-      clearTimeout(openTimer);
-      clearTimeout(closeTimer);
-    };
-  }, [isInView, isTouchDevice]);
-
-  const panelOpen = hovered || mobilePeek;
-
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const springRotateX = useSpring(rotateX, { stiffness: 150, damping: 14 });
-  const springRotateY = useSpring(rotateY, { stiffness: 150, damping: 14 });
-
-  function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    rotateY.set(px * 8);
-    rotateX.set(-py * 8);
-  }
-  function handlePointerLeave() {
-    rotateX.set(0);
-    rotateY.set(0);
-    setHovered(false);
-  }
+  const panelOpen = false;
 
   return (
     <motion.div
@@ -271,12 +235,6 @@ function EventCard({
       className="relative select-none"
     >
       <motion.div
-        onPointerMove={handlePointerMove}
-        onPointerEnter={() => {
-          setHovered(true);
-          onFocus(index);
-        }}
-        onPointerLeave={handlePointerLeave}
         onClick={() => onOpen(index)}
         role="button"
         tabIndex={0}
@@ -286,12 +244,7 @@ function EventCard({
             onOpen(index);
           }
         }}
-        style={{
-          rotateX: springRotateX,
-          rotateY: springRotateY,
-          transformPerspective: 1000,
-        }}
-        className="group relative aspect-[3.5/4.3] cursor-pointer overflow-hidden rounded-[30px] bg-[#1C1C1C] shadow-[0_20px_60px_rgba(28,28,28,0.10)] ring-1 ring-[#DDD8CE] transition-shadow duration-500 hover:shadow-[0_30px_80px_rgba(28,28,28,0.20)]"
+        className="group relative aspect-[3.5/4.3] cursor-pointer overflow-hidden rounded-[30px] bg-[#1C1C1C] shadow-[0_20px_60px_rgba(28,28,28,0.10)] ring-1 ring-[#DDD8CE]"
       >
         <div className="absolute inset-0 w-full h-full z-0">
           <motion.div style={{ y: smoothImageY }} className="h-full w-full">
