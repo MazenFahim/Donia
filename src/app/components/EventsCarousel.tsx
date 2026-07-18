@@ -1,6 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useScroll, useTransform, useSpring, useInView } from "motion/react";
-import { ArrowUpRight, ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
+import {
+  ArrowUpRight,
+  ArrowLeft,
+  ArrowRight,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 
 // ✅ استيراد صور TFT Event
@@ -57,15 +71,28 @@ const EVENTS = [
     num: "01",
     type: "Tech Tournament",
     name: "TFT event",
-    description: "A competitive Teamfight Tactics tournament bringing together strategic players for intense matches and community engagement.",
+    description:
+      "A competitive Teamfight Tactics tournament bringing together strategic players for intense matches and community engagement.",
     meta: "1st Edition / BVU Academy",
     impact: "Esports community building and strategic gaming",
     photos: [
-      { src: tftSlide1, crop: "center center", alt: "TFT Tournament Highlights 1" },
-      { src: tftSlide2, crop: "center center", alt: "TFT Tournament Highlights 2" },
-      { src: tftSlide3, crop: "center center", alt: "TFT Tournament Highlights 3" },
+      {
+        src: tftSlide1,
+        crop: "center center",
+        alt: "TFT Tournament Highlights 1",
+      },
+      {
+        src: tftSlide2,
+        crop: "center center",
+        alt: "TFT Tournament Highlights 2",
+      },
+      {
+        src: tftSlide3,
+        crop: "center center",
+        alt: "TFT Tournament Highlights 3",
+      },
     ],
-    photo: tftSlide1, 
+    photo: tftSlide1,
     alt: "Strategic Teamfight Tactics tournament matches at TFT Event",
     crop: "center center",
   },
@@ -73,14 +100,23 @@ const EVENTS = [
     num: "02",
     type: "Academic Conference",
     name: "The 20th Annual Conference of the Adult Education Center - Ain Shams University",
-    description: "An influential academic conference focusing on the modern trends, challenges, and strategic developments in adult education and community empowerment.",
+    description:
+      "An influential academic conference focusing on the modern trends, challenges, and strategic developments in adult education and community empowerment.",
     meta: "20th Edition / Ain Shams University",
     impact: "Adult education strategies and academic research alignment",
     photos: [
-      { src: asSlide1, crop: "center 15%", alt: "Ain Shams University Conference Highlights 1" },
-      { src: asSlide2, crop: "center center", alt: "Ain Shams University Conference Highlights 2" },
+      {
+        src: asSlide1,
+        crop: "center 15%",
+        alt: "Ain Shams University Conference Highlights 1",
+      },
+      {
+        src: asSlide2,
+        crop: "center center",
+        alt: "Ain Shams University Conference Highlights 2",
+      },
     ],
-    photo: asSlide1, 
+    photo: asSlide1,
     alt: "Donia Essam Mohamed Amin at Ain Shams University for the Annual Conference",
     crop: "center 15%",
   },
@@ -88,19 +124,25 @@ const EVENTS = [
     num: "03",
     type: "Development Program",
     name: "TMC",
-    description: "A competitive training and development program empowering youth with practical market skills.",
+    description:
+      "A competitive training and development program empowering youth with practical market skills.",
     meta: "1st & 2nd Editions / BVU Academy",
     impact: "Practical market skills for youth",
     photos: [
-      { src: tmcSlide1, crop: "center 20%", alt: "TMC Highlights 1" }, 
-      { src: tmcSlide2, crop: "center center", alt: "TMC Highlights 2" }, 
-      { src: tmcSlide3, crop: "center center", alt: "TMC Highlights 3" }, 
-      { src: tmcSlide4, crop: "center center", alt: "TMC Highlights 4" }, 
+      { src: tmcSlide1, crop: "center 20%", alt: "TMC Highlights 1" },
+      { src: tmcSlide2, crop: "center center", alt: "TMC Highlights 2" },
+      { src: tmcSlide3, crop: "center center", alt: "TMC Highlights 3" },
+      { src: tmcSlide4, crop: "center center", alt: "TMC Highlights 4" },
       { src: tmcSlide5, crop: "center center", alt: "TMC Highlights 5" },
       { src: tmcSlide6, crop: "center center", alt: "TMC Highlights 6" },
-      { src: tmcSlide7, crop: "center center", alt: "TMC Highlights 7 Graduation", contain: true }, 
+      {
+        src: tmcSlide7,
+        crop: "center center",
+        alt: "TMC Highlights 7 Graduation",
+        contain: true,
+      },
     ],
-    photo: tmcSlide1, 
+    photo: tmcSlide1,
     alt: "TMC training program — group of participants with certificates",
     crop: "center 20%",
   },
@@ -108,7 +150,8 @@ const EVENTS = [
     num: "04",
     type: "International Case Competition",
     name: "ICC event",
-    description: "An intensive global case competition challenging ambitious minds to solve real-world business cases and pitch strategic solutions.",
+    description:
+      "An intensive global case competition challenging ambitious minds to solve real-world business cases and pitch strategic solutions.",
     meta: "Global Edition / Corporate Sponsored",
     impact: "Business strategy, analytical thinking, and global networking",
     photos: [
@@ -118,7 +161,7 @@ const EVENTS = [
       { src: iccSlide5, crop: "center center", alt: "ICC Event Highlights 5" },
       { src: iccSlide6, crop: "center center", alt: "ICC Event Highlights 6" },
     ],
-    photo: iccSlide2, 
+    photo: iccSlide2,
     alt: "Global case solving and networking at the ICC Event",
     crop: "center 18%",
   },
@@ -126,20 +169,53 @@ const EVENTS = [
     num: "05",
     type: "Public Youth Event",
     name: "Path Finder Event",
-    description: "A large-scale youth qualification event organized in collaboration with Al-Asmarat Youth & Sports City.",
+    description:
+      "A large-scale youth qualification event organized in collaboration with Al-Asmarat Youth & Sports City.",
     meta: "Ministry of Youth & Sports / Al-Asmarat Youth City",
     impact: "Large-scale youth career development",
     photos: [
-      { src: pfSlide1, crop: "center 18%", alt: "Path Finder Event Highlights 1" },
-      { src: pfSlide2, crop: "center center", alt: "Path Finder Event Highlights 2" },
-      { src: pfSlide3, crop: "center center", alt: "Path Finder Event Highlights 3" },
-      { src: pfSlide4, crop: "center center", alt: "Path Finder Event Highlights 4" },
-      { src: pfSlide5, crop: "center center", alt: "Path Finder Event Highlights 5" },
-      { src: pfSlide6, crop: "center center", alt: "Path Finder Event Highlights 6" },
-      { src: pfSlide7, crop: "center center", alt: "Path Finder Event Highlights 7" },
-      { src: pfSlide8, crop: "center center", alt: "Path Finder Event Highlights 8" },
+      {
+        src: pfSlide1,
+        crop: "center 18%",
+        alt: "Path Finder Event Highlights 1",
+      },
+      {
+        src: pfSlide2,
+        crop: "center center",
+        alt: "Path Finder Event Highlights 2",
+      },
+      {
+        src: pfSlide3,
+        crop: "center center",
+        alt: "Path Finder Event Highlights 3",
+      },
+      {
+        src: pfSlide4,
+        crop: "center center",
+        alt: "Path Finder Event Highlights 4",
+      },
+      {
+        src: pfSlide5,
+        crop: "center center",
+        alt: "Path Finder Event Highlights 5",
+      },
+      {
+        src: pfSlide6,
+        crop: "center center",
+        alt: "Path Finder Event Highlights 6",
+      },
+      {
+        src: pfSlide7,
+        crop: "center center",
+        alt: "Path Finder Event Highlights 7",
+      },
+      {
+        src: pfSlide8,
+        crop: "center center",
+        alt: "Path Finder Event Highlights 8",
+      },
     ],
-    photo: pfSlide1, 
+    photo: pfSlide1,
     alt: "Donia Essam on stage with microphone at the Path Finder Event",
     crop: "center 18%",
   },
@@ -147,15 +223,28 @@ const EVENTS = [
     num: "06",
     type: "Cultural Community Gathering",
     name: "Ramadan Majlis Event",
-    description: "A special traditional and networking majlis bringing professionals together during the holy month to discuss community development and cultural values.",
+    description:
+      "A special traditional and networking majlis bringing professionals together during the holy month to discuss community development and cultural values.",
     meta: "Annual Edition / Community Network",
     impact: "Cultural exchange, leadership networking, and social synergy",
     photos: [
-      { src: rmSlide1, crop: "center center", alt: "Ramadan Majlis Event Highlights 1" },
-      { src: rmSlide2, crop: "center center", alt: "Ramadan Majlis Event Highlights 2" },
-      { src: rmSlide3, crop: "center center", alt: "Ramadan Majlis Event Highlights 3" },
+      {
+        src: rmSlide1,
+        crop: "center center",
+        alt: "Ramadan Majlis Event Highlights 1",
+      },
+      {
+        src: rmSlide2,
+        crop: "center center",
+        alt: "Ramadan Majlis Event Highlights 2",
+      },
+      {
+        src: rmSlide3,
+        crop: "center center",
+        alt: "Ramadan Majlis Event Highlights 3",
+      },
     ],
-    photo: rmSlide1, 
+    photo: rmSlide1,
     alt: "Atmosphere and networking at the Ramadan Majlis Event",
     crop: "center center",
   },
@@ -163,76 +252,163 @@ const EVENTS = [
     num: "07",
     type: "Professional Corporate Forum",
     name: "HR Expert Club Event",
-    description: "An exclusive gathering for human resource professionals focusing on talent acquisition strategies, corporate culture modern shifts, and workforce optimization.",
+    description:
+      "An exclusive gathering for human resource professionals focusing on talent acquisition strategies, corporate culture modern shifts, and workforce optimization.",
     meta: "Expert Edition / Corporate Network",
     impact: "Strategic workforce insights and industry leadership connection",
     photos: [
-      { src: hrSlide1, crop: "center center", alt: "HR Expert Club Highlights 1" },
-      { src: hrSlide2, crop: "center center", alt: "HR Expert Club Highlights 2" },
-      { src: hrSlide3, crop: "center center", alt: "HR Expert Club Highlights 3" },
-      { src: hrSlide4, crop: "center center", alt: "HR Expert Club Highlights 4" },
-      { src: hrSlide5, crop: "center center", alt: "HR Expert Club Highlights 5" },
+      {
+        src: hrSlide1,
+        crop: "center center",
+        alt: "HR Expert Club Highlights 1",
+      },
+      {
+        src: hrSlide2,
+        crop: "center center",
+        alt: "HR Expert Club Highlights 2",
+      },
+      {
+        src: hrSlide3,
+        crop: "center center",
+        alt: "HR Expert Club Highlights 3",
+      },
+      {
+        src: hrSlide4,
+        crop: "center center",
+        alt: "HR Expert Club Highlights 4",
+      },
+      {
+        src: hrSlide5,
+        crop: "center center",
+        alt: "HR Expert Club Highlights 5",
+      },
     ],
-    photo: hrSlide1, 
+    photo: hrSlide1,
     alt: "Keynote presentation and panels at the HR Expert Club Event",
     crop: "center center",
   },
 ];
 
-const CARD_WIDTH = 460; 
-const CARD_GAP = 28; 
+const CARD_WIDTH = 460;
+const CARD_GAP = 28;
+
+// CARD_WIDTH stays the desktop width. On a viewport narrower than the card,
+// the card uses the available track width so even the first/last card can be
+// truly centered without creating empty/phantom neighbours.
+const CARD_SIZE = `min(${CARD_WIDTH}px, 100%)`;
+const CENTER_GUTTER = `max(2px, calc((100% - ${CARD_WIDTH}px) / 2))`;
+
+function getCarouselCards(track: HTMLDivElement) {
+  return Array.from(track.querySelectorAll<HTMLElement>("[data-event-card]"));
+}
+
+/**
+ * Reads the cards' real positions in the scrollable content and returns:
+ * - exactIndex: a continuous value used by Motion (e.g. 1.35 while moving
+ *   from card 2 to card 3)
+ * - nearestIndex: the card currently closest to the viewport centre
+ */
+function readCenteredPosition(track: HTMLDivElement) {
+  const cards = getCarouselCards(track);
+
+  if (cards.length === 0) {
+    return { exactIndex: 0, nearestIndex: 0 };
+  }
+
+  const trackRect = track.getBoundingClientRect();
+  const viewportCenter = track.scrollLeft + track.clientWidth / 2;
+  const centers = cards.map((card) => {
+    const cardRect = card.getBoundingClientRect();
+
+    return (
+      cardRect.left - trackRect.left + track.scrollLeft + cardRect.width / 2
+    );
+  });
+
+  let nearestIndex = 0;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+
+  centers.forEach((center, index) => {
+    const distance = Math.abs(center - viewportCenter);
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestIndex = index;
+    }
+  });
+
+  if (viewportCenter <= centers[0]) {
+    return { exactIndex: 0, nearestIndex };
+  }
+
+  const lastIndex = centers.length - 1;
+  if (viewportCenter >= centers[lastIndex]) {
+    return { exactIndex: lastIndex, nearestIndex };
+  }
+
+  const rightIndex = centers.findIndex((center) => center >= viewportCenter);
+  const leftIndex = rightIndex - 1;
+  const distanceBetweenCenters = centers[rightIndex] - centers[leftIndex];
+  const progressBetweenCards =
+    distanceBetweenCenters === 0
+      ? 0
+      : (viewportCenter - centers[leftIndex]) / distanceBetweenCenters;
+
+  return {
+    exactIndex: leftIndex + progressBetweenCards,
+    nearestIndex,
+  };
+}
+
+function getCenteredScrollLeft(track: HTMLDivElement, index: number) {
+  const cards = getCarouselCards(track);
+  if (cards.length === 0) return null;
+
+  const safeIndex = Math.min(Math.max(index, 0), cards.length - 1);
+  const trackRect = track.getBoundingClientRect();
+  const cardRect = cards[safeIndex].getBoundingClientRect();
+  const cardCenter =
+    cardRect.left - trackRect.left + track.scrollLeft + cardRect.width / 2;
+  const desiredLeft = cardCenter - track.clientWidth / 2;
+  const maxScrollLeft = Math.max(track.scrollWidth - track.clientWidth, 0);
+
+  return Math.min(Math.max(desiredLeft, 0), maxScrollLeft);
+}
 
 // ✅ تم تعديل هذا المكون ليغطي الكارد بالكامل وتختفي المساحة الرمادية
 function EventCard({
   event,
   index,
-  total,
-  trackProgress,
-  onFocus,
+  focusIndex,
   onOpen,
 }: {
   event: (typeof EVENTS)[number];
   index: number;
-  total: number;
-  trackProgress: ReturnType<typeof useMotionValue<number>>;
-  onFocus: (index: number) => void;
+  focusIndex: MotionValue<number>;
   onOpen: (index: number) => void;
 }) {
-  const centerFraction = (index + 0.5) / total;
-
-  const scale = useTransform(
-    trackProgress,
-    [centerFraction - 0.5, centerFraction, centerFraction + 0.5],
-    [0.86, 1, 0.86]
-  );
-  const opacity = useTransform(
-    trackProgress,
-    [centerFraction - 0.6, centerFraction, centerFraction + 0.6],
-    [0.45, 1, 0.45]
-  );
-  const imageY = useTransform(
-    trackProgress,
-    [centerFraction - 0.5, centerFraction, centerFraction + 0.5],
-    [24, 0, 24]
+  const distanceFromCenter = useTransform(focusIndex, (value) =>
+    Math.abs(value - index),
   );
 
-  const smoothScale = useSpring(scale, { stiffness: 120, damping: 20 });
-  const smoothOpacity = useSpring(opacity, { stiffness: 120, damping: 20 });
-  const smoothImageY = useSpring(imageY, { stiffness: 120, damping: 20 });
+  // 0 cards away = focused, 1 away = immediate neighbour, 2+ = background.
+  const scale = useTransform(distanceFromCenter, [0, 1, 2], [1, 0.86, 0.8]);
+  const opacity = useTransform(distanceFromCenter, [0, 1, 2], [1, 0.45, 0.22]);
+  const imageY = useTransform(distanceFromCenter, [0, 1, 2], [0, 18, 28]);
 
-  const cardRef = useRef<HTMLDivElement>(null);
+  const smoothScale = useSpring(scale, { stiffness: 150, damping: 22 });
+  const smoothOpacity = useSpring(opacity, { stiffness: 150, damping: 22 });
+  const smoothImageY = useSpring(imageY, { stiffness: 150, damping: 22 });
+
   const panelOpen = false;
 
   return (
     <motion.div
-      ref={cardRef}
       style={{
         scale: smoothScale,
         opacity: smoothOpacity,
-        width: CARD_WIDTH,
-        flex: `0 0 ${CARD_WIDTH}px`,
+        transformOrigin: "center center",
       }}
-      className="relative select-none"
+      className="relative w-full select-none"
     >
       <motion.div
         onClick={() => onOpen(index)}
@@ -376,15 +552,21 @@ function EventModal({
 
   const prevInternalPhoto = () => {
     if (event.photos) {
-      setCurrentPhotoIndex((prev) => (prev - 1 + event.photos.length) % event.photos.length);
+      setCurrentPhotoIndex(
+        (prev) => (prev - 1 + event.photos.length) % event.photos.length,
+      );
     }
   };
 
   const isSlider = !!event.photos;
-  const displayPhoto = isSlider ? event.photos[currentPhotoIndex].src : event.photo;
-  const currentCrop = isSlider ? event.photos[currentPhotoIndex].crop : event.crop;
+  const displayPhoto = isSlider
+    ? event.photos[currentPhotoIndex].src
+    : event.photo;
+  const currentCrop = isSlider
+    ? event.photos[currentPhotoIndex].crop
+    : event.crop;
   const currentAlt = isSlider ? event.photos[currentPhotoIndex].alt : event.alt;
-  
+
   const isContain = isSlider && event.photos[currentPhotoIndex].contain;
 
   return (
@@ -417,7 +599,7 @@ function EventModal({
           <div className="absolute inset-0 w-full h-full">
             <AnimatePresence mode="wait">
               <motion.div
-                key={currentPhotoIndex + (event.name)}
+                key={currentPhotoIndex + event.name}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -427,20 +609,20 @@ function EventModal({
                 <ImageWithFallback
                   src={displayPhoto}
                   alt={currentAlt}
-                  className={`w-full h-full grayscale-[14%] saturate-[.86] ${isContain ? 'object-contain' : 'object-cover'}`}
-                  style={{ objectPosition: currentCrop }} 
+                  className={`w-full h-full grayscale-[14%] saturate-[.86] ${isContain ? "object-contain" : "object-cover"}`}
+                  style={{ objectPosition: currentCrop }}
                 />
               </motion.div>
             </AnimatePresence>
           </div>
-          
+
           {!isContain && (
             <>
               <div className="pointer-events-none absolute inset-0 bg-[#6B8F71]/12 mix-blend-multiply" />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#171717]/60 via-transparent to-transparent md:bg-gradient-to-r" />
             </>
           )}
-          
+
           <span className="absolute left-6 top-6 font-['Playfair_Display'] text-5xl italic leading-none text-[#F8F5EF] drop-shadow-md">
             {event.num}
           </span>
@@ -449,7 +631,10 @@ function EventModal({
             <>
               <button
                 type="button"
-                onClick={(e) => { e.stopPropagation(); prevInternalPhoto(); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevInternalPhoto();
+                }}
                 aria-label="Previous Photo"
                 className="absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-[#1C1C1C]/75 text-[#F8F5EF] backdrop-blur-md shadow-lg border border-[#F8F5EF]/20 transition-all duration-200 hover:bg-[#1C1C1C]/90 hover:scale-105 active:scale-95 z-20"
               >
@@ -457,7 +642,10 @@ function EventModal({
               </button>
               <button
                 type="button"
-                onClick={(e) => { e.stopPropagation(); nextInternalPhoto(); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextInternalPhoto();
+                }}
                 aria-label="Next Photo"
                 className="absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-[#1C1C1C]/75 text-[#F8F5EF] backdrop-blur-md shadow-lg border border-[#F8F5EF]/20 transition-all duration-200 hover:bg-[#1C1C1C]/90 hover:scale-105 active:scale-95 z-20"
               >
@@ -469,9 +657,14 @@ function EventModal({
                   <button
                     key={i}
                     type="button"
-                    onClick={(e) => { e.stopPropagation(); setCurrentPhotoIndex(i); }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentPhotoIndex(i);
+                    }}
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      currentPhotoIndex === i ? "w-5 bg-[#F8F5EF]" : "w-2 bg-[#F8F5EF]/45 hover:bg-[#F8F5EF]/70"
+                      currentPhotoIndex === i
+                        ? "w-5 bg-[#F8F5EF]"
+                        : "w-2 bg-[#F8F5EF]/45 hover:bg-[#F8F5EF]/70"
                     }`}
                   />
                 ))}
@@ -541,23 +734,86 @@ export function EventsCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const activeIndexRef = useRef(0);
+  const focusIndex = useMotionValue(0);
 
-  const { scrollXProgress } = useScroll({ container: trackRef });
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let scrollFrame: number | null = null;
+    let resizeFrame: number | null = null;
+
+    const updateFromScroll = () => {
+      scrollFrame = null;
+      const { exactIndex, nearestIndex } = readCenteredPosition(track);
+
+      // Motion gets the continuous position for smooth scale/opacity changes.
+      focusIndex.set(exactIndex);
+
+      // React state changes only when another card actually becomes nearest.
+      if (activeIndexRef.current !== nearestIndex) {
+        activeIndexRef.current = nearestIndex;
+        setActiveIndex(nearestIndex);
+      }
+    };
+
+    const scheduleScrollUpdate = () => {
+      if (scrollFrame !== null) return;
+      scrollFrame = window.requestAnimationFrame(updateFromScroll);
+    };
+
+    const keepActiveCardCenteredOnResize = () => {
+      if (resizeFrame !== null) {
+        window.cancelAnimationFrame(resizeFrame);
+      }
+
+      resizeFrame = window.requestAnimationFrame(() => {
+        resizeFrame = null;
+        const targetLeft = getCenteredScrollLeft(track, activeIndexRef.current);
+
+        if (targetLeft !== null) {
+          track.scrollTo({ left: targetLeft, behavior: "auto" });
+        }
+
+        scheduleScrollUpdate();
+      });
+    };
+
+    updateFromScroll();
+    track.addEventListener("scroll", scheduleScrollUpdate, { passive: true });
+    window.addEventListener("resize", keepActiveCardCenteredOnResize);
+
+    return () => {
+      track.removeEventListener("scroll", scheduleScrollUpdate);
+      window.removeEventListener("resize", keepActiveCardCenteredOnResize);
+
+      if (scrollFrame !== null) {
+        window.cancelAnimationFrame(scrollFrame);
+      }
+      if (resizeFrame !== null) {
+        window.cancelAnimationFrame(resizeFrame);
+      }
+    };
+  }, [focusIndex]);
 
   function scrollToIndex(index: number) {
-    const el = trackRef.current;
-    if (!el) return;
-    const cardFull = CARD_WIDTH + CARD_GAP;
-    el.scrollTo({ left: index * cardFull, behavior: "smooth" });
-    setActiveIndex(index);
+    const track = trackRef.current;
+    if (!track) return;
+
+    const targetLeft = getCenteredScrollLeft(track, index);
+    if (targetLeft === null) return;
+
+    track.scrollTo({ left: targetLeft, behavior: "smooth" });
   }
 
   function scrollBy(direction: 1 | -1) {
-    const el = trackRef.current;
-    if (!el) return;
-    const cardFull = CARD_WIDTH + CARD_GAP;
-    el.scrollBy({ left: direction * cardFull, behavior: "smooth" });
-    setActiveIndex((prev) => Math.min(Math.max(prev + direction, 0), EVENTS.length - 1));
+    const nextIndex = Math.min(
+      Math.max(activeIndexRef.current + direction, 0),
+      EVENTS.length - 1,
+    );
+
+    scrollToIndex(nextIndex);
   }
 
   return (
@@ -578,12 +834,16 @@ export function EventsCarousel() {
               </div>
               <h2 className="font-['Playfair_Display'] text-[clamp(42px,6vw,78px)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#1C1C1C]">
                 Events with
-                <br />visible impact
+                <br />
+                visible impact
               </h2>
             </div>
             <div className="flex flex-col gap-6 lg:ml-auto lg:items-end lg:text-right">
               <p className="max-w-xl text-[16px] leading-8 text-[#4A4A4A]">
-                A refined selection of Donia’s university programs, training sessions, public appearances, and youth development initiatives — presented as proof of presence, credibility, and real-world career impact.
+                A refined selection of Donia’s university programs, training
+                sessions, public appearances, and youth development initiatives
+                — presented as proof of presence, credibility, and real-world
+                career impact.
               </p>
               <div className="flex items-center gap-3">
                 <button
@@ -610,22 +870,35 @@ export function EventsCarousel() {
         <FadeUp delay={0.08}>
           <div
             ref={trackRef}
-            className="flex gap-7 overflow-x-auto pb-4 pl-[2px] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            style={{ scrollSnapType: "x mandatory", cursor: "grab" }}
+            className="relative flex overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{
+              gap: CARD_GAP,
+              paddingInline: CENTER_GUTTER,
+              scrollPaddingInline: CENTER_GUTTER,
+              scrollSnapType: "x mandatory",
+              cursor: "grab",
+            }}
           >
             {EVENTS.map((event, index) => (
-              <div key={event.num} style={{ scrollSnapAlign: "start" }}>
+              <div
+                key={event.num}
+                data-event-card
+                style={{
+                  width: CARD_SIZE,
+                  flexGrow: 0,
+                  flexShrink: 0,
+                  flexBasis: CARD_SIZE,
+                  scrollSnapAlign: "start",
+                }}
+              >
                 <EventCard
                   event={event}
                   index={index}
-                  total={EVENTS.length}
-                  trackProgress={scrollXProgress}
-                  onFocus={setActiveIndex}
+                  focusIndex={focusIndex}
                   onOpen={setOpenIndex}
                 />
               </div>
             ))}
-            <div className="shrink-0" style={{ width: 1 }} />
           </div>
         </FadeUp>
 
@@ -638,6 +911,7 @@ export function EventsCarousel() {
                   type="button"
                   onClick={() => scrollToIndex(index)}
                   aria-label={`Go to ${event.name}`}
+                  aria-current={activeIndex === index ? "true" : undefined}
                   className="group flex items-center gap-2"
                 >
                   <span
@@ -651,7 +925,8 @@ export function EventsCarousel() {
               ))}
             </div>
             <p className="font-['Playfair_Display'] text-xl italic text-[#8A8174]">
-              0{activeIndex + 1} / 0{EVENTS.length}
+              {String(activeIndex + 1).padStart(2, "0")} /{" "}
+              {String(EVENTS.length).padStart(2, "0")}
             </p>
           </div>
         </FadeUp>
@@ -663,8 +938,16 @@ export function EventsCarousel() {
           <EventModal
             event={EVENTS[openIndex]}
             onClose={() => setOpenIndex(null)}
-            onPrev={() => setOpenIndex((prev) => (prev === null ? 0 : (prev - 1 + EVENTS.length) % EVENTS.length))}
-            onNext={() => setOpenIndex((prev) => (prev === null ? 0 : (prev + 1) % EVENTS.length))}
+            onPrev={() =>
+              setOpenIndex((prev) =>
+                prev === null ? 0 : (prev - 1 + EVENTS.length) % EVENTS.length,
+              )
+            }
+            onNext={() =>
+              setOpenIndex((prev) =>
+                prev === null ? 0 : (prev + 1) % EVENTS.length,
+              )
+            }
           />
         )}
       </AnimatePresence>
