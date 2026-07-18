@@ -95,6 +95,7 @@ const EVENTS = [
     photo: tftSlide1,
     alt: "Strategic Teamfight Tactics tournament matches at TFT Event",
     crop: "center center",
+    fit: "contain" as const,
   },
   {
     num: "02",
@@ -423,14 +424,42 @@ function EventCard({
         className="group relative aspect-[3.5/4.3] cursor-pointer overflow-hidden rounded-[30px] bg-[#1C1C1C] shadow-[0_20px_60px_rgba(28,28,28,0.10)] ring-1 ring-[#DDD8CE]"
       >
         <div className="absolute inset-0 w-full h-full z-0">
-          <motion.div style={{ y: smoothImageY }} className="h-full w-full">
-            <ImageWithFallback
-              src={event.photo}
-              alt={event.alt}
-              className="h-full w-full scale-[1.08] object-cover grayscale-[14%] saturate-[.86] transition-transform duration-700 group-hover:scale-[1.16]"
-              style={{ objectPosition: event.crop }}
-            />
-          </motion.div>
+          {event.fit === "contain" ? (
+            <>
+              {/* Blurred fill so a landscape photo never leaves bare letterbox space */}
+              <div className="absolute inset-0 h-full w-full">
+                <ImageWithFallback
+                  src={event.photo}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full scale-110 object-cover object-center blur-2xl opacity-40 grayscale-[14%] saturate-[.86]"
+                />
+                <div className="absolute inset-0 bg-[#1C1C1C]/60" />
+              </div>
+
+              {/* Full, uncropped photo on top */}
+              <motion.div
+                style={{ y: smoothImageY }}
+                className="relative flex h-full w-full items-center justify-center"
+              >
+                <ImageWithFallback
+                  src={event.photo}
+                  alt={event.alt}
+                  className="max-h-full max-w-full object-contain grayscale-[14%] saturate-[.86] transition-transform duration-700 group-hover:scale-[1.04]"
+                  style={{ objectPosition: event.crop }}
+                />
+              </motion.div>
+            </>
+          ) : (
+            <motion.div style={{ y: smoothImageY }} className="h-full w-full">
+              <ImageWithFallback
+                src={event.photo}
+                alt={event.alt}
+                className="h-full w-full scale-[1.08] object-cover grayscale-[14%] saturate-[.86] transition-transform duration-700 group-hover:scale-[1.16]"
+                style={{ objectPosition: event.crop }}
+              />
+            </motion.div>
+          )}
         </div>
 
         <div className="pointer-events-none absolute inset-0 bg-[#6B8F71]/8 mix-blend-multiply z-10" />
