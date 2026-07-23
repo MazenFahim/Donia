@@ -163,7 +163,7 @@ export function Contact() {
             letterSpacing: "0.06em",
           }}
         >
-          © 2025 Donia Essam Mohamed Amin · All Rights Reserved
+          © 2026 Donia Essam · All Rights Reserved
         </p>
       </div>
     </section>
