@@ -2,24 +2,25 @@ import { Play, Facebook } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { FadeUp } from "./FadeUp";
 import { T } from "./tokens";
-import reelThumbOne from "@/imports/5791871838450290271.jpg";
-import reelThumbTwo from "@/imports/ain shams.jpg";
-import reelThumbThree from "@/imports/New Cairo4.jpeg";
+import reelThumbOne from "@/imports/5791871838450290291.jpg";
+import reelThumbTwo from "@/imports/hero_photo.jpg";
+import reelThumbThree from "@/imports/5791871838450290292.jpg";
+import reelThumbFour from "@/imports/5791871838450290283.jpg";
 
 const TRAINING_VIDEOS = [
   {
-    title: "Public speaking tips",
+    title: "AI is a partner in the educational process.",
     badge: "Reel",
     platform: "Facebook",
-    url: "https://web.facebook.com/reel/1211200914104090",
+    url: "https://www.facebook.com/share/v/1BK3fCQFf5/?mibextid=wwXIfr",
     thumbnail: reelThumbOne,
-    alt: "Portrait thumbnail from a training video about public speaking tips",
+    alt: "Portrait thumbnail from a training video about artificial intelligence in education",
   },
   {
     title: "Confidence on stage",
     badge: "Reel",
     platform: "Facebook",
-    url: "https://web.facebook.com/reel/1377818246898486",
+    url: "https://www.facebook.com/share/v/1EdvznSzCn/?mibextid=wwXIfr",
     thumbnail: reelThumbTwo,
     alt: "Portrait thumbnail from a training video about confidence on stage",
   },
@@ -27,9 +28,17 @@ const TRAINING_VIDEOS = [
     title: "Career-ready communication",
     badge: "Reel",
     platform: "Facebook",
-    url: "https://web.facebook.com/watch/?v=605099809230138",
+    url: "https://www.facebook.com/share/r/19GyhBFS9K/?mibextid=wwXIfr",
     thumbnail: reelThumbThree,
     alt: "Portrait thumbnail from a training video about career-ready communication",
+  },
+  {
+    title: "Graduation day speech",
+    badge: "Reel",
+    platform: "Facebook",
+    url: "https://www.facebook.com/share/r/1NVAHBpyWH/?mibextid=wwXIfr",
+    thumbnail: reelThumbFour,
+    alt: "Portrait thumbnail from a training video about Donia's goal for the research and development",
   },
 ];
 
@@ -56,7 +65,7 @@ export function TrainingVideos() {
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {TRAINING_VIDEOS.map((video, index) => (
             <FadeUp key={video.url} delay={index * 90}>
               <a
