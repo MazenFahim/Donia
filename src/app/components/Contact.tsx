@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { T } from "./tokens";
 import { FadeUp } from "./FadeUp";
-import { MessageCircle, Mail, Linkedin, Facebook, Instagram } from "lucide-react";
+import { MessageCircle, Mail, Linkedin, Facebook, Instagram, Send, Check } from "lucide-react";
 
 type IconComponent = React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
 
@@ -19,7 +20,73 @@ const CONTACT_CARDS: ContactCard[] = [
   { Icon: Instagram, label: "Instagram", value: "", href: "https://www.instagram.com/donia_essam_98" },
 ];
 
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  padding: "12px 14px",
+  background: "#161616",
+  border: "1px solid rgba(255,255,255,0.1)",
+  borderRadius: 10,
+  color: T.white,
+  fontSize: 14,
+  outline: "none",
+  transition: "border-color 0.2s ease",
+};
+
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  fontSize: 12,
+  fontWeight: 600,
+  color: "rgba(255,255,255,0.6)",
+  marginBottom: 8,
+  letterSpacing: "0.04em",
+  textTransform: "uppercase",
+};
+
 export function Contact() {
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMsg("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSent(true);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setIsSent(false), 4000);
+      } else {
+        setErrorMsg(result.message || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setErrorMsg("Could not connect. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const focusRing = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e.target as HTMLElement).style.borderColor = T.gold;
+  };
+  const blurRing = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e.target as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)";
+  };
+
   return (
     <section id="contact" style={{ background: T.navy }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }} className="px-6 md:px-12 pt-16 md:pt-[120px]">
@@ -45,7 +112,7 @@ export function Contact() {
         {/* Two columns */}
         <div style={{ alignItems: "start" }} className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-[64px]">
 
-          {/* Left: Quote + Photo */}
+          {/* Left: Quote + Form */}
           <FadeUp delay={100}>
             <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
               <div
@@ -72,6 +139,126 @@ export function Contact() {
                 </p>
               </div>
 
+              {/* Contact form */}
+              <form
+                onSubmit={handleSubmit}
+                style={{
+                  background: "#111111",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: 16,
+                  padding: 28,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 20,
+                }}
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 16 }}>
+                  <div>
+                    <label htmlFor="name" style={labelStyle}>Name *</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      onFocus={focusRing}
+                      onBlur={blurRing}
+                      placeholder="Your name"
+                      style={inputStyle}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" style={labelStyle}>Email *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      onFocus={focusRing}
+                      onBlur={blurRing}
+                      placeholder="you@example.com"
+                      style={inputStyle}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="subject" style={labelStyle}>Subject *</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    required
+                    value={formData.subject}
+                    onChange={handleChange}
+                    onFocus={focusRing}
+                    onBlur={blurRing}
+                    placeholder="Training inquiry, speaking engagement, etc."
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" style={labelStyle}>Message *</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleChange}
+                    onFocus={focusRing}
+                    onBlur={blurRing}
+                    placeholder="Tell me a bit about what you're looking for..."
+                    style={{ ...inputStyle, resize: "vertical", minHeight: 110, fontFamily: "inherit" }}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 10,
+                    padding: "14px 24px",
+                    background: isSent ? "#3d5a43" : T.gold,
+                    color: "#111111",
+                    fontSize: 14,
+                    fontWeight: 700,
+                    letterSpacing: "0.02em",
+                    border: "none",
+                    borderRadius: 10,
+                    cursor: isSubmitting ? "default" : "pointer",
+                    opacity: isSubmitting ? 0.7 : 1,
+                    transition: "background 0.2s ease, opacity 0.2s ease",
+                  }}
+                >
+                  {isSent ? (
+                    <>
+                      <Check size={16} strokeWidth={2.5} />
+                      Message Sent
+                    </>
+                  ) : isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <Send size={16} strokeWidth={2.5} />
+                      Send Message
+                    </>
+                  )}
+                </button>
+
+                {errorMsg && (
+                  <p style={{ fontSize: 13, color: "#e08a8a", margin: 0 }}>
+                    {errorMsg}
+                  </p>
+                )}
+              </form>
             </div>
           </FadeUp>
 
