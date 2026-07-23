@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
-import uniOctober from "@/imports/5791871838450290267.jpg";
 import AinShams from "@/imports/ain shams.jpg";
 import CIC1 from "@/imports/CIC1.jpeg";
 import CIC2 from "@/imports/CIC2.jpeg";
@@ -24,11 +23,21 @@ import Must1 from "@/imports/Must1.jpeg";
 import Must2 from "@/imports/Must2.jpeg";
 import Must4 from "@/imports/Must4.jpeg";
 import Must5 from "@/imports/Must5.jpeg";
+import october1 from "@/imports/6octtraining1.jpeg";
+import october2 from "@/imports/6octtraining2.jpeg";
+import october3 from "@/imports/6octtraining3.jpeg";
+import october4 from "@/imports/6octtraining4.jpeg";
+import modern1 from "@/imports/6octmodern1.jpeg";
+import modern2 from "@/imports/6octmodern2.jpeg";
+import modern3 from "@/imports/6octmodern3.jpeg";
+import modern4 from "@/imports/6octmodern4.jpeg";
+import modern5 from "@/imports/6octmodern5.jpeg";
+
 import { T } from "./tokens";
 import { FadeUp } from "./FadeUp";
 
 const UNIVERSITIES = [
-   {
+  {
     name: "Cairo University",
     city: "Giza",
     photos: [
@@ -40,10 +49,9 @@ const UNIVERSITIES = [
       { src: cairo1, alt: "Cairo University training session", crop: "center 25%" },
       { src: cairo7, alt: "Cairo University training session", crop: "center 25%" },
     ],
-    description: "Led large-scale seminar series for multiple faculties, equipping thousands of students with the necessary philosophical frameworks to excel in professional environments.",
-  
+    description: "Spearheaded university-wide training initiatives at Cairo University, empowering thousands of undergraduates across diverse disciplines with strategic thinking, impactful communication, and market-aligned professional skills.",
   },
- {
+  {
     name: "New Cairo Technological University",
     city: "Cairo",
     photos: [
@@ -86,16 +94,30 @@ const UNIVERSITIES = [
     ],
     description: "Contributed as a Guest Trainer at the Canadian International College (CIC), delivering comprehensive training sessions for the School of Business Administration. By designing interactive and practical learning experiences, I empowered undergraduate students with vital professional development and market-ready skills, fostering their academic growth and preparing them to excel in today's competitive corporate landscape.",
   },
+  /* 🛠️ NUMBER 6 UPDATED HERE */
   {
-  
     name: "6th of October University",
     city: "Giza",
     photos: [
-      { src: uniOctober, alt: "Students holding certificates at 6th of October University training event", crop: "center" },
+      { src: modern1, alt: "6th of October University modern session photo 1", crop: "center" },
+      { src: modern2, alt: "6th of October University modern session photo 2", crop: "center" },
+      { src: modern3, alt: "6th of October University modern session photo 3", crop: "center" },
+      { src: modern4, alt: "6th of October University modern session photo 4", crop: "center" },
+      { src: modern5, alt: "6th of October University modern session photo 5", crop: "center" },
     ],
-    description: "Delivered comprehensive soft skills and job market preparation training to over 500 graduating seniors, focusing on interview techniques and professional communication.",
+    description: "Served as a Trainer at 6th of October University's Faculty of Education, empowering student teachers with modern pedagogical strategies and cutting-edge AI technologies tailored for classroom management and lesson preparation. By bridging educational theory with innovative AI tools, I enabled future teachers to build the digital and instructional competencies required to excel in today's evolving educational landscape.",
   },
- 
+  {
+    name: "6th of October - Training on modern teaching strategies",
+    city: "Giza",
+    photos: [
+      { src: october1, alt: "6th of October training session photo 1", crop: "center" },
+      { src: october2, alt: "6th of October training session photo 2", crop: "center" },
+      { src: october3, alt: "6th of October training session photo 3", crop: "center" },
+      { src: october4, alt: "6th of October training session photo 4", crop: "center" },
+    ],
+    description: "Facilitated interactive training sessions for Faculty of Education students at 6th of October University, focusing on modern teaching strategies, active learning techniques, and practical instructional design to enhance student engagement.",
+  },
 ];
 
 const ArrowButton = ({ direction, onClick }: { direction: "left" | "right", onClick: () => void }) => {
@@ -191,10 +213,10 @@ export function Universities() {
     if (paused) return;
     const id = setInterval(() => {
       const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
-    setActivePhotoIndex((prev) => (prev + 1) % photoCount);
-        }, 3000);
-        return () => clearInterval(id);
-      }, [paused, activeUniIndex, activePhotoIndex]);
+      setActivePhotoIndex((prev) => (prev + 1) % photoCount);
+    }, 3000);
+    return () => clearInterval(id);
+  }, [paused, activeUniIndex, activePhotoIndex]);
 
   useEffect(() => {
     if (paused) return;
@@ -233,7 +255,15 @@ export function Universities() {
   };
 
   return (
-    <section style={{ background: "#F8F5EF", overflow: "hidden" }}>
+    <section
+      id="training-experience"
+      className="scroll-mt-24"
+      style={{
+        background: "#F8F5EF",
+        overflow: "hidden",
+        scrollMarginTop: "90px",
+      }}
+    >
       <div style={{ height: 1, background: T.border }} />
 
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "120px 48px 0" }}>
@@ -286,8 +316,8 @@ export function Universities() {
                   <div style={{ paddingBottom: "125%" }} />
 
                   {UNIVERSITIES[activeUniIndex].photos.map((photo, idx) => {
-                   const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
-                   let position = "hidden";
+                    const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
+                    let position = "hidden";
 
                     if (idx === activePhotoIndex) {
                       position = "front";
@@ -369,9 +399,9 @@ export function Universities() {
                       onClick={(e) => {
                         e.stopPropagation();
                         setActivePhotoIndex((prev) => {
-                        const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
-                        return (prev - 1 + photoCount) % photoCount;
-                      });
+                          const photoCount = UNIVERSITIES[activeUniIndex].photos.length;
+                          return (prev - 1 + photoCount) % photoCount;
+                        });
                       }}
                     />
                     <InnerNavButton
@@ -436,7 +466,6 @@ export function Universities() {
           </div>
         </FadeUp>
       </div>
-
     </section>
   );
 }

@@ -3,23 +3,20 @@ import { AnimatePresence, motion, useMotionValue, useScroll, useTransform, useSp
 import { ArrowUpRight, ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 
-// ✅ استيراد صور TFT Event
+// ✅ imports
 import tftSlide1 from "@/imports/TFT1.jpeg";
 import tftSlide2 from "@/imports/TFT2.jpeg";
 import tftSlide3 from "@/imports/TFT3.jpeg";
 
-// ✅ استيراد صور مؤتمر جامعة عين شمس
 import asSlide1 from "@/imports/AS1.jpg";
 import asSlide2 from "@/imports/AS2.jpeg";
 
-// ✅ استيراد صور ICC Event
 import iccSlide2 from "@/imports/ICC2.jpeg";
 import iccSlide3 from "@/imports/ICC3.jpeg";
 import iccSlide4 from "@/imports/ICC4.jpeg";
 import iccSlide5 from "@/imports/ICC5.jpeg";
 import iccSlide6 from "@/imports/ICC6.jpeg";
 
-// ✅ استيراد صور TMC
 import tmcSlide1 from "@/imports/TMC1.jpeg";
 import tmcSlide2 from "@/imports/TMC2.jpeg";
 import tmcSlide3 from "@/imports/TMC3.jpeg";
@@ -28,7 +25,6 @@ import tmcSlide5 from "@/imports/TMC5.jpeg";
 import tmcSlide6 from "@/imports/TMC6.jpeg";
 import tmcSlide7 from "@/imports/TMC7.jpeg";
 
-// ✅ استيراد صور Path Finder Event
 import pfSlide1 from "@/imports/PathFinder1.jpeg";
 import pfSlide2 from "@/imports/PathFinder2.jpeg";
 import pfSlide3 from "@/imports/PathFinder3.jpeg";
@@ -38,12 +34,10 @@ import pfSlide6 from "@/imports/PathFinder6.jpeg";
 import pfSlide7 from "@/imports/PathFinder7.jpeg";
 import pfSlide8 from "@/imports/PathFinder8.jpeg";
 
-// ✅ استيراد صور Ramadan Majlis Event
 import rmSlide1 from "@/imports/Ramadan1.jpeg";
 import rmSlide2 from "@/imports/Ramadan2.jpeg";
 import rmSlide3 from "@/imports/Ramadan3.jpeg";
 
-// ✅ استيراد صور HR Expert Club Event
 import hrSlide1 from "@/imports/HR1.jpeg";
 import hrSlide2 from "@/imports/HR2.jpeg";
 import hrSlide3 from "@/imports/HR3.jpeg";
@@ -182,7 +176,6 @@ const EVENTS = [
 const CARD_WIDTH = 460; 
 const CARD_GAP = 28; 
 
-// ✅ تم تعديل هذا المكون ليغطي الكارد بالكامل وتختفي المساحة الرمادية
 function EventCard({
   event,
   index,
@@ -280,6 +273,7 @@ function EventCard({
         onClick={() => onOpen(index)}
         role="button"
         tabIndex={0}
+        aria-label={`View details for ${event.name}`}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
@@ -392,6 +386,11 @@ function EventModal({
 }) {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
+  // 🛠️ Reset photo index when switching events
+  useEffect(() => {
+    setCurrentPhotoIndex(0);
+  }, [event.name]);
+
   useEffect(() => {
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -413,7 +412,7 @@ function EventModal({
     }
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [onClose, onPrev, onNext, currentPhotoIndex]);
+  }, [onClose, onPrev, onNext, currentPhotoIndex, event.photos]);
 
   const nextInternalPhoto = () => {
     if (event.photos) {
@@ -441,7 +440,8 @@ function EventModal({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C1C1C]/70 p-4 backdrop-blur-sm md:p-8"
+      /* 🛠️ Updated z-index to z-[100] to sit above fixed navbars & used dvh for mobile viewports */
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1C1C1C]/70 p-4 backdrop-blur-sm md:p-8 min-h-[100dvh]"
     >
       <motion.div
         initial={{ opacity: 0, y: 28, scale: 0.97 }}
@@ -449,7 +449,7 @@ function EventModal({
         exit={{ opacity: 0, y: 18, scale: 0.97 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="relative grid h-auto max-h-[90vh] min-h-[520px] w-full max-w-[1040px] overflow-hidden rounded-[28px] bg-[#F8F5EF] shadow-[0_40px_100px_rgba(0,0,0,0.35)] grid-rows-[auto_1fr] md:grid-rows-1 md:grid-cols-[1.15fr_1fr]"
+        className="relative grid h-auto max-h-[85dvh] min-h-[520px] w-full max-w-[1040px] overflow-hidden rounded-[28px] bg-[#F8F5EF] shadow-[0_40px_100px_rgba(0,0,0,0.35)] grid-rows-[auto_1fr] md:grid-rows-1 md:grid-cols-[1.15fr_1fr]"
       >
         <button
           type="button"
@@ -608,7 +608,8 @@ export function EventsCarousel() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[#F8F5EF] py-24 text-[#1C1C1C] md:py-32">
+    /* 🛠️ Added id="events" to allow smooth scrolling from your navbar links */
+    <section id="events" className="relative overflow-hidden bg-[#F8F5EF] py-24 text-[#1C1C1C] md:py-32">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#DDD8CE]" />
       <div className="pointer-events-none absolute -right-32 top-28 h-96 w-96 rounded-full bg-[#6B8F71]/10 blur-3xl" />
       <div className="pointer-events-none absolute -left-40 bottom-0 h-80 w-80 rounded-full bg-[#D6E5D8]/30 blur-3xl" />

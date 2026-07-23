@@ -330,12 +330,14 @@ function CertCard({ tag, abbr, fullName, country, description, logo, logoSize = 
 export function CertifiedBy() {
   return (
     <section
+      id="certificates"
       style={{
         position: "relative",
         overflow: "hidden",
         background:
           "radial-gradient(ellipse 110% 55% at 50% -5%, rgba(184,151,58,0.06) 0%, transparent 60%), #F8F5EF",
         fontFamily: "'DM Sans', sans-serif",
+        scrollMarginTop: "90px",
       }}
     >
       <div style={{ height: 1, background: T.border }} />
@@ -475,7 +477,7 @@ export function CertifiedBy() {
                 margin: 0,
               }}
             >
-              Our programs and credentials are formally recognized and endorsed by the world's most
+              Donia's programs and credentials are formally recognized and endorsed by the world's most
               distinguished academic, scientific, and cultural bodies.
             </p>
           </div>

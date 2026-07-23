@@ -3,24 +3,29 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "About",      id: "about" },
-  { label: "Education",  id: "education" },
-  { label: "Programs",   id: "programs" },
-  { label: "Contact",    id: "contact" },
+  { label: "About",               id: "about" },
+  { label: "Certificates",        id: "certificates" },
+  { label: "Education",           id: "education" },
+  { label: "Training Experience", id: "training-experience" },
+  { label: "Videos",              id: "training-videos" },
+  { label: "Events",              id: "events" },
+  { label: "Contact",             id: "contact" },
 ];
 
 function smoothScroll(id: string) {
   const section = document.getElementById(id);
-  if (!section) return;
 
-  window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+  if (!section) {
+    console.warn(`[Navbar] Target section "#${id}" was not found in the DOM.`);
+    return;
+  }
 
+  // Native behavior: Let CSS scroll-margin handle header offsets seamlessly
   section.scrollIntoView({
     behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
     block: "start",
   });
 }
-
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -33,23 +38,17 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // close mobile menu on resize to desktop
   useEffect(() => {
     const onResize = () => { if (window.innerWidth >= 768) setOpen(false); };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // clear stale hash on mount
-  useEffect(() => {
-    if (window.location.hash) {
-      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
-    }
-  }, []);
-
   const handleClick = (id: string) => {
     setOpen(false);
-    smoothScroll(id);
+    setTimeout(() => {
+      smoothScroll(id);
+    }, 50);
   };
 
   return (
@@ -68,20 +67,20 @@ export function Navbar() {
       {/* top accent bar */}
       <div className="h-[3px] bg-gradient-to-r from-[#1C1C1C] via-[#6B8F71] to-[#D6E5D8]" />
 
-      <nav className="mx-auto flex max-w-[1220px] items-center justify-between gap-6 px-6 py-4 md:px-12">
+      <nav className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-4 md:px-8">
         {/* Logo */}
         <motion.button
           type="button"
           onClick={() => handleClick("about")}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className="font-['Playfair_Display'] text-[20px] font-semibold tracking-[-0.02em] text-[#1C1C1C]"
+          className="font-['Playfair_Display'] text-[20px] font-semibold tracking-[-0.02em] text-[#1C1C1C] whitespace-nowrap"
         >
           Donia Essam
         </motion.button>
 
         {/* Desktop nav */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-4 lg:gap-6 md:flex">
           {NAV_ITEMS.map((item) => (
             <NavLink key={item.id} label={item.label} onClick={() => handleClick(item.id)} />
           ))}
@@ -128,7 +127,7 @@ export function Navbar() {
                   type="button"
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05, duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: i * 0.04, duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                   onClick={() => handleClick(item.id)}
                   className="rounded-xl px-4 py-3 text-left text-[14px] font-medium text-[#3F3B35] transition-colors hover:bg-[#EEE9DF] hover:text-[#6B8F71]"
                 >
@@ -138,7 +137,7 @@ export function Navbar() {
               <motion.div
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: NAV_ITEMS.length * 0.05, duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: NAV_ITEMS.length * 0.04, duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                 className="pt-2"
               >
                 <BookButton onClick={() => handleClick("contact")} fullWidth />
@@ -158,10 +157,9 @@ function NavLink({ label, onClick }: { label: string; onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="group relative text-[13px] font-medium tracking-[0.03em] text-[#4A4A4A] transition-colors duration-200 hover:text-[#1C1C1C]"
+      className="group relative text-[13px] font-medium tracking-[0.02em] text-[#4A4A4A] transition-colors duration-200 hover:text-[#1C1C1C] whitespace-nowrap"
     >
       {label}
-      {/* underline slide-in */}
       <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 rounded-full bg-[#6B8F71] transition-all duration-300 group-hover:w-full" />
     </button>
   );
@@ -174,7 +172,7 @@ function BookButton({ onClick, fullWidth }: { onClick: () => void; fullWidth?: b
       onClick={onClick}
       whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.96 }}
-      className={`rounded-xl bg-[#1C1C1C] px-5 py-2.5 text-[13px] font-semibold tracking-[0.04em] text-[#F8F5EF] transition-all duration-300 hover:bg-[#6B8F71] hover:shadow-[0_4px_18px_rgba(107,143,113,0.35)] ${
+      className={`rounded-xl bg-[#1C1C1C] px-4 py-2 text-[13px] font-semibold tracking-[0.03em] text-[#F8F5EF] transition-all duration-300 hover:bg-[#6B8F71] hover:shadow-[0_4px_18px_rgba(107,143,113,0.35)] whitespace-nowrap ${
         fullWidth ? "w-full text-center" : ""
       }`}
     >

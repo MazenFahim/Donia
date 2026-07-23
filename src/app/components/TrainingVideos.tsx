@@ -35,7 +35,15 @@ const TRAINING_VIDEOS = [
 
 export function TrainingVideos() {
   return (
-    <section id="training-videos" style={{ background: "#F8F5EF", borderTop: `1px solid ${T.border}` }}>
+    <section
+      id="training-videos"
+      className="scroll-mt-24"
+      style={{ 
+        background: "#F8F5EF", 
+        borderTop: `1px solid ${T.border}`,
+        scrollMarginTop: "90px" // 🛠️ Ensures sticky navbar doesn't cover section title
+      }}
+    >
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "112px 48px 120px" }}>
         <FadeUp>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
