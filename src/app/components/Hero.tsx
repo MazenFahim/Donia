@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+// @ts-ignore
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
+// @ts-ignore
 import heroPhoto from "@/imports/hero_photo.jpg";
 import { T } from "./tokens";
 
@@ -123,7 +125,7 @@ export function Hero() {
                 lineHeight: 1.6,
               }}
             >
-              Academic Trainer & Educator · Internationally Certified
+              Educational Consultant · Internationally Certified
             </span>
           </div>
 
@@ -167,19 +169,7 @@ export function Hero() {
                 verticalAlign: "middle",
               }}
             />
-            Personal Skills Development
-            <span
-              style={{
-                display: "inline-block",
-                width: 4,
-                height: 4,
-                background: T.blue,
-                borderRadius: "50%",
-                margin: "0 10px 2px",
-                verticalAlign: "middle",
-              }}
-            />
-            Train-the-Trainer
+            Teacher Professional Development & Curriculum Design
           </p>
 
           <p
